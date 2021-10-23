@@ -1,0 +1,9 @@
+com/example/goalog/databinding/ContentScrollingBinding.java
+ com.example.goalog.databinding.ContentScrollingBinding
+com/example/goalog/ScrollingActivity.java
+ com.example.goalog.ScrollingActivity
+ com.example.goalog.ScrollingActivity$1
+com/example/goalog/databinding/ActivityScrollingBinding.java
+ com.example.goalog.databinding.ActivityScrollingBinding
+com/example/goalog/BuildConfig.java
+ com.example.goalog.BuildConfig
