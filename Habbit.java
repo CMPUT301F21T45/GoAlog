@@ -112,6 +112,16 @@ public class Habit {
 		
 	}
 	
+	public ArrayList<String> getWeekdayPlan{
+		
+		return this.getWeekdayPlan;
+		
+	}
 	
+	public void setWeekdayPlan(ArrayList<String> weekdayPlan) {
+			this.weekdayPlan = weekdayPlan;
+	
+	}
+}
 
 }
