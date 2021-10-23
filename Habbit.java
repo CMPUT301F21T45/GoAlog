@@ -89,7 +89,7 @@ public class Habit {
 		
 	}
 
-    public void String setHabbitReeason(String habbitReason){
+    public void setHabbitReeason(String habbitReason){
 		//implement constraints
 		        if (habbitReasonCheck(habbitReason)) {
             this.habbitReason = habbitReason;
@@ -106,7 +106,11 @@ public class Habit {
 		
 	}
 	
-	
+	public void setStartDate(Date startDate){
+		this.startDate = startDate;
+		
+		
+	}
 	
 	
 
