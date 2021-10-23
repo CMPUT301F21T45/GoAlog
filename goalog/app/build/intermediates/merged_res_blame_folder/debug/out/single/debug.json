@@ -8,6 +8,10 @@
         "source": "/Users/jiajunxie/Desktop/CMPUT301/goalog/app/build/generated/res/pngs/debug/drawable-xhdpi/ic_launcher_background.png"
     },
     {
+        "merged": "/Users/jiajunxie/Desktop/CMPUT301/goalog/app/build/intermediates/merged_res/debug/layout_activity_add_habit.xml.flat",
+        "source": "/Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/res/layout/activity_add_habit.xml"
+    },
+    {
         "merged": "/Users/jiajunxie/Desktop/CMPUT301/goalog/app/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
         "source": "/Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
     },

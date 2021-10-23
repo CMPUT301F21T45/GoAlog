@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
 MERGED from [androidx.databinding:viewbinding:7.0.2] /Users/jiajunxie/.gradle/caches/transforms-3/620e574f95cf7e7e93ac68ed08666fcb/transformed/jetified-viewbinding-7.0.2/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/jiajunxie/.gradle/caches/transforms-3/88529be31827e4f79d73657e1e070cb2/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.material:material:1.4.0] /Users/jiajunxie/.gradle/caches/transforms-3/c2e76fb5e086b5c906002f45c03cd24a/transformed/material-1.4.0/AndroidManifest.xml:17:1-24:12
@@ -71,25 +71,25 @@ MERGED from [androidx.print:print:1.0.0] /Users/jiajunxie/.gradle/caches/transfo
 MERGED from [androidx.annotation:annotation-experimental:1.0.0] /Users/jiajunxie/.gradle/caches/transforms-3/9ccd4574ebca9c86103f7bd859ba1dfd/transformed/jetified-annotation-experimental-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/jiajunxie/.gradle/caches/transforms-3/07ee67b71d61179709c3749373524324/transformed/jetified-protolite-well-known-types-18.0.0/AndroidManifest.xml:2:1-11:12
 MERGED from [io.grpc:grpc-android:1.28.0] /Users/jiajunxie/.gradle/caches/transforms-3/a1b6a2558cae7a50244f7d82767cb4ec/transformed/jetified-grpc-android-1.28.0/AndroidManifest.xml:2:1-13:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
 	package
 		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:3:5-33
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-25:12
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:1-27:12
 		INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:5:5-23:19
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:5:5-25:19
 MERGED from [com.google.android.material:material:1.4.0] /Users/jiajunxie/.gradle/caches/transforms-3/c2e76fb5e086b5c906002f45c03cd24a/transformed/material-1.4.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.4.0] /Users/jiajunxie/.gradle/caches/transforms-3/c2e76fb5e086b5c906002f45c03cd24a/transformed/material-1.4.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.1] /Users/jiajunxie/.gradle/caches/transforms-3/3721de789aff74f2f52f02659b18895c/transformed/constraintlayout-2.1.1/AndroidManifest.xml:9:5-20
@@ -149,25 +149,31 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/jiaj
 	android:theme
 		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:11:9-44
 activity#com.example.goalog.ScrollingActivity
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:12:9-22:20
-	android:label
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:15:13-45
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:12:9-14:39
 	android:exported
 		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:14:13-36
-	android:theme
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:16:13-60
 	android:name
 		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:13:13-46
+activity#com.example.goalog.AddHabitActivity
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:15:9-24:20
+	android:label
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:18:13-45
+	android:exported
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:17:13-36
+	android:theme
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:19:13-60
+	android:name
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:16:13-45
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:17:13-21:29
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:20:13-23:29
 action#android.intent.action.MAIN
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:18:17-69
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:21:17-69
 	android:name
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:18:25-66
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:21:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:20:17-77
+ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:22:17-77
 	android:name
-		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:20:27-74
+		ADDED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml:22:27-74
 uses-sdk
 INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/jiajunxie/Desktop/CMPUT301/goalog/app/src/main/AndroidManifest.xml

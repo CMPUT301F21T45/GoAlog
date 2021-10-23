@@ -2037,6 +2037,7 @@ id disableIntraAutoTransition
 id disablePostScroll
 id disableScroll
 id disjoint
+id display_start_date_add_habit
 id dragAnticlockwise
 id dragClockwise
 id dragDown
@@ -2237,6 +2238,7 @@ id search_mag_icon
 id search_plate
 id search_src_text
 id search_voice_btn
+id select_date_add_habit
 id select_dialog_listview
 id selected
 id selection_type
@@ -2421,6 +2423,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_habit
 layout activity_scrolling
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row

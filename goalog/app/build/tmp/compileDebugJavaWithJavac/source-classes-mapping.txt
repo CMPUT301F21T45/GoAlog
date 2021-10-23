@@ -1,9 +1,17 @@
-com/example/goalog/databinding/ContentScrollingBinding.java
- com.example.goalog.databinding.ContentScrollingBinding
-com/example/goalog/ScrollingActivity.java
- com.example.goalog.ScrollingActivity
- com.example.goalog.ScrollingActivity$1
-com/example/goalog/databinding/ActivityScrollingBinding.java
- com.example.goalog.databinding.ActivityScrollingBinding
 com/example/goalog/BuildConfig.java
  com.example.goalog.BuildConfig
+com/example/goalog/Habit.java
+ com.example.goalog.Habit
+com/example/goalog/databinding/ContentScrollingBinding.java
+ com.example.goalog.databinding.ContentScrollingBinding
+com/example/goalog/databinding/ActivityAddHabitBinding.java
+ com.example.goalog.databinding.ActivityAddHabitBinding
+com/example/goalog/databinding/ActivityScrollingBinding.java
+ com.example.goalog.databinding.ActivityScrollingBinding
+com/example/goalog/ScrollingActivity.java
+ com.example.goalog.ScrollingActivity
+com/example/goalog/DatePickerFragment.java
+ com.example.goalog.DatePickerFragment
+com/example/goalog/AddHabitActivity.java
+ com.example.goalog.AddHabitActivity
+ com.example.goalog.AddHabitActivity$1
