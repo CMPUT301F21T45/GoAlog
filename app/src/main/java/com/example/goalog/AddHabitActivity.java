@@ -24,6 +24,23 @@ public class AddHabitActivity extends AppCompatActivity {
     protected static TextView dateDisplay;
     public static boolean editMode = false;
 
+    Habit myHabit = (Habit) getIntent().getSerializableExtra("selected habit");
+
+
+    /*Put in main activity
+    !SOME!List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+  //clicked on a item: if delete is clicked, remove the obj, if not, open the edit window
+     @Override
+     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+          if(!delete) {
+               intent.putExtra("selected habit",!SOME!DataList.get(i)));
+                }else{
+                       //implement delete here
+                }
+            }
+        });
+     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +51,18 @@ public class AddHabitActivity extends AppCompatActivity {
         dateDisplay = findViewById(R.id.display_start_date_add_habit);
         habitTitle = findViewById(R.id.habit_title);
         habitReason = findViewById(R.id.habit_reason);
+
+
+        if(myHabit != null)
+        {
+            editMode = true;
+            habitTitle.setText(myHabit.getTitle());
+            habitReason.setText(myHabit.getReason());
+        }
+        else
+        {
+            editMode = false;
+        }
 
         selectDate = (Button) findViewById(R.id.select_date_add_habit);
         selectDate.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +85,9 @@ public class AddHabitActivity extends AppCompatActivity {
                 if(editMode)
                 {
                     editMode = false;
-                    //filled in with the object's data
+                    myHabit.setTitle(habitTitleString);
+                    myHabit.setReason(habitReasonString);
+                    myHabit.setDate(habitDateString);
                 }
                 else
                 {
