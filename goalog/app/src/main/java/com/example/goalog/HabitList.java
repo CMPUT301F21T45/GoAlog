@@ -54,7 +54,7 @@ public class HabitList extends AppCompatActivity /*implements AddHabitActivityCo
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(com.example.goalog.HabitList.this,AddHabitActivity.class);
+                Intent intent = new Intent(HabitList.this, AddHabitActivity.class);
                 startActivity(intent);
             }
         });
