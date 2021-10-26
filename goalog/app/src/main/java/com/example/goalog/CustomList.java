@@ -31,14 +31,14 @@ public class CustomList extends ArrayAdapter<Habit> {
         }
 
         Habit habit = Habits.get(position);
-        TextView userID = view.findViewById(R.id.userID);
-        TextView habbitName= view.findViewById(R.id.habitTitle);
-        TextView habbitReason= view.findViewById(R.id.reason);
+
+        TextView habitName= view.findViewById(R.id.habitTitle);
+        TextView habitReason= view.findViewById(R.id.reason);
         TextView startDate= view.findViewById(R.id.startDate);
 
-        userID.setText(habit.getUserID());
-        habbitName.setText(habit.getHabitTitle());
-        habbitReason.setText(habit.getReason());
+
+        habitName.setText(habit.getHabitTitle());
+        habitReason.setText(habit.getReason());
         startDate.setText(habit.getDate().toString());
 
 
