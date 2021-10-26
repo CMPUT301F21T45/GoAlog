@@ -1,9 +1,5 @@
 package com.example.goalog;
 
-import static com.squareup.okhttp.internal.http.HttpDate.parse;
-
-import static java.util.logging.Logger.global;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Array;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,14 +110,22 @@ public class UserPageActivity extends AppCompatActivity {
                     // Adding the habits from FireStore
                     HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
                     String weekdayPlan = map.get("weekdayPlan");
-                    for (int i = 0; i < weekdayPlan.length(); i++) {
-                        char ch = weekdayPlan.charAt(i);
-                        if (weekday.equals(String.valueOf(ch))) {
-                            String habitReason = map.get("habitReason");
-                            String startDate = map.get("startDate");
-                            habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
+                    String startDate = map.get("startDate");
+                    String habitReason = map.get("habitReason");
+
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                    Date today = new Date();
+                    try {
+                        if(today.after(date.parse(startDate))) {
+                            for (int i = 0; i < weekdayPlan.length(); i++) {
+                                char ch = weekdayPlan.charAt(i);
+                                if (weekday.equals(String.valueOf(ch))) {
+                                    habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
+                                }
+                            }
                         }
-                        // Adding the cities and provinces from FireStore
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                     listAdapter.notifyDataSetChanged();
                     // Notifying the adapter to render any new data fetched from the cloud
