@@ -76,14 +76,14 @@ public class HabitList extends AppCompatActivity /*implements AddHabitActivityCo
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     String habitTitle = doc.getId();
-                    // TODO: Retrieve data from firebase.
-                    // Adding the habits from FireStore
-                    HashMap<String,String> map = (HashMap<String,String>) doc.getData().get("HabitClass");
-                    assert map != null;
-                    String habitReason = map.get("habitReason");
-                    String startDate = map.get("startDate");
-                    String weekdayPlan = map.get("weekdayPlan");
-                    habitDataList.add(new Habit(habitTitle,habitReason,startDate,weekdayPlan)); // Adding the cities and provinces from FireStore
+                    if (doc.getData().get("HabitClass") != null) {
+                        HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
+                        //assert map != null;
+                        String habitReason = map.get("habitReason");
+                        String startDate = map.get("startDate");
+                        String weekdayPlan = map.get("weekdayPlan");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
+                    }// Adding the cities and provinces from FireStore
                 }
                 habitAdapter.notifyDataSetChanged();
                 // Notifying the adapter to render any new data fetched from the cloud
