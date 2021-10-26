@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -80,13 +81,14 @@ public class UserPageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String docId = doc.getId();
+                    String habitTitle = doc.getId();
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
-                    String habitTitle = (String) doc.getData().get("habitTitle");
-                    String habitReason = (String) doc.getData().get("habitReason");
-                    String startDate = (String) doc.getData().get("startDate");
-                    String weekdayPlan = (String) doc.getData().get("weekdayPlan");
+                    HashMap<String,String> map = (HashMap<String,String>) doc.getData().get("HabitClass");
+
+                    String habitReason = map.get("habitReason");
+                    String startDate = map.get("startDate");
+                    String weekdayPlan = map.get("weekdayPlan");
                     habitDataList.add(new Habit(habitTitle,habitReason,startDate,weekdayPlan)); // Adding the cities and provinces from FireStore
                 }
                 habitAdapter.notifyDataSetChanged();
