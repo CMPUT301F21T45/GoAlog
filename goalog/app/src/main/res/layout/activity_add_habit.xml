@@ -24,6 +24,7 @@
         android:textSize="20sp"/>
 
     <EditText
+        android:id="@+id/habit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Describe your habit... "
@@ -42,6 +43,7 @@
         android:textSize="20sp"/>
 
     <EditText
+        android:id="@+id/habit_reason"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Describe your motivation... "
@@ -96,38 +98,43 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="S">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="M">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="T">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="W">
-
-    </CheckBox>
         <CheckBox
+            android:id="@+id/sun_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="S">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/mon_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="M">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/tue_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="T">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/wed_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="W">
+
+        </CheckBox>
+        <CheckBox
+            android:id="@+id/thu_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -135,6 +142,7 @@
 
         </CheckBox>
         <CheckBox
+            android:id="@+id/fri_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -142,6 +150,7 @@
 
         </CheckBox>
         <CheckBox
+            android:id="@+id/sat_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
