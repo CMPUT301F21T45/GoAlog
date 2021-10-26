@@ -79,7 +79,7 @@ public class HabitList extends AppCompatActivity /*implements AddHabitActivityCo
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
                     HashMap<String,String> map = (HashMap<String,String>) doc.getData().get("HabitClass");
-
+                    assert map != null;
                     String habitReason = map.get("habitReason");
                     String startDate = map.get("startDate");
                     String weekdayPlan = map.get("weekdayPlan");
