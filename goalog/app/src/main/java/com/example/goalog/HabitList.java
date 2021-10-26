@@ -10,16 +10,16 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 
 public class HabitList extends AppCompatActivity {
-    ListView HabitList;
-    ArrayAdapter<Habit> habitAdapter;
+    ListView Habit_List;
+    ArrayAdapter<Habit> habit_Adapter;
     ArrayList<Habit> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.habitlist);
-        HabitList=findViewById(R.id.list_view);
+        Habit_List=findViewById(R.id.list_view);
         list = new ArrayList<>();
-        habitAdapter = new CustomList(this, list);
-        HabitList.setAdapter(habitAdapter);
+        habit_Adapter = new CustomList(this, list);
+        Habit_List.setAdapter(habit_Adapter);
     }
 }

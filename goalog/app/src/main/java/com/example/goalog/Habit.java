@@ -7,7 +7,7 @@ public class Habit {
     
     private int userID;
     private String habitTitle;
-    private String reason;
+    private String habitReason;
     private Date startDate;
     private ArrayList<String> weekdayPlan;
 
@@ -24,18 +24,18 @@ public class Habit {
 
     }
 
-    Habit(int userID, String habitTitle, String reason){
+    Habit(int userID, String habitTitle, String habitReason){
         this.userID = userID;
         this.habitTitle = habitTitle;
-        this.reason = reason;
+        this.habitReason = habitReason;
     }
 
 
 
-    Habit(int userID, String habitTitle, String reason, Date startDate){
+    Habit(int userID, String habitTitle, String habitReason, Date startDate){
         this.userID = userID;
         this.habitTitle = habitTitle;
-        this.reason = reason;
+        this.habitReason= habitReason;
         this.startDate = startDate;
 
     }
@@ -62,7 +62,7 @@ public class Habit {
         return this.habitTitle;
     }
 
-    public void habitTitle(String name){
+    public void setHabitName(String name){
 
         //implement constraints?
         name = this.habitTitle;
@@ -70,9 +70,9 @@ public class Habit {
 
     }
 
-    public String getReason(){
+    public String getHabitReason(){
 
-        return this.reason;
+        return this.habitReason;
 
     }
 

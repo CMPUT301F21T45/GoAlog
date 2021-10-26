@@ -38,7 +38,7 @@ public class CustomList extends ArrayAdapter<Habit> {
 
 
         habitName.setText(habit.getHabitTitle());
-        habitReason.setText(habit.getReason());
+        habitReason.setText(habit.getHabitReason());
         startDate.setText(habit.getDate().toString());
 
 

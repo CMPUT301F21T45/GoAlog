@@ -4,12 +4,7 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/userID"
-        android:layout_width="80dp"
-        android:layout_height="55dp"
-        android:text="userID"
-        android:textSize="15sp" />
+
 
     <TextView
         android:id="@+id/habitTitle"
