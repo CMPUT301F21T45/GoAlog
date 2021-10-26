@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/habit_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/habit_list_view.xml" value="0.20006172437402103" />
+        <entry key="app/src/main/res/layout/user_page.xml" value="0.2671875" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
