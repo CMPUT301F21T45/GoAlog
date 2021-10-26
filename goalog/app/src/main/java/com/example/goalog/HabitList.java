@@ -83,7 +83,7 @@ public class HabitList extends AppCompatActivity /*implements AddHabitActivityCo
                         String startDate = map.get("startDate");
                         String weekdayPlan = map.get("weekdayPlan");
                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
-                    }// Adding the cities and provinces from FireStore
+                    }
                 }
                 habitAdapter.notifyDataSetChanged();
                 // Notifying the adapter to render any new data fetched from the cloud
