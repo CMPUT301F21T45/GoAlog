@@ -33,7 +33,7 @@ public class Habit implements Serializable {
      */
 
 
-    Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan){
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
         this.startDate = startDate;

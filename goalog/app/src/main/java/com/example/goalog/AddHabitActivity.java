@@ -87,36 +87,17 @@ public class AddHabitActivity extends AppCompatActivity{
                 habitReasonString = habitReason.getText().toString();
                 habitDateString = dateDisplay.getText().toString();
 
-                String checked = "";
-                if (mon.isChecked()) {
-                    checked+="1";
-                }
-                if (tue.isChecked()) {
-                    checked+="2";
-                }
-                if (wed.isChecked()) {
-                    checked+="3";
-                }
-                if (thu.isChecked()) {
-                    checked+="4";
-                }
-                if (fri.isChecked()) {
-                    checked+="5";
-                }
-                if (sat.isChecked()) {
-                    checked+="6";
-                }
-                if (sun.isChecked()) {
-                    checked+="7";
+                StringBuilder checked = new StringBuilder();
+                int dayIndex = 1;
+                CheckBox week[] = {mon, tue, wed, thu, fri, sat, sun};
+
+                for (CheckBox box:week) {
+                    if (box.isChecked()) {
+                        checked.append(dayIndex);
+                    }
+                    dayIndex++;
                 }
 
-
-                Date theDate = new Date();
-                try {
-                    theDate = dateFormat.parse(habitDateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
                 if(editMode)
                 {
 //                    editMode = false;
@@ -128,7 +109,7 @@ public class AddHabitActivity extends AppCompatActivity{
                 {
                     //AL.onConfirmPressed(new Habit(habitDateString,habitTitleString,theDate));
                     //finish();
-                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString,checked);
+                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString());
                     Intent intent = new Intent(AddHabitActivity.this,HabitList.class);
                     intent.putExtra("New Habit", newHabit);
                     startActivity(intent);

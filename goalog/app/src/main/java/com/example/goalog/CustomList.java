@@ -13,8 +13,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class CustomList extends ArrayAdapter<Habit> {
-    private ArrayList<Habit> Habits;
-    private Context context;
+    private final ArrayList<Habit> Habits;
+    private final Context context;
 
     public CustomList(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
