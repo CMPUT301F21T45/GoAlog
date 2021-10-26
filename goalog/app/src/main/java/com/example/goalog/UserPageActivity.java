@@ -2,6 +2,8 @@ package com.example.goalog;
 
 import static com.squareup.okhttp.internal.http.HttpDate.parse;
 
+import static java.util.logging.Logger.global;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,11 +33,11 @@ import javax.annotation.Nullable;
 
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
-    ArrayAdapter<Habit> habitAdapter;
+    static ArrayAdapter<Habit> listAdapter;
     ListView todayList;
     FirebaseFirestore db;
     String sdf;
-    final String TAG = "Sample";
+    String weekday;
 
 
     @Override
@@ -46,7 +49,6 @@ public class UserPageActivity extends AppCompatActivity {
         myGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
                 Intent intent = new Intent();
                 intent.setClass(UserPageActivity.this, HabitList.class);
                 startActivity(intent);
@@ -56,12 +58,37 @@ public class UserPageActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
         //first three letters for Weekday
+
+
         String sdf = new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime());//get today's weekday
+        switch (sdf){
+            case "Mon":
+                weekday = "1";
+                break;
+            case "Tue":
+                weekday = "2";
+                break;
+            case "Wed":
+                weekday = "3";
+                break;
+            case "Thu":
+                weekday = "4";
+                break;
+            case "Fri":
+                weekday = "5";
+                break;
+            case "Sat":
+                weekday = "6";
+                break;
+            case "Sun":
+                weekday = "7";
+                break;
+        }
 
         todayList = findViewById(R.id.today_list);
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomList(this, habitDataList);
-        todayList.setAdapter(habitAdapter);
+        listAdapter = new CustomList(this,habitDataList);
+        todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("user001");
@@ -84,20 +111,23 @@ public class UserPageActivity extends AppCompatActivity {
                     String habitTitle = doc.getId();
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
-                    HashMap<String,String> map = (HashMap<String,String>) doc.getData().get("HabitClass");
-
-                    String habitReason = map.get("habitReason");
-                    String startDate = map.get("startDate");
+                    HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
                     String weekdayPlan = map.get("weekdayPlan");
-                    habitDataList.add(new Habit(habitTitle,habitReason,startDate,weekdayPlan)); // Adding the cities and provinces from FireStore
+                    for (int i = 0; i < weekdayPlan.length(); i++) {
+                        char ch = weekdayPlan.charAt(i);
+                        if (weekday.equals(String.valueOf(ch))) {
+                            String habitReason = map.get("habitReason");
+                            String startDate = map.get("startDate");
+                            habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
+                        }
+                        // Adding the cities and provinces from FireStore
+                    }
+                    listAdapter.notifyDataSetChanged();
+                    // Notifying the adapter to render any new data fetched from the cloud
                 }
-                habitAdapter.notifyDataSetChanged();
-                // Notifying the adapter to render any new data fetched from the cloud
             }
         });
-
-
-    }
+}
 }
 
 
