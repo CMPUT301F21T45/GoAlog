@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Goalog">
         <activity
-            android:name=".ScrollingActivity"
+            android:name=".UserPageActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Goalog.NoActionBar">
@@ -20,6 +20,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ScrollingActivity">
+        </activity>
+        <activity
+            android:name=".HabitList"
+            android:label="@string/app_name"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".AddHabitActivity"
+            android:label="@string/app_name"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>
