@@ -30,10 +30,9 @@ import javax.annotation.Nullable;
 
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
-    static ArrayAdapter<Habit> listAdapter;
+    ArrayAdapter<Habit> listAdapter;
     ListView todayList;
     FirebaseFirestore db;
-    String sdf;
     String weekday;
 
 
@@ -55,8 +54,6 @@ public class UserPageActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
         //first three letters for Weekday
-
-
         String sdf = new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime());//get today's weekday
         switch (sdf){
             case "Mon":
@@ -82,19 +79,13 @@ public class UserPageActivity extends AppCompatActivity {
                 break;
         }
 
-        todayList = findViewById(R.id.today_list);
         habitDataList = new ArrayList<>();
         listAdapter = new CustomList(this,habitDataList);
+        todayList = findViewById(R.id.today_list);
         todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("user001");
-
-        /*for(int i = 0; i < weekdayPlan.length; i++) {
-            if (weekdayPlan[i].toString() == sdf) {
-                dataList.add((new Habit(userID[i], habitName[i], habitReason[i], startDate[i], weekdayPlan[i])));
-            }
-        }*/
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
