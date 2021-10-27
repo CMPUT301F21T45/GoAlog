@@ -80,7 +80,7 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         habitDataList = new ArrayList<>();
-        listAdapter = new CustomList(this,habitDataList);
+        listAdapter = new CustomToday(this,habitDataList);
         todayList = findViewById(R.id.today_list);
         todayList.setAdapter(listAdapter);
 
