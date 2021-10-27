@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -10,6 +11,8 @@
         android:layout_weight="40"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:padding="10dp"
         android:text="habitTitle"
         android:gravity="center" />
 
@@ -18,6 +21,8 @@
         android:layout_weight="30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:padding="10dp"
         android:text="habitReason"
         android:gravity="center" />
 
@@ -27,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="startDate"
+        android:padding="10dp"
+        android:textSize="20dp"
         android:gravity="center" />
 
 </LinearLayout>
