@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,10 +13,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 
 public class AddHabitActivity extends AppCompatActivity{
@@ -110,7 +106,7 @@ public class AddHabitActivity extends AppCompatActivity{
                     //AL.onConfirmPressed(new Habit(habitDateString,habitTitleString,theDate));
                     //finish();
                     Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString());
-                    Intent intent = new Intent(AddHabitActivity.this,HabitList.class);
+                    Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
                     intent.putExtra("New Habit", newHabit);
                     startActivity(intent);
                 }

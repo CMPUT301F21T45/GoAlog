@@ -46,7 +46,7 @@ public class UserPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(UserPageActivity.this, HabitList.class);
+                intent.setClass(UserPageActivity.this, HabitListViewActivity.class);
                 startActivity(intent);
             }
         });
