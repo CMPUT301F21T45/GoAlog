@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
-public class HabitListViewActivity extends AppCompatActivity /*implements AddHabitActivityConfirmListener*/ {
+public class HabitListViewActivity extends AppCompatActivity{
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -69,7 +69,12 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
         if (newHabit != null) {
             collectionReference.document(newHabit.getHabitTitle()).set(data);
         }
-
+        Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
+        HashMap<String, Object> editData = new HashMap<>();
+        editData.put("HabitClass", updatedHabit);
+        if (updatedHabit != null) {
+            collectionReference.document(updatedHabit.getHabitTitle()).update(editData);
+        }
 
         // for swipe delete
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -116,15 +121,6 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
                         Intent intent = new Intent(com.example.goalog.HabitListViewActivity.this,AddHabitActivity.class);
                         intent.putExtra("Selected Habit",habitDataList.get(position));
                         startActivity(intent);
-
-                        Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
-                        HashMap<String, Object> data = new HashMap<>();
-                        data.put("HabitClass", updatedHabit);
-                        if (updatedHabit != null) {
-                            collectionReference.document(updatedHabit.getHabitTitle()).update(data);
-                        }
-
-                        habitAdapter.notifyDataSetChanged();
                         break;
                     case 1:
                         // delete

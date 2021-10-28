@@ -60,6 +60,7 @@ public class AddHabitActivity extends AppCompatActivity{
             habitReason.setText(myHabit.getHabitReason());
             dateDisplay.setText(myHabit.getStartDate());
             String weekPlan = myHabit.getWeekdayPlan();
+
             if (weekPlan.contains("1")){mon.setChecked(true);}
             if (weekPlan.contains("2")){tue.setChecked(true);}
             if (weekPlan.contains("3")){wed.setChecked(true);}
