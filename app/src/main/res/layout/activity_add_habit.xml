@@ -98,38 +98,43 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="S">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="M">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="T">
-
-    </CheckBox>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="W">
-
-    </CheckBox>
         <CheckBox
+            android:id="@+id/sun_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="S">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/mon_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="M">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/tue_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="T">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/wed_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="W">
+
+        </CheckBox>
+        <CheckBox
+            android:id="@+id/thu_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -137,6 +142,7 @@
 
         </CheckBox>
         <CheckBox
+            android:id="@+id/fri_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
@@ -144,10 +150,41 @@
 
         </CheckBox>
         <CheckBox
+            android:id="@+id/sat_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="S">
+
+        </CheckBox>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:text="Privacy"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+        <CheckBox
+            android:id="@+id/checkbox_privacy_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:text="Public">
 
         </CheckBox>
     </LinearLayout>
