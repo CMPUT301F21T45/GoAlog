@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,10 +13,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 
 public class AddHabitActivity extends AppCompatActivity{
@@ -27,9 +23,10 @@ public class AddHabitActivity extends AppCompatActivity{
     private Button confirmButton;
     private EditText habitTitle;
     private EditText habitReason;
-    private CheckBox mon, tue, wed, thu, fri, sat, sun;
+    private CheckBox mon, tue, wed, thu, fri, sat, sun, privacy;
     private String habitTitleString;
     private String habitReasonString;
+    private boolean habitPrivacy = false;
     public static String habitDateString;
     protected static TextView dateDisplay;
     public static boolean editMode = false;
@@ -56,6 +53,7 @@ public class AddHabitActivity extends AppCompatActivity{
         fri = findViewById(R.id.fri_checkbox);
         sat = findViewById(R.id.sat_checkbox);
         sun = findViewById(R.id.sun_checkbox);
+        privacy = findViewById(R.id.checkbox_privacy_add);
 
 //        if(myHabit != null)
 //        {
@@ -98,6 +96,10 @@ public class AddHabitActivity extends AppCompatActivity{
                     dayIndex++;
                 }
 
+                if (privacy.isChecked()) {
+                    habitPrivacy = true;
+                }
+
                 if(editMode)
                 {
 //                    editMode = false;
@@ -109,8 +111,8 @@ public class AddHabitActivity extends AppCompatActivity{
                 {
                     //AL.onConfirmPressed(new Habit(habitDateString,habitTitleString,theDate));
                     //finish();
-                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString());
-                    Intent intent = new Intent(AddHabitActivity.this,HabitList.class);
+                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString(), habitPrivacy);
+                    Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
                     intent.putExtra("New Habit", newHabit);
                     startActivity(intent);
                 }

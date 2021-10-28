@@ -14,6 +14,7 @@ public class Habit implements Serializable {
     private String habitReason;
     private String startDate;
     private String weekdayPlan;
+    private boolean isPublic;
 
 
     /*
@@ -33,11 +34,12 @@ public class Habit implements Serializable {
      */
 
 
-    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan){
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
         this.startDate = startDate;
         this.weekdayPlan = weekdayPlan;
+        this.isPublic = isPublic;
     }
 
     public void setHabitReason(String habitReason) {
@@ -63,6 +65,13 @@ public class Habit implements Serializable {
 
     }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
 
     public String getStartDate(){
         return startDate;

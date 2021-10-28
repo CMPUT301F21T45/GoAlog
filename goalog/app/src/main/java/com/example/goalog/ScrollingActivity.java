@@ -1,6 +1,5 @@
 package com.example.goalog;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -13,13 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.goalog.databinding.ActivityScrollingBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
 
 
 public class ScrollingActivity extends AppCompatActivity {
@@ -30,8 +25,6 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, AddHabitActivity.class);
-        startActivity(intent);
 
         binding = ActivityScrollingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -39,7 +32,6 @@ public class ScrollingActivity extends AppCompatActivity {
         // Access to firebase using db:
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        /*
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
@@ -53,8 +45,6 @@ public class ScrollingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        
-         */
     }
 
     @Override
