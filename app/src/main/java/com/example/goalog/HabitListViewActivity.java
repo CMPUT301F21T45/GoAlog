@@ -69,6 +69,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         if (newHabit != null) {
             collectionReference.document(newHabit.getHabitTitle()).set(data);
         }
+        //update existed habits
         Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
         HashMap<String, Object> editData = new HashMap<>();
         editData.put("HabitClass", updatedHabit);

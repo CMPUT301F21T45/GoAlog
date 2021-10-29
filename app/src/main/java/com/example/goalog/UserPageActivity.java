@@ -84,45 +84,46 @@ public class UserPageActivity extends AppCompatActivity {
         todayList = findViewById(R.id.today_list);
         todayList.setAdapter(listAdapter);
 
-//        db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionReference = db.collection("user001");
-//        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(
-//                    @Nullable QuerySnapshot queryDocumentSnapshots,
-//                    @Nullable FirebaseFirestoreException error) {
-//                habitDataList.clear();
-//
-//                assert queryDocumentSnapshots != null;
-//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-//                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-//                    String habitTitle = doc.getId();
-//                    // TODO: Retrieve data from firebase.
-//                    // Adding the habits from FireStore
-//                    HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
-//                    String weekdayPlan = map.get("weekdayPlan");
-//                    String startDate = map.get("startDate");
-//                    String habitReason = map.get("habitReason");
-//
-//                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-//                    Date today = new Date();
-//                    try {
-//                        if(today.after(date.parse(startDate))) {
-//                            for (int i = 0; i < weekdayPlan.length(); i++) {
-//                                char ch = weekdayPlan.charAt(i);
-//                                if (weekday.equals(String.valueOf(ch))) {
-//                                    habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, true));
-//                                }
-//                            }
-//                        }
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    listAdapter.notifyDataSetChanged();
-//                    // Notifying the adapter to render any new data fetched from the cloud
-//                }
-//            }
-//        });
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("user001");
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(
+                    @Nullable QuerySnapshot queryDocumentSnapshots,
+                    @Nullable FirebaseFirestoreException error) {
+                habitDataList.clear();
+
+                assert queryDocumentSnapshots != null;
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
+                    String habitTitle = doc.getId();
+                    // TODO: Retrieve data from firebase.
+                    // Adding the habits from FireStore
+                    HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
+                    if (doc.getData().get("HabitClass") != null){
+                        String habitReason = (String) map.get("habitReason");
+                        String startDate = (String)  map.get("startDate");
+                        String weekdayPlan = (String)  map.get("weekdayPlan");
+                        boolean isPublic = (boolean) map.get("public");
+                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                        Date today = new Date();
+                        try {
+                            if(today.after(date.parse(startDate))) {
+                                for (int i = 0; i < weekdayPlan.length(); i++) {
+                                    char ch = weekdayPlan.charAt(i);
+                                    if (weekday.equals(String.valueOf(ch))) {
+                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic));
+                                    }
+                                }
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }}
+                    listAdapter.notifyDataSetChanged();
+                    // Notifying the adapter to render any new data fetched from the cloud
+                }
+            }
+        });
 }
 }
 
