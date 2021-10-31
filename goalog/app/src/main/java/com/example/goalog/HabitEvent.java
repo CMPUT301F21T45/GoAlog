@@ -11,17 +11,23 @@ public class HabitEvent {
 
     //declaring variables
 
-    private String userID;
-    private String eventID;
-    private String eventComment;
-    private LocalDate completeDate;
-    private String habitTitle;
-    private double latitude;
-    private double longitude;
-
+    private String userID; //has to be unique
+    private String eventID; // has to be unique as well(haven't figured out how to generate it yet)
+    private String eventComment; //optional event comment
+    private LocalDate completeDate; // The date the event is completed
+    private String habitTitle; // Name set by the user?
+    // User can turn on location tracking for their events. Default = off
     private Boolean wantsLocation;
 
+    private double latitude; // latitude of the location
+    private double longitude; // longitude of the location
+    /* Use only if needed. Longitude and latitude should be enough
+    private double altitude;
+    */
+    /*
+    will deal with schedule stuff later
     private Boolean scheduled;
+     */
 
 
 
@@ -29,17 +35,18 @@ public class HabitEvent {
      *
      */
 
-    // by default Location set as false
+    // By default Location set as false. Add more constructors as required
     public HabitEvent(String userID, String habitTitle) {
         this.userID = userID;
         this.habitTitle = habitTitle;
         this.wantsLocation = false;
     }
 
+    //Location import requires a higher level of API than 16 (i think 21?)
     @RequiresApi(api = Build.VERSION_CODES.O)
     public HabitEvent(HabitEvent h1) {
 
-        // Copy all members over
+        // The required variables being attached to a habit event
         this.setUserID(h1.getUserID());
         this.setHabitTitle(h1.getHabitTitle());
         this.setEventID(h1.getEventID());
@@ -54,25 +61,34 @@ public class HabitEvent {
         }
 
         //will deal with scheduled stuff later   this.scheduled = h1.getScheduled();
-       // this.habitTitle = h1.getHabitName();
+       // this.habitTitle = h1.getHabitName(); Ignore this
 
 
     }
 
-
+    //Setter for userID
     public void setUserID(String userID) {
 
         this.userID = userID;
     }
+    //Getter for userID
     public String getUserID(){
 
         return this.userID;
     }
+
+    //Setter for HabitTitle
     public void setHabitTitle(String habitTitle) {
 
         this.habitTitle = habitTitle;
     }
 
+    //Getter for HabitTitle
+    public String getHabitTitle() {
+        return habitTitle;
+    }
+
+    //setter for EventID, haven't figured out how to uniquely identify evenID yet
     public void setEventID(String firebaseEvent) {
 
         this.eventID = firebaseEvent; //maybe user ID and habit Name, combine
@@ -80,17 +96,25 @@ public class HabitEvent {
 
     }
 
+    public String getEventID() {
+        return eventID;
+    }
+    // The Location android import requires a higher minimum API than 16
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setLocation(Location eventLocation) {
         if (eventLocation != null) {
             this.wantsLocation = true;
             this.longitude = eventLocation.getLongitude();
             this.latitude = eventLocation.getLatitude();
-            // this.altitude = eventLocation.getAltitude();
+            /* will only use altitude if required later. Commenting it out for now
+            this.altitude = eventLocation.getAltitude();
+            */
         }
+
     }
 
-        public void setEventComment(String eventComment){
+
+    public void setEventComment(String eventComment){
             if (eventComment.length() <= 20) {
                 this.eventComment = eventComment;
             } else {
@@ -108,7 +132,7 @@ public class HabitEvent {
             }
         }
     public boolean wantsLocation() {
-        return this.wantsLocation;  // maybe no .thhis?? not sure will check later
+        return this.wantsLocation;  // either the user wants location tracking or doesn't
     }
 
     public Location getLocation() {
@@ -129,14 +153,12 @@ public class HabitEvent {
     }
 
 
-    public String getEventID() {
-        return eventID; }
+
 
     public LocalDate getCompleteDate(){
         return completeDate;
     }
-    public String getHabitTitle() {
-        return habitTitle; }
+
 
 
 }
