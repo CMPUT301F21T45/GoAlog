@@ -1,10 +1,12 @@
 package com.example.goalog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,13 +39,23 @@ public class CustomToday extends ArrayAdapter<Habit> {
         //TextView habitReason= view.findViewById(R.id.habit_reason);
         //TextView startDate= view.findViewById(R.id.startDate);
 
-
         habitName.setText(habit.getHabitTitle());
         //habitReason.setText(habit.getHabitReason());
         //startDate.setText(habit.getStartDate());
+
+        Button doneButton = (Button)view.findViewById(R.id.done_goal);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
+                parent.getContext().startActivity(intent);
+
+            }
+        });
 
 
         return view;
 
     } // public view
+
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddHabitActivity">
+    <EditText
+        android:id="@+id/comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Share your experience!"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:maxLength="20"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/first_image"/>
+
+    <ImageView
+        android:id="@+id/first_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/ic_upload_image"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment_text"/>
+
+    <ImageView
+        android:id="@+id/image_delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_delete_image"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/first_image"
+        app:layout_constraintEnd_toEndOf="@id/first_image" />
+    <Button
+        android:id="@+id/confirm_habit_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_image"
+        android:text="Confirm"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

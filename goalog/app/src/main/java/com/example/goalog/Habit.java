@@ -1,8 +1,6 @@
 package com.example.goalog;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Habit implements Serializable {
     // Members
@@ -14,6 +12,7 @@ public class Habit implements Serializable {
     private String habitReason;
     private String startDate;
     private String weekdayPlan;
+    private boolean isPublic;
 
 
     /*
@@ -33,28 +32,29 @@ public class Habit implements Serializable {
      */
 
 
-    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan){
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
         this.startDate = startDate;
         this.weekdayPlan = weekdayPlan;
+        this.isPublic = isPublic;
     }
 
     public void setHabitReason(String habitReason) {
         this.habitReason = habitReason;
     }
 
-
     public String getHabitTitle() {
         return habitTitle;
     }
 
-    public void setHabitTitle(String name){
+    public void setHabitTitle(String habitTitle) {
+        //input constrain missing
+        this.habitTitle = habitTitle;
+    }
 
-        //implement constraints?
-        name = this.habitTitle;
-
-
+    public void setWeekdayPlan(String weekdayPlan) {
+        this.weekdayPlan = weekdayPlan;
     }
 
     public String getHabitReason(){
@@ -63,6 +63,13 @@ public class Habit implements Serializable {
 
     }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
 
     public String getStartDate(){
         return startDate;
