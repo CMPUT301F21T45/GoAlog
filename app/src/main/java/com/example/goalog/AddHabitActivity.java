@@ -27,6 +27,7 @@ public class AddHabitActivity extends AppCompatActivity{
     private CheckBox mon, tue, wed, thu, fri, sat, sun, privacy;
     private String habitTitleString;
     private String habitReasonString;
+    private TextView activityTitle;
     private boolean habitPrivacy = false;
     public static String habitDateString;
     protected static TextView dateDisplay;
@@ -41,6 +42,7 @@ public class AddHabitActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
+        activityTitle = findViewById(R.id.activity_add_habit_title);
         dateDisplay = findViewById(R.id.display_start_date_add_habit);
         habitTitle = findViewById(R.id.habit_title);
         habitReason = findViewById(R.id.habit_reason);
@@ -55,7 +57,8 @@ public class AddHabitActivity extends AppCompatActivity{
 
         Habit myHabit = (Habit) getIntent().getSerializableExtra("Selected Habit");
         if(myHabit != null)
-        {
+        {//edit mode
+            activityTitle.setText("EDIT HABIT");
             editMode = true;
             habitTitle.setText(myHabit.getHabitTitle());
             habitReason.setText(myHabit.getHabitReason());
@@ -127,11 +130,16 @@ public class AddHabitActivity extends AppCompatActivity{
                 }
                 else
                 {
-                    final String habitID = UUID.randomUUID().toString().replace("-", "");
-                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString(), habitPrivacy,habitID);
-                    Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
-                    intent.putExtra("New Habit", newHabit);
-                    startActivity(intent);
+                    if(habitTitleString.length()<= 20 && habitReasonString.length()<=30) {
+                        final String habitID = UUID.randomUUID().toString().replace("-", "");
+                        Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID);
+                        Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
+                        intent.putExtra("New Habit", newHabit);
+                        startActivity(intent);
+                    }
+                    else
+                    { //deal with the exception
+                    }
                 }
             }
         });

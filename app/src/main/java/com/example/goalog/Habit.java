@@ -28,7 +28,9 @@ public class Habit implements Serializable {
     }
 
     public void setHabitReason(String habitReason) {
-        this.habitReason = habitReason;
+        if (habitReason.length() <= 30) {
+            this.habitReason = habitReason;
+        }
     }
 
     public String getHabitTitle() {
@@ -36,8 +38,9 @@ public class Habit implements Serializable {
     }
 
     public void setHabitTitle(String habitTitle) {
-        //input constrain missing
-        this.habitTitle = habitTitle;
+        if (habitTitle.length() <= 20) {
+            this.habitTitle = habitTitle;
+        }
     }
 
     public void setWeekdayPlan(String weekdayPlan) {
@@ -72,7 +75,4 @@ public class Habit implements Serializable {
         return habitID;
     }
 
-    public void setHabitID(String habitID) {
-        this.habitID = habitID;
-    }
 }
