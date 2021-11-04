@@ -127,7 +127,7 @@ public class HabitListViewActivity extends AppCompatActivity{
                     case 1:
                         // delete
 //                        TextView view = menu.findViewById(R.id.city_text);
-                        collectionReference.document(habitDataList.get(position).getHabitTitle())
+                        collectionReference.document(habitDataList.get(position).getHabitID())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

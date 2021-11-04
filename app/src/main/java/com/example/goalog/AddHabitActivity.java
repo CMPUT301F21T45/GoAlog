@@ -19,7 +19,6 @@ import java.util.UUID;
 
 public class AddHabitActivity extends AppCompatActivity{
 
-    //AddHabitActivityConfirmListener AL;
     private Button selectDate;
     private Button confirmButton;
     private EditText habitTitle;
