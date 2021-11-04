@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 
 public class AddHabitActivity extends AppCompatActivity{
@@ -126,7 +127,8 @@ public class AddHabitActivity extends AppCompatActivity{
                 }
                 else
                 {
-                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString(), habitPrivacy);
+                    final String habitID = UUID.randomUUID().toString().replace("-", "");
+                    Habit newHabit = new Habit(habitTitleString,habitReasonString,habitDateString, checked.toString(), habitPrivacy,habitID);
                     Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
                     intent.putExtra("New Habit", newHabit);
                     startActivity(intent);

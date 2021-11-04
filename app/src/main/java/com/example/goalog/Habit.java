@@ -3,6 +3,7 @@ package com.example.goalog;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class Habit implements Serializable {
     // Members
@@ -15,31 +16,15 @@ public class Habit implements Serializable {
     private String startDate;
     private String weekdayPlan;
     private boolean isPublic;
+    private String habitID;
 
-
-    /*
-    We can add constraint, ask ta for confirmation.
-    Habit(int userID) {
-        this.userID = userID;
-    }
-    Habit(int userID, String habitName){
-        this.userID = userID;
-        this.habitTitle = habitName;
-    }
-    Habit(int userID, String habitName, String habitReason){
-        this.userID = userID;
-        this.habitTitle = habitName;
-        this.habitReason = habitReason;
-    }
-     */
-
-
-    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic){
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic,String habitID){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
         this.startDate = startDate;
         this.weekdayPlan = weekdayPlan;
         this.isPublic = isPublic;
+        this.habitID = habitID;
     }
 
     public void setHabitReason(String habitReason) {
@@ -60,9 +45,7 @@ public class Habit implements Serializable {
     }
 
     public String getHabitReason(){
-
         return habitReason;
-
     }
 
     public boolean isPublic() {
@@ -85,7 +68,11 @@ public class Habit implements Serializable {
         this.startDate = date;
     }
 
+    public String getHabitID() {
+        return habitID;
+    }
 
-
-
+    public void setHabitID(String habitID) {
+        this.habitID = habitID;
+    }
 }

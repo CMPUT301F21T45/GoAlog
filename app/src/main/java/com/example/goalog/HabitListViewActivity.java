@@ -19,6 +19,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -67,14 +68,14 @@ public class HabitListViewActivity extends AppCompatActivity{
         HashMap<String, Habit> data = new HashMap<>();
         data.put("HabitClass", newHabit);
         if (newHabit != null) {
-            collectionReference.document(newHabit.getHabitTitle()).set(data);
+            collectionReference.document(newHabit.getHabitID()).set(data);
         }
         //update existed habits
         Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
         HashMap<String, Object> editData = new HashMap<>();
         editData.put("HabitClass", updatedHabit);
         if (updatedHabit != null) {
-            collectionReference.document(updatedHabit.getHabitTitle()).update(editData);
+            collectionReference.document(updatedHabit.getHabitID()).update(editData);
         }
 
         // for swipe delete
@@ -157,15 +158,16 @@ public class HabitListViewActivity extends AppCompatActivity{
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String habitTitle = doc.getId();
                     if (doc.getData().get("HabitClass") != null) {
                         HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                         //assert map != null;
+                        String habitTitle = (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic));
+                        String habitID = (String) map.get("habitID");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                     }
                 }
                 habitAdapter.notifyDataSetChanged();
