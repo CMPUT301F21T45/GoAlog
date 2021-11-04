@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "77369103803",
+    "project_id": "goalog-cmput301t45",
+    "storage_bucket": "goalog-cmput301t45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77369103803:android:52ca4cf839ef1cc3d4e09e",
+        "android_client_info": {
+          "package_name": "com.example.goalog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77369103803-t8jiqnlmbsglabhoph3hup3l3i2kij3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARw1OeFE85Xkban9OQQoD6M_tHkVRD9sA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77369103803-t8jiqnlmbsglabhoph3hup3l3i2kij3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
