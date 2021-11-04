@@ -1,13 +1,17 @@
 package com.example.goalog;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -34,8 +38,10 @@ public class UserPageActivity extends AppCompatActivity {
     ListView todayList;
     FirebaseFirestore db;
     String weekday;
+    int numOfHabit;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +91,7 @@ public class UserPageActivity extends AppCompatActivity {
         todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("user001");
+        final CollectionReference collectionReference = db.collection("user003");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -96,34 +102,54 @@ public class UserPageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String habitTitle = doc.getId();
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
-                    HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
-                    String weekdayPlan = map.get("weekdayPlan");
-                    String startDate = map.get("startDate");
-                    String habitReason = map.get("habitReason");
-
-                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                    Date today = new Date();
-                    try {
-                        if(today.after(date.parse(startDate))) {
-                            for (int i = 0; i < weekdayPlan.length(); i++) {
-                                char ch = weekdayPlan.charAt(i);
-                                if (weekday.equals(String.valueOf(ch))) {
-                                    habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, true));
+                    HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
+                    if (doc.getData().get("HabitClass") != null){
+                        String habitTitle = (String) map.get("habitTitle");
+                        String habitReason = (String) map.get("habitReason");
+                        String startDate = (String)  map.get("startDate");
+                        String weekdayPlan = (String)  map.get("weekdayPlan");
+                        boolean isPublic = (boolean) map.get("public");
+                        String habitID = (String) map.get("habitID");
+                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                        Date today = new Date();
+                        try {
+                            if(today.after(date.parse(startDate))) {
+                                for (int i = 0; i < weekdayPlan.length(); i++) {
+                                    char ch = weekdayPlan.charAt(i);
+                                    if (weekday.equals(String.valueOf(ch))) {
+                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                    }
                                 }
                             }
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }}
                     listAdapter.notifyDataSetChanged();
+                    ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
+                    TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
+                    TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
+
+                    int ratioNum;
+                    numOfHabit = habitDataList.size();
+
+                    if (numOfHabit ==0) {
+                        ratioNum = 0;
+                    } else {
+                        ratioNum = (int) 100 * 1/numOfHabit;
+                    }
+
+                    // Today's Progress:
+                    percentage.setText(ratioNum+"%");
+                    indicator.setProgress(ratioNum, true);
+                    ratio.setText("1/"+numOfHabit);
                     // Notifying the adapter to render any new data fetched from the cloud
                 }
             }
         });
-}
+
+    }
 }
 
 

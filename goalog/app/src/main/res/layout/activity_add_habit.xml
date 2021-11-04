@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/activity_add_habit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NEW HABIT"
@@ -68,7 +69,7 @@
             android:id="@+id/display_start_date_add_habit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2000-01-11"
+            android:text="2021-09-01"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
