@@ -8,10 +8,12 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/activity_add_habit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NEW HABIT"
+        android:text="ADD A NEW GOAL!"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:padding="10dp"
         android:textSize="28sp"/>
 
@@ -39,7 +41,7 @@
         android:layout_height="wrap_content"
         android:text="Reason"
         android:textColor="@color/black"
-        android:padding="15dp"
+        android:padding="10dp"
         android:textSize="20sp"/>
 
     <EditText
@@ -51,38 +53,41 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:textSize="20sp"
-        android:maxLength="20"/>
+        android:maxLength="30"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Date"
             android:textColor="@color/black"
-            android:padding="10dp"
             android:textSize="20dp"/>
         <TextView
             android:id="@+id/display_start_date_add_habit"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2000-01-11"
+            android:text="2021-09-01"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
-            android:padding="10dp"
+            android:paddingLeft="20dp"
             android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/select_date_add_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:paddingLeft="20dp"
+            style="?android:attr/buttonBarButtonStyle"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/select_date_add_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Date"
-        style="?android:attr/buttonBarButtonStyle"/>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -162,20 +167,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="20dp"
+        android:paddingRight="10dp"
         android:text="Privacy"/>
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
 
 
         <CheckBox
@@ -183,7 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
-            android:padding="10dp"
+
             android:text="Public">
 
         </CheckBox>
@@ -195,6 +196,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
         android:text="Confirm"/>
 
 </LinearLayout>

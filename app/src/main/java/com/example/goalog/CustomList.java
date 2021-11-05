@@ -16,6 +16,7 @@ public class CustomList extends ArrayAdapter<Habit> {
     private final ArrayList<Habit> Habits;
     private final Context context;
 
+
     public CustomList(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
         this.Habits = Habits;
@@ -36,7 +37,7 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView habitName= view.findViewById(R.id.habit_title);
         TextView habitReason= view.findViewById(R.id.habit_reason);
         TextView startDate= view.findViewById(R.id.startDate);
-
+        // public view
 
         habitName.setText(habit.getHabitTitle());
         habitReason.setText(habit.getHabitReason());

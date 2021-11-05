@@ -30,19 +30,19 @@ public class HabitEventCustomList extends ArrayAdapter<HabitEvent> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content_habitevent_list, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.content_habitevent_list_view, parent,false);
         }
 
         HabitEvent habitEvent = HabitEvents.get(position);
 
-        TextView habitName= view.findViewById(R.id.habitTitle);
-        TextView eventID= view.findViewById(R.id.eventID);
+
         TextView completeDate= view.findViewById(R.id.completeDate);
 
+        TextView eventComment= view.findViewById(R.id.eventComment);
 
-        habitName.setText(habitEvent.getHabitTitle());
-        eventID.setText(habitEvent.getEventID());
         completeDate.setText(habitEvent.getCompleteDate().toString());
+        eventComment.setText(habitEvent.getEventComment().toString());
+
 
 
         return view;
