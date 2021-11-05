@@ -1,8 +1,8 @@
 package com.example.goalog;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,18 +67,16 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
-                // Log.d("sample", "onClick: "+ clickedHabit);
                 HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
                 HashMap<String, HabitEvent> data = new HashMap<>();
-                data.put("HabitEvent", newHabitEvent);
+                data.put("Event", newHabitEvent);
                 if (newHabitEvent != null) {
-                    Log.d("sample", "onClick: "+ newHabitEvent);
                     collectionReference.document(newHabitEvent.getEventID()).set(data);
                 }
 
-                //Intent intent = new Intent(AddHabitEventActivity.this, CustomTodayActivity.class);
+                Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
                 //intent.putExtra("success",true);
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
     }

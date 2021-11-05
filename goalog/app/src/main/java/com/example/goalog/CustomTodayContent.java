@@ -14,11 +14,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomTodayActivity extends ArrayAdapter<Habit> {
+public class CustomTodayContent extends ArrayAdapter<Habit> {
     private final ArrayList<Habit> Habits;
     private final Context context;
+    private static boolean doneClicked = false;
 
-    public CustomTodayActivity(Context context, ArrayList<Habit> Habits) {
+    public CustomTodayContent(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
         this.Habits = Habits;
         this.context = context;
@@ -40,14 +41,18 @@ public class CustomTodayActivity extends ArrayAdapter<Habit> {
         habitName.setText(habit.getHabitTitle());
 
         Button doneButton = (Button)view.findViewById(R.id.done_goal);
+
+        if (doneClicked){doneButton.setVisibility(View.INVISIBLE);}
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
                 intent.putExtra("Habit",habit);
                 parent.getContext().startActivity(intent);
+                doneClicked  = true;
             }
         });
+
 
 
 
