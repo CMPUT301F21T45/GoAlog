@@ -27,7 +27,15 @@ public class HabitEvent {
 
 
 
-    /**
+    /*** A habitevent consists of the following attribute:
+     *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
+     *     [EventID] in string format
+     *     [startDate] in yyyy-mm-dd format;
+     *     [wantsLocation] return the Boolean format
+     *     [latitude] record the double number
+     *     [habitID] record the double number
+     *     [evenComment] up to 30 letter event comment
+     *
      *
      */
 
@@ -62,10 +70,11 @@ public class HabitEvent {
         this.wantsLocation = true;
     }
     ///change the simple HabitEventList
-    public HabitEvent(String completeDate, String habitTitle) {
+    public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
         this.completeDate = completeDate;
-
+        this.eventID=eventID;
         this.habitTitle = habitTitle;
+        this.eventComment=eventCommentString;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

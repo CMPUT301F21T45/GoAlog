@@ -40,11 +40,18 @@ import javax.annotation.Nullable;
 public class HabitEventListViewActivity extends AppCompatActivity {
     SwipeMenuListView HabitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
-    ArrayList<HabitEvent> habitEventDataList;
+    ArrayList<HabitEvent> List;
+    /** HabitListViewActivity:
+     * 1. Retrieve habitEvent data list from firebase
+     * 2. Map habitEvent["title","Date"] on listView
+     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
+     * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //-------set up parameters-------------------
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
 
@@ -54,6 +61,32 @@ public class HabitEventListViewActivity extends AppCompatActivity {
         HabitEventList.setAdapter(habitEventArrayAdapter);
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        try {
+            final CollectionReference collectionReference = database.collection("user003")
+                    .document(selectedHabitId)
+                    .collection("HabitEvent");
+            collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onEvent(
+                        @Nullable QuerySnapshot queryDocumentSnapshots,
+                        @Nullable FirebaseFirestoreException error) {
+                    List.clear();
+
+                    assert queryDocumentSnapshots != null;
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
+                        // TODO: Retrieve data from firebase.
+                        // Adding the habits from FireStore
+                        HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
+                        if (doc.getData().get("Event") != null){
+
+                            String habitTitle = (String)  map.get("habitTitle");
+                            String completeTime =  (String)  map.get("completeDate");
+                            String eventCommentString = (String) map.get("eventComment");
+                            String eventID = (String) map.get("eventID");
+                            List.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
+                        }
 
         final CollectionReference collectionReference = database.collection("user003")
                 .document(selectedHabitId)

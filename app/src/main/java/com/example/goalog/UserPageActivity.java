@@ -31,6 +31,9 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
+/**
+ * The class for User Page and other interactions.
+ */
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
     ArrayAdapter<Habit> listAdapter;
@@ -39,7 +42,14 @@ public class UserPageActivity extends AppCompatActivity {
     String weekday;
     int numOfHabit;
 
-
+    /**
+     * User: Today's Habit List, Visual Indicator, Button to all habits, habit events.
+     * Today's List prompts th user to follow today's schedule.
+     * The visual indicator reflects the day's progress.
+     * Buttons to page, activities switch.
+     * @param savedInstanceState
+     *  Bundle savedInstanceSate
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
