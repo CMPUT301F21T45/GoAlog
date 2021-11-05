@@ -76,6 +76,8 @@ public class HabitEvent implements Serializable {
         this.eventID=eventID;
         this.habitTitle = habitTitle;
         this.eventComment=eventCommentString;
+        this.wantsLocation = true;
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
