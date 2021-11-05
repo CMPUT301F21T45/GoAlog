@@ -25,13 +25,13 @@
         </activity>
         <activity
             android:name=".AddHabitActivity"
-            android:label="@string/app_name"
+            android:label="Goal Detail"
             android:exported="true">
 
         </activity>
         <activity
             android:name=".HabitListViewActivity"
-            android:label="Habit List"
+            android:label="Goal List"
             android:exported="true"
             android:parentActivityName=".UserPageActivity">
 
@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name=".HabitEventListViewActivity"
-            android:label="Habit Event List"
+            android:label="Footprints"
             android:exported="true"
             android:parentActivityName=".HabitListViewActivity">
 
@@ -54,7 +54,7 @@
 
         <activity
             android:name=".AddHabitEventActivity"
-            android:label="@string/app_name"
+            android:label="Goal Completion Detail"
             android:exported="true">
 
             <intent-filter>

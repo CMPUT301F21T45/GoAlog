@@ -48,7 +48,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
-
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
     // for firebase FATAL error
     implementation "io.grpc:grpc-okhttp:1.32.2"

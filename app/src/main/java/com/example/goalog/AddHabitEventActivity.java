@@ -32,7 +32,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String completeDate;
     private TextView title;
     private TextView dateComplete;
-    private TextView id;
     private Uri filePath;
     private boolean editMode = false;
 
@@ -40,11 +39,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_habit_event);
+        setContentView(R.layout.activity_add_habit_event);
         optimalComment = findViewById(R.id.comment_text);//create an optional comment
         title = findViewById(R.id.habitTitle);
         dateComplete = findViewById(R.id.eventDate);
-        id = findViewById(R.id.eventId);
 
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
@@ -64,7 +62,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
         final String habitEventID = UUID.randomUUID().toString().replace("-", "");
         title.setText(clickedHabit.getHabitTitle());
         dateComplete.setText(completeDate);
-        id.setText(habitEventID);
 
         confirmButton = (Button) findViewById(R.id.confirm_habit_event);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +79,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     HashMap<String,Object> data = new HashMap<>();
                     data.put("Event",needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
-                    Intent intent = new Intent(AddHabitEventActivity.this, HabitListViewActivity.class);
+                    Intent intent = new Intent(AddHabitEventActivity.this, HabitEventListViewActivity.class);
                     startActivity(intent);
                 } else {
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());

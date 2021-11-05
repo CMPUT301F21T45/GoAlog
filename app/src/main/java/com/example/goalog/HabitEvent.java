@@ -22,7 +22,7 @@ public class HabitEvent implements Serializable {
     private double latitude;
     private double longitude;
 
-    private Boolean wantsLocation;
+    private Boolean hasLocation;
 
     private Boolean scheduled;
 
@@ -32,7 +32,7 @@ public class HabitEvent implements Serializable {
      *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
      *     [EventID] in string format
      *     [startDate] in yyyy-mm-dd format;
-     *     [wantsLocation] return the Boolean format
+     *     [hasLocation] return the Boolean format
      *     [latitude] record the double number
      *     [habitID] record the double number
      *     [evenComment] up to 30 letter event comment
@@ -41,8 +41,8 @@ public class HabitEvent implements Serializable {
      */
 
     // by default Location set as false
-    public HabitEvent(Boolean wantsLocation, String completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
-        this.wantsLocation = wantsLocation;
+    public HabitEvent(Boolean hasLocation, String completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
+        this.hasLocation = hasLocation;
         this.completeDate = completeDate;
         this.eventID=eventID;
         this.latitude=latitude;
@@ -50,17 +50,17 @@ public class HabitEvent implements Serializable {
         this.userID=userID;
         this.eventComment=eventComment;
         this.habitTitle = habitTitle;
-        this.wantsLocation = true;
+        this.hasLocation = true;
     }
-    public HabitEvent(Boolean wantsLocation, String completeDate, String eventID, String habitTitle, double latitude, double longitude, String userID){
-        this.wantsLocation = wantsLocation;
+    public HabitEvent(Boolean hasLocation, String completeDate, String eventID, String habitTitle, double latitude, double longitude, String userID){
+        this.hasLocation = hasLocation;
         this.completeDate = completeDate;
         this.eventID=eventID;
         this.latitude=latitude;
         this.longitude=longitude;
         this.userID=userID;
         this.habitTitle = habitTitle;
-        this.wantsLocation = true;
+        this.hasLocation = true;
     }
     public HabitEvent(String completeDate, String eventComment, String eventID, String habitTitle, String userID) {
         this.completeDate = completeDate;
@@ -68,7 +68,7 @@ public class HabitEvent implements Serializable {
         this.userID=userID;
         this.eventComment=eventComment;
         this.habitTitle = habitTitle;
-        this.wantsLocation = true;
+        this.hasLocation = true;
     }
     ///change the simple HabitEventList
     public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
@@ -76,7 +76,7 @@ public class HabitEvent implements Serializable {
         this.eventID=eventID;
         this.habitTitle = habitTitle;
         this.eventComment=eventCommentString;
-        this.wantsLocation = true;
+        this.hasLocation = true;
 
     }
 
@@ -90,11 +90,11 @@ public class HabitEvent implements Serializable {
         this.setEventComment(h1.getEventComment());
 
         // this.setPhoto(h1.getPhoto()); will deal with photo stuff later
-        if (h1.wantsLocation()) {
+        if (h1.hasLocation()) {
             this.setLocation(h1.getLocation()); //requires API notation on Android studio
-            this.wantsLocation = true;
+            this.hasLocation = true;
         }else {
-            this.wantsLocation = false;
+            this.hasLocation = false;
         }
 
         //will deal with scheduled stuff later   this.scheduled = h1.getScheduled();
@@ -127,7 +127,7 @@ public class HabitEvent implements Serializable {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setLocation(Location eventLocation) {
         if (eventLocation != null) {
-            this.wantsLocation = true;
+            this.hasLocation = true;
             this.longitude = eventLocation.getLongitude();
             this.latitude = eventLocation.getLatitude();
             // this.altitude = eventLocation.getAltitude();
@@ -143,13 +143,13 @@ public class HabitEvent implements Serializable {
     }
 
 
-    public boolean wantsLocation() {
-        return this.wantsLocation;  // maybe no .thhis?? not sure will check later
+    public boolean hasLocation() {
+        return this.hasLocation;  // maybe no .thhis?? not sure will check later
     }
 
     public Location getLocation() {
 
-        if (wantsLocation) {
+        if (hasLocation) {
 
             Location l1 = new Location("");
             l1.setLatitude(latitude);

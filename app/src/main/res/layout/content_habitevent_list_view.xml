@@ -3,34 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="100">
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:shrinkColumns="0"
-    android:stretchColumns="*">
-    <TableRow>
-    <TextView
-        android:id="@+id/habitTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="habitTitle"
-        android:textSize="20dp" />
+    android:orientation="vertical"
+    android:weightSum="100"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="15dp">
 
     <TextView
         android:id="@+id/completeDate"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:padding="10dp"
         android:text="completeDate"
         android:textSize="20dp" />
-    </TableRow>
-</TableLayout>
+
+    <TextView
+        android:id="@+id/eventComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="event commet(optional)"
+        android:textSize="20dp" />
+
+
 
 </LinearLayout>
