@@ -79,7 +79,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     HashMap<String,Object> data = new HashMap<>();
                     data.put("Event",needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
-                    Intent intent = new Intent(AddHabitEventActivity.this, HabitListViewActivity.class);
+                    Intent intent = new Intent(AddHabitEventActivity.this, HabitEventListViewActivity.class);
                     startActivity(intent);
                 } else {
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
