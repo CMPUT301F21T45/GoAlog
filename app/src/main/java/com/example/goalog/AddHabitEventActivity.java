@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -80,6 +81,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     data.put("Event",needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
                     Intent intent = new Intent(AddHabitEventActivity.this, HabitEventListViewActivity.class);
+                    Toast.makeText(v.getContext(), "Event Successfully Edited", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 } else {
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
@@ -90,6 +92,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
                     //intent.putExtra("success",true);
+                    Toast.makeText(v.getContext(), "New Event Created", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
 

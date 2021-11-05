@@ -6,10 +6,12 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class HabitEvent implements Serializable {
+public class HabitEvent implements Serializable, Comparable<HabitEvent>{
 
 
     //declaring variables
@@ -173,6 +175,19 @@ public class HabitEvent implements Serializable {
     }
     public String getHabitTitle() {
         return habitTitle; }
+
+
+    @Override
+    public int compareTo(HabitEvent he) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.parse(this.getCompleteDate()).compareTo(sdf.parse(he.getCompleteDate()));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+            return -2;
+        }
+    }
 
 
 }

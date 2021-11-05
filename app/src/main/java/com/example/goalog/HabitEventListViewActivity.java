@@ -33,6 +33,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -94,6 +96,7 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                         }
 
                     }
+                    Collections.sort(habitEventDataList);
                     habitEventArrayAdapter.notifyDataSetChanged();
                 }
             });

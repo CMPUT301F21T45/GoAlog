@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -121,13 +122,15 @@ public class AddHabitActivity extends AppCompatActivity{
                     habitReasonString = habitReasonString.substring(0,30);
                 }
 
-                StringBuilder checked = new StringBuilder();
+                StringBuilder checked = new StringBuilder("");
                 int dayIndex = 1;
+                boolean isScheduled = false;
                 CheckBox week[] = {mon, tue, wed, thu, fri, sat, sun};
 
                 for (CheckBox box:week) {
                     if (box.isChecked()) {
                         checked.append(dayIndex);
+                        isScheduled = true;
                     }
                     dayIndex++;
                 }
@@ -137,25 +140,41 @@ public class AddHabitActivity extends AppCompatActivity{
                 if(editMode)
                 {   //In edit mode
                     //update with new information
-                    editMode = false;
-                    myHabit.setHabitTitle(habitTitleString);
-                    myHabit.setHabitReason(habitReasonString);
-                    myHabit.setStartDate(habitDateString);
-                    myHabit.setWeekdayPlan(checked.toString());
-                    myHabit.setPublic(habitPrivacy);
+                    if (habitTitleString.length()>0 && habitReason.length()>0 && isScheduled) {
+                        editMode = false;
+                        myHabit.setHabitTitle(habitTitleString);
+                        myHabit.setHabitReason(habitReasonString);
+                        myHabit.setStartDate(habitDateString);
+                        myHabit.setWeekdayPlan(checked.toString());
+                        myHabit.setPublic(habitPrivacy);
 
-                    //send the Habit back to AddHabit
-                    Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
-                    intent.putExtra("Updated Habit", myHabit);
-                    startActivity(intent);
+                        //send the Habit back to AddHabit
+                        Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
+                        intent.putExtra("Updated Habit", myHabit);
+                        Toast.makeText(v.getContext(), "Successfully Edited!",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(v.getContext(),
+                                "Please enter a title & reason, and schedule for your habit!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else
                 {   //in add mode
-                    final String habitID = UUID.randomUUID().toString().replace("-", "");
-                    Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID);
-                    Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
-                    intent.putExtra("New Habit", newHabit);
-                    startActivity(intent);
+                    if (habitTitleString.length()>0 && habitReason.length()>0 && isScheduled) {
+                        final String habitID = UUID.randomUUID().toString().replace("-", "");
+                        Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID);
+                        Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
+                        intent.putExtra("New Habit", newHabit);
+                        Toast.makeText(v.getContext(), "The habit has been added to your list!",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(v.getContext(),
+                                "Please enter a title & reason, and schedule for your habit!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
