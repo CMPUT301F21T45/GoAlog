@@ -5,11 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
-
-public class HabitEvent implements Serializable {
+public class HabitEvent {
 
 
     //declaring variables
@@ -28,57 +24,11 @@ public class HabitEvent implements Serializable {
 
 
 
-    /*** A habitevent consists of the following attribute:
-     *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
-     *     [EventID] in string format
-     *     [startDate] in yyyy-mm-dd format;
-     *     [wantsLocation] return the Boolean format
-     *     [latitude] record the double number
-     *     [habitID] record the double number
-     *     [evenComment] up to 30 letter event comment
-     *
+    /**
      *
      */
 
     // by default Location set as false
-    public HabitEvent(Boolean wantsLocation, String completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
-        this.wantsLocation = wantsLocation;
-        this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.userID=userID;
-        this.eventComment=eventComment;
-        this.habitTitle = habitTitle;
-        this.wantsLocation = true;
-    }
-    public HabitEvent(Boolean wantsLocation, String completeDate, String eventID, String habitTitle, double latitude, double longitude, String userID){
-        this.wantsLocation = wantsLocation;
-        this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.userID=userID;
-        this.habitTitle = habitTitle;
-        this.wantsLocation = true;
-    }
-    public HabitEvent(String completeDate, String eventComment, String eventID, String habitTitle, String userID) {
-        this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.userID=userID;
-        this.eventComment=eventComment;
-        this.habitTitle = habitTitle;
-        this.wantsLocation = true;
-    }
-    ///change the simple HabitEventList
-    public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
-        this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.habitTitle = habitTitle;
-        this.eventComment=eventCommentString;
-        this.wantsLocation = true;
-
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public HabitEvent(HabitEvent h1) {
@@ -88,7 +38,7 @@ public class HabitEvent implements Serializable {
         this.setHabitTitle(h1.getHabitTitle());
         this.setEventID(h1.getEventID());
         this.setEventComment(h1.getEventComment());
-
+        this.setCompleteDate(h1.getCompleteDate());
         // this.setPhoto(h1.getPhoto()); will deal with photo stuff later
         if (h1.wantsLocation()) {
             this.setLocation(h1.getLocation()); //requires API notation on Android studio
@@ -100,6 +50,15 @@ public class HabitEvent implements Serializable {
         //will deal with scheduled stuff later   this.scheduled = h1.getScheduled();
         // this.habitTitle = h1.getHabitName();
 
+
+    }
+
+    public HabitEvent(String habitEventID, String eventCommentString, String completeDate,String  habitTitle) {
+        this.completeDate = completeDate;
+        this.eventID=habitEventID;
+        this.eventComment=eventCommentString;
+        this.habitTitle = habitTitle;
+        this.wantsLocation = true;
 
     }
 
@@ -142,7 +101,9 @@ public class HabitEvent implements Serializable {
         }
     }
 
-
+    public void setCompleteDate ( String completeDate){
+        this.completeDate = completeDate;
+    }
     public boolean wantsLocation() {
         return this.wantsLocation;  // maybe no .thhis?? not sure will check later
     }
@@ -176,3 +137,4 @@ public class HabitEvent implements Serializable {
 
 
 }
+

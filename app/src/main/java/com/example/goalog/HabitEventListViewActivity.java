@@ -1,6 +1,7 @@
 package com.example.goalog;
 
 import android.content.Intent;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -135,7 +136,10 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                     switch (index) {
                         case 0:
                             // Edit (pen is clicked)
-
+                            Intent intent = new Intent(HabitEventListViewActivity.this,AddHabitEventActivity.class);
+                            intent.putExtra("Update HabitEvent",habitEventDataList.get(position));
+                            intent.putExtra("Habit",selectedHabit);
+                            startActivity(intent);
                             break;
                         case 1:
                             // Delete (trash can is clicked)

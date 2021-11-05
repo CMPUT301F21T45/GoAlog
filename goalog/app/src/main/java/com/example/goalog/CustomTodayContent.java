@@ -1,10 +1,12 @@
 package com.example.goalog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,11 +14,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomToday extends ArrayAdapter<Habit> {
+public class CustomTodayContent extends ArrayAdapter<Habit> {
     private final ArrayList<Habit> Habits;
     private final Context context;
+    private static boolean doneClicked = false;
 
-    public CustomToday(Context context, ArrayList<Habit> Habits) {
+    public CustomTodayContent(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
         this.Habits = Habits;
         this.context = context;
@@ -34,16 +37,28 @@ public class CustomToday extends ArrayAdapter<Habit> {
         Habit habit = Habits.get(position);
 
         TextView habitName= view.findViewById(R.id.habit_title);
-        //TextView habitReason= view.findViewById(R.id.habit_reason);
-        //TextView startDate= view.findViewById(R.id.startDate);
-
 
         habitName.setText(habit.getHabitTitle());
-        //habitReason.setText(habit.getHabitReason());
-        //startDate.setText(habit.getStartDate());
+
+        Button doneButton = (Button)view.findViewById(R.id.done_goal);
+
+        if (doneClicked){doneButton.setVisibility(View.INVISIBLE);}
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
+                intent.putExtra("Habit",habit);
+                parent.getContext().startActivity(intent);
+                doneClicked  = true;
+            }
+        });
+
+
 
 
         return view;
 
     } // public view
+
+
 }
