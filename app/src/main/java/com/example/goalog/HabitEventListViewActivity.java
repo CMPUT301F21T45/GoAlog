@@ -136,8 +136,9 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                     switch (index) {
                         case 0:
                             // Edit (pen is clicked)
-                            Intent intent = new Intent(com.example.goalog.HabitEventListViewActivity.this,AddHabitActivity.class);
-                            intent.putExtra("Selected Habit",habitEventDataList.get(position));
+                            Intent intent = new Intent(HabitEventListViewActivity.this,AddHabitEventActivity.class);
+                            intent.putExtra("Update HabitEvent",habitEventDataList.get(position));
+                            intent.putExtra("Habit",selectedHabit);
                             startActivity(intent);
                             break;
                         case 1:

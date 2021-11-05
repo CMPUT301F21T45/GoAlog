@@ -21,7 +21,7 @@ import java.util.UUID;
 
 
 public class AddHabitEventActivity extends AppCompatActivity {
-    private EditText optionalComment;
+    private EditText optimalComment;
     private ImageView image;
     private ImageView deleteIcon;
     private Button camera;
@@ -34,13 +34,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private TextView dateComplete;
     private TextView id;
     private Uri filePath;
+    private boolean editMode = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
-        optionalComment = findViewById(R.id.comment_text);//create an optional comment
+        optimalComment = findViewById(R.id.comment_text);//create an optional comment
         title = findViewById(R.id.habitTitle);
         dateComplete = findViewById(R.id.eventDate);
         id = findViewById(R.id.eventId);
@@ -49,10 +50,18 @@ public class AddHabitEventActivity extends AppCompatActivity {
         Date today = new Date();
         completeDate = date.format(today);
 
-        final String habitEventID = UUID.randomUUID().toString().replace("-", "");
         Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
         String clickedHabitID = (String) clickedHabit.getHabitID();
-
+        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");
+        if(needUpdatedEvent != null)
+        {
+            editMode = true;
+            optimalComment.setText(needUpdatedEvent.getEventComment());
+        }
+        else {
+            editMode =false;
+        }
+        final String habitEventID = UUID.randomUUID().toString().replace("-", "");
         title.setText(clickedHabit.getHabitTitle());
         dateComplete.setText(completeDate);
         id.setText(habitEventID);
@@ -61,22 +70,34 @@ public class AddHabitEventActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventCommentString = optionalComment.getText().toString();
+                eventCommentString = optimalComment.getText().toString();
                 // image = (ImageView) findViewById(R.id.first_image);
                 //deleteIcon = (ImageView) findViewById(R.id.image_delete);
 
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
-                HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
-                HashMap<String, HabitEvent> data = new HashMap<>();
-                data.put("Event", newHabitEvent);
-                if (newHabitEvent != null) {
-                    collectionReference.document(newHabitEvent.getEventID()).set(data);
+                if(editMode) {
+                    editMode = false;
+                    needUpdatedEvent.setEventComment(eventCommentString);
+                    HashMap<String,Object> data = new HashMap<>();
+                    data.put("Event",needUpdatedEvent);
+                    collectionReference.document(needUpdatedEvent.getEventID()).update(data);
+                    Intent intent = new Intent(AddHabitEventActivity.this, HabitListViewActivity.class);
+                    startActivity(intent);
+                } else {
+                    HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
+                    HashMap<String, HabitEvent> data = new HashMap<>();
+                    data.put("Event", newHabitEvent);
+                    if (newHabitEvent != null) {
+                        collectionReference.document(newHabitEvent.getEventID()).set(data);
+                    }
+                    Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
+                    //intent.putExtra("success",true);
+                    startActivity(intent);
                 }
 
-                Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
-                //intent.putExtra("success",true);
-                startActivity(intent);
+
+
             }
         });
     }
@@ -118,7 +139,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                 Date today = new Date();
                 completeDate = date.format(today);
-                eventCommentString = optionalComment.getText().toString();
+                eventCommentString = optimalComment.getText().toString();
 
                 //HabitEvent newHabitEvent = new HabitEvent(filePath);
                 //HashMap<String, HabitEvent> data = new HashMap<>();
