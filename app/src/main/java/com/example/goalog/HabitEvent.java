@@ -5,10 +5,11 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class HabitEvent {
+public class HabitEvent implements Serializable {
 
 
     //declaring variables
