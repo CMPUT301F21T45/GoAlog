@@ -11,11 +11,20 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+/***
+ * habitEvent Class:
+ *  The class represents the event the user completes for a habit. The user can freely choose
+ *  to leave a comment, upload a picture or not. The class can contain the location where the user
+ *  completed it.
+ * Current Issues:
+ *  Two Todos are denoted.
+ *  The optional picture uploading process has made some progress. But it is excluded from the first
+ *  half of the project. Other attributes such as ones related to locations might be used later.
+ *  The commented constructors are for planning, testing, etc.
+ *  We will have a final version of the constructor once we have implemented all essential
+ *  functionalities. All redundant data will be removed then.
+ */
 public class HabitEvent implements Serializable, Comparable<HabitEvent>{
-
-
-    //declaring variables
-
     private String userID;
     private String eventID;
     private String eventComment;
@@ -23,25 +32,32 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     private String habitTitle;
     private double latitude;
     private double longitude;
-
     private Boolean hasLocation;
 
-    private Boolean scheduled;
-
-
-
-    /*** A habitevent consists of the following attribute:
-     *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
-     *     [EventID] in string format
-     *     [startDate] in yyyy-mm-dd format;
-     *     [hasLocation] return the Boolean format
-     *     [latitude] record the double number
-     *     [habitID] record the double number
-     *     [evenComment] up to 30 letter event comment
+    /**
+     * The HabitEvent Constructor that is currently in use
+     * @param eventID
+     *   Unique ID for a Habit Event
+     * @param eventCommentString
+     *   A comment made to the event. <=30 char
+     * @param completeDate
+     *   The day when the user completes the event. It is a String in the "yy-MM-dd" format.
+     * @param habitTitle
+     *   The title of the parent habit.
      *
-     *
+     * Current Issues:
+     *   The habitTitle has no use.
+     *   Other attributes need to be included later.
      */
+    public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
+        this.completeDate = completeDate;
+        this.eventID=eventID;
+        this.habitTitle = habitTitle;
+        this.eventComment=eventCommentString;
+        this.hasLocation = true;
+    }
 
+     /*
     // by default Location set as false
     public HabitEvent(Boolean hasLocation, String completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
         this.hasLocation = hasLocation;
@@ -72,15 +88,8 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         this.habitTitle = habitTitle;
         this.hasLocation = true;
     }
-    ///change the simple HabitEventList
-    public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
-        this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.habitTitle = habitTitle;
-        this.eventComment=eventCommentString;
-        this.hasLocation = true;
-
-    }
+     */
+    // TODO: Upload a picture for the event.
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public HabitEvent(HabitEvent h1) {
@@ -99,9 +108,9 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
             this.hasLocation = false;
         }
 
-        //will deal with scheduled stuff later   this.scheduled = h1.getScheduled();
+        // TODO: Location
+        // this.scheduled = h1.getScheduled();
         // this.habitTitle = h1.getHabitName();
-
 
     }
 
@@ -150,14 +159,12 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     }
 
     public Location getLocation() {
-
         if (hasLocation) {
 
             Location l1 = new Location("");
             l1.setLatitude(latitude);
             l1.setLongitude(longitude);
             return l1;
-
         } else {
             return null;
         }
@@ -165,7 +172,6 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     public String getEventComment(){
         return eventComment;
     }
-
 
     public String getEventID() {
         return eventID; }
@@ -176,7 +182,13 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     public String getHabitTitle() {
         return habitTitle; }
 
-
+    /**
+     * CompareTo The method that will be used to compare the order of a DateString.
+     * @param he
+     *  The candidate HabitEvent object
+     * @return
+     *  The order of the object. It returns -2 if parse errors happen.
+     */
     @Override
     public int compareTo(HabitEvent he) {
         try {

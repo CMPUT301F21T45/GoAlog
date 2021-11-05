@@ -40,22 +40,27 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
-
+/**
+ * HabitListViewActivity:
+ * 1. Retrieve habitEvent data list from firebase
+ * 2. Map habitEvent["title","Date"] on listView
+ * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
+ * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
+ */
 public class HabitEventListViewActivity extends AppCompatActivity {
     SwipeMenuListView HabitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> habitEventDataList;
-    /** HabitListViewActivity:
-     * 1. Retrieve habitEvent data list from firebase
-     * 2. Map habitEvent["title","Date"] on listView
-     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
-     * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
-     */
 
+    /**
+     * Main: OnCreate
+     * @param savedInstanceState
+     *  Bundle savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //-------set up parameters-------------------
+        // Set up parameters:
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
         setContentView(R.layout.habitevent_list_view);
@@ -104,6 +109,11 @@ public class HabitEventListViewActivity extends AppCompatActivity {
             // for swipe delete
             SwipeMenuCreator creator = new SwipeMenuCreator() {
 
+                /**
+                 * Create the "left swipe" menu
+                 * @param menu
+                 *  Swipe menu
+                 */
                 @Override
                 public void create(SwipeMenu menu) {
                     // create "open" item
@@ -138,6 +148,13 @@ public class HabitEventListViewActivity extends AppCompatActivity {
             HabitEventList.setMenuCreator(creator);
 
             HabitEventList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+                /**
+                 * On Menu Item Click
+                 * @param position Clicked position in menu.
+                 * @param menu The current menu
+                 * @param index The index
+                 * @return A boolean value
+                 */
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
@@ -153,12 +170,22 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             collectionReference.document(habitEventDataList.get(position).getEventID())
                                     .delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        /**
+                                         * Successfully deleted a document.
+                                         * @param aVoid
+                                         *  aVoid
+                                         */
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("Sample", "DocumentSnapshot successfully deleted!");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
+                                        /**
+                                         * Failed to delete a document
+                                         * @param e
+                                         *  Exception e
+                                         */
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w("Sample", "Error deleting document", e);
@@ -176,11 +203,5 @@ public class HabitEventListViewActivity extends AppCompatActivity {
             Intent intent = new Intent(HabitEventListViewActivity.this, HabitListViewActivity.class);
             startActivity(intent);
         }
-
-
-
-
-
-
     }
 }
