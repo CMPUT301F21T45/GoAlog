@@ -9,17 +9,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import androidx.fragment.app.DialogFragment;
-
 import java.util.Calendar;
-public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
-    /**
-     * // For date picker, we search android developer documents:https://developer.android.com/guide/topics/ui/controls/pickers#DatePicker
-     * //it will open the build-in date picker and update medicineDate String
-     */
 
+/**
+ * DatePickerFragment
+ * For date picker, we search android developer documents:
+ *  https://developer.android.com/guide/topics/ui/controls/pickers#DatePicker
+ * it will open the build-in date picker and update medicineDate String
+ */
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    /**
+     * onCreateDialog
+     * @param savedInstanceState
+     *  saveInstanceState parameter
+     * @return
+     *  The DatePickerDialog Fragment
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
@@ -32,6 +39,17 @@ public class DatePickerFragment extends DialogFragment
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    /**
+     * onDateSet： convert the selected date into "yyyy--MM--dd" format
+     * @param view
+     *  Current View
+     * @param year
+     *  The year in the Date
+     * @param month
+     *  The month in the Date
+     * @param dayOfMonth
+     *  The day in the Date
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String startDateSelected = String.valueOf(year) + "-" + String.valueOf(month+1) + "-" + String.valueOf(dayOfMonth);
