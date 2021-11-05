@@ -1,30 +1,21 @@
 package com.example.goalog;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 
@@ -40,18 +31,55 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String completeDate;
     private Uri filePath;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
-        optimalComment = findViewById(R.id.comment_text);//create an optional comment
-        image = (ImageView) findViewById(R.id.first_image);
-        deleteIcon = (ImageView) findViewById(R.id.image_delete);
 
+        confirmButton = (Button) findViewById(R.id.confirm_habit_event);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                optimalComment = findViewById(R.id.comment_text);//create an optional comment
+                // image = (ImageView) findViewById(R.id.first_image);
+                eventCommentString = optimalComment.getText().toString();
+                //Log.d("Sample", "onClick: "+eventCommentString);
+
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                Date today = new Date();
+                completeDate = date.format(today);
+
+                //deleteIcon = (ImageView) findViewById(R.id.image_delete);
+
+                final String habitEventID = UUID.randomUUID().toString().replace("-", "");
+                Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
+                String clickedHabitID = (String) clickedHabit.getHabitID();
+                final FirebaseFirestore database = FirebaseFirestore.getInstance();
+                final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
+                // Log.d("sample", "onClick: "+ clickedHabit);
+                HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
+                HashMap<String, HabitEvent> data = new HashMap<>();
+                data.put("HabitEvent", newHabitEvent);
+                if (newHabitEvent != null) {
+                    Log.d("sample", "onClick: "+ newHabitEvent);
+                    collectionReference.document(newHabitEvent.getEventID()).set(data);
+                }
+            }
+        });
+
+
+
+        }
+}
+
+/*save for later, for optional photograph
+        /*
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChoosePhoto();
+                //setChoosePhoto();
             }
         });//click to add optional photograph
 
@@ -63,13 +91,15 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
             }
         });
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user003");
+        //final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        //final CollectionReference collectionReference = database.collection("user003");
+
         FirebaseStorage storage;
         StorageReference storageReference;
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         confirmButton = (Button) findViewById(R.id.confirm_habit_event);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +115,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 //HabitEvent newHabitEvent = new HabitEvent(filePath);
                 //HashMap<String, HabitEvent> data = new HashMap<>();
                 //data.put("HabitEvent", newHabitEvent);
-                if (filePath != null){
-                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+
+                if (filePath != null) {
+                    StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                     ref.putFile(filePath);
 
                     //collectionReference.document(newHabitEvent.getFilePath().toString()).set(data);
@@ -95,23 +126,21 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 //HashMap<String, HabitEvent> data = new HashMap<>();
                 //data.put("HabitClass", newHabit);
                 //if (newHabit != null) {
-                    //collectionReference.document(newHabit.getHabitTitle()).set(data);
+                //collectionReference.document(newHabit.getHabitTitle()).set(data);
                 //}
-
 
 
             }
 
 
         });
+
     }
-
-
-
-
     /*
-     * selection(take a photo or open gallery)
-     */
+
+
+     selection(take a photo or open gallery)
+
     private void setChoosePhoto(){
         View chooseTypeView = LayoutInflater.from(this).inflate(R.layout.choose_type_view, null);
         AlertDialog selection = new AlertDialog.Builder(this).setView(chooseTypeView).setCancelable(false).create();
@@ -145,9 +174,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 
-    /*
-     * open phone camera
-     */
+
+    // open phone camera
+
     private void openCamera() {
         //File imgDir = new File(getFilePath(null));
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -171,9 +200,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
             });
 
-    /*
+
      * open phone photo gallery
-     */
+
     private void openGallery() {
         Intent photoPicker = new Intent(Intent.ACTION_PICK);
         photoPicker.setType("image/*");
@@ -195,6 +224,23 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
             });
 
+     * Get file path
+
+
+    public String getFilePath(String dir){
+        String path;
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            path = getExternalFilesDir(dir).getAbsolutePath();
+        } else{
+            path = getFilesDir() + File.separator +dir;
+        }
+        File file = new File(path);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        return path;
+    }
+*/
 
 
 
@@ -203,4 +249,4 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
 
 
-}
+

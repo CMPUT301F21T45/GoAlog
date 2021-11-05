@@ -5,6 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddHabitActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/habitTitle"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventId"
+        android:textSize="20dp"
+        android:gravity="start"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/habitTitle"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventDate"
+        android:textSize="20dp"
+        android:gravity="start"
+        app:layout_constraintTop_toBottomOf="@id/eventId"
+        />
+
     <EditText
         android:id="@+id/comment_text"
         android:layout_width="match_parent"
@@ -15,36 +44,17 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:maxLength="20"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventDate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/first_image"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/first_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="16dp"
-        android:src="@mipmap/ic_upload_image"
-        android:clickable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment_text"/>
 
-    <ImageView
-        android:id="@+id/image_delete"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/ic_delete_image"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/first_image"
-        app:layout_constraintEnd_toEndOf="@id/first_image" />
     <Button
         android:id="@+id/confirm_habit_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_image"
+        app:layout_constraintTop_toBottomOf="@id/comment_text"
         android:text="Confirm"/>
 
 

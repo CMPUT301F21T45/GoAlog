@@ -14,11 +14,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomToday extends ArrayAdapter<Habit> {
+public class CustomTodayActivity extends ArrayAdapter<Habit> {
     private final ArrayList<Habit> Habits;
     private final Context context;
 
-    public CustomToday(Context context, ArrayList<Habit> Habits) {
+    public CustomTodayActivity(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
         this.Habits = Habits;
         this.context = context;
@@ -48,14 +48,19 @@ public class CustomToday extends ArrayAdapter<Habit> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
+                intent.putExtra("Habit",habit);
                 parent.getContext().startActivity(intent);
 
             }
         });
 
 
+
+
+
         return view;
 
     } // public view
+//    public
 
 }

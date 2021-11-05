@@ -49,7 +49,7 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
 
         HabitList.setAdapter(habitAdapter);
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user001");
+        final CollectionReference collectionReference = database.collection("user003");
 
         Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
         HashMap<String, Habit> data = new HashMap<>();
         data.put("HabitClass", newHabit);
         if (newHabit != null) {
-            collectionReference.document(newHabit.getHabitTitle()).set(data);
+            collectionReference.document(newHabit.getHabitID()).set(data);
         }
 
 
@@ -158,15 +158,16 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String habitTitle = doc.getId();
                     if (doc.getData().get("HabitClass") != null) {
                         HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                         //assert map != null;
+                        String habitTitle = (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic));
+                        String habitID = (String) map.get("habitID");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                     }
                 }
                 habitAdapter.notifyDataSetChanged();

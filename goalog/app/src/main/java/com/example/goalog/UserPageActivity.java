@@ -79,12 +79,12 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         habitDataList = new ArrayList<>();
-        listAdapter = new CustomToday(this,habitDataList);
+        listAdapter = new CustomTodayActivity(this,habitDataList);
         todayList = findViewById(R.id.today_list);
         todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("user001");
+        final CollectionReference collectionReference = db.collection("user003");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -95,15 +95,16 @@ public class UserPageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String habitTitle = doc.getId();
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
+                        String habitTitle  =  (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
+                        String habitID = (String) map.get("habitID");
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
                         try {
@@ -111,7 +112,7 @@ public class UserPageActivity extends AppCompatActivity {
                                 for (int i = 0; i < weekdayPlan.length(); i++) {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
-                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic));
+                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                                  }
                                 }
                             }
@@ -123,6 +124,7 @@ public class UserPageActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 }
 
