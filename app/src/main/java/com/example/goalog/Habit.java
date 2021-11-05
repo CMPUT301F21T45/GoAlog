@@ -5,21 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * A habit consists of the following attribute:
- *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
- *     [habitReason] is motivation, and has length constraint of 30 character;
- *     [startDate] in yyyy-mm-dd format;
- *     [weekdayPlan] "123" if want this habit done on Monday, Tuesday, Wednesday;
- *     [isPublic] whether this object is public to others;
- *     [habitID] is a unique id for each habit;
- */
-
 public class Habit implements Serializable {
     // Members
     //private int uid;
     //private int hid;
     //private boolean[] schedule;
+    /**
+     * A habit consists of the following attribute:
+     *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
+     *     [habitReason] is motivation, and has length constraint of 30 character;
+     *     [startDate] in yyyy-mm-dd format;
+     *     [weekdayPlan] "123" if want this habit done on Monday, Tuesday, Wednesday;
+     *     [isPublic] whether this object is public to others;
+     *     [habitID] is a unique id for each habit;
+     */
 
     private String habitTitle;
     private String habitReason;
