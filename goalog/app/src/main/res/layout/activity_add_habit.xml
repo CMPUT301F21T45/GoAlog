@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/activity_add_habit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NEW HABIT"
@@ -68,7 +69,7 @@
             android:id="@+id/display_start_date_add_habit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2000-01-11"
+            android:text="2021-09-01"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
@@ -155,6 +156,36 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="S">
+
+        </CheckBox>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="Privacy"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+        <CheckBox
+            android:id="@+id/checkbox_privacy_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:padding="10dp"
+            android:text="Public">
 
         </CheckBox>
     </LinearLayout>
