@@ -6,6 +6,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class HabitEvent {
 
@@ -15,7 +16,7 @@ public class HabitEvent {
     private String userID;
     private String eventID;
     private String eventComment;
-    private LocalDate completeDate;
+    private String completeDate;
     private String habitTitle;
     private double latitude;
     private double longitude;
@@ -31,7 +32,7 @@ public class HabitEvent {
      */
 
     // by default Location set as false
-    public HabitEvent(Boolean wantsLocation, LocalDate completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
+    public HabitEvent(Boolean wantsLocation, String completeDate, String eventComment, String eventID, String habitTitle, double latitude, double longitude, String userID) {
         this.wantsLocation = wantsLocation;
         this.completeDate = completeDate;
         this.eventID=eventID;
@@ -42,7 +43,7 @@ public class HabitEvent {
         this.habitTitle = habitTitle;
         this.wantsLocation = true;
     }
-    public HabitEvent(Boolean wantsLocation, LocalDate completeDate, String eventID, String habitTitle, double latitude, double longitude, String userID){
+    public HabitEvent(Boolean wantsLocation, String completeDate, String eventID, String habitTitle, double latitude, double longitude, String userID){
         this.wantsLocation = wantsLocation;
         this.completeDate = completeDate;
         this.eventID=eventID;
@@ -52,7 +53,7 @@ public class HabitEvent {
         this.habitTitle = habitTitle;
         this.wantsLocation = true;
     }
-    public HabitEvent(LocalDate completeDate, String eventComment, String eventID, String habitTitle, String userID) {
+    public HabitEvent(String completeDate, String eventComment, String eventID, String habitTitle, String userID) {
         this.completeDate = completeDate;
         this.eventID=eventID;
         this.userID=userID;
@@ -60,12 +61,11 @@ public class HabitEvent {
         this.habitTitle = habitTitle;
         this.wantsLocation = true;
     }
-    public HabitEvent(LocalDate completeDate, String eventID, String habitTitle, String userID) {
+    ///change the simple HabitEventList
+    public HabitEvent(String completeDate, String habitTitle) {
         this.completeDate = completeDate;
-        this.eventID=eventID;
-        this.userID=userID;
+
         this.habitTitle = habitTitle;
-        this.wantsLocation = true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -76,7 +76,7 @@ public class HabitEvent {
         this.setHabitTitle(h1.getHabitTitle());
         this.setEventID(h1.getEventID());
         this.setEventComment(h1.getEventComment());
-        this.setCompleteDate(h1.getCompleteDate());
+
         // this.setPhoto(h1.getPhoto()); will deal with photo stuff later
         if (h1.wantsLocation()) {
             this.setLocation(h1.getLocation()); //requires API notation on Android studio
@@ -130,15 +130,7 @@ public class HabitEvent {
         }
     }
 
-    public void setCompleteDate ( LocalDate completeDate){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (completeDate.isAfter(LocalDate.now())) {
-                throw new IllegalArgumentException("Completion date must be on or before today's date.");
-            } else {
-                this.completeDate = completeDate;
-            }
-        }
-    }
+
     public boolean wantsLocation() {
         return this.wantsLocation;  // maybe no .thhis?? not sure will check later
     }
@@ -164,7 +156,7 @@ public class HabitEvent {
     public String getEventID() {
         return eventID; }
 
-    public LocalDate getCompleteDate(){
+    public String getCompleteDate(){
         return completeDate;
     }
     public String getHabitTitle() {

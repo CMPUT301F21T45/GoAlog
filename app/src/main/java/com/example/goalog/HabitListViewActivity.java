@@ -52,7 +52,7 @@ public class HabitListViewActivity extends AppCompatActivity{
 
         HabitList.setAdapter(habitAdapter);
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user001");
+        final CollectionReference collectionReference = database.collection("user003");
 
         Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,8 @@
 package com.example.goalog;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
@@ -34,33 +46,14 @@ public class HabitEventListViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.habitevent_list_view);
-        HabitEventList=findViewById(R.id.HabitEventList);
+        HabitEventList=findViewById(R.id.habit_event_list);
         List = new ArrayList<>();
         habitEventArrayAdapter= new HabitEventCustomList(this, List);
         HabitEventList.setAdapter(habitEventArrayAdapter);
-        //create habit event list
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user002");
-        //connect the firestore
-        Button buttonAddHabitEvent = (Button) findViewById(R.id.add_event);
-        buttonAddHabitEvent.setOnClickListener(new View.OnClickListener() {
-            //add some object to habit event list
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(HabitEventListViewActivity.this, AddHabitEventActivity.class);
-                //startActivity(intent);
-            }
-        });
-
-        
-        HabitEvent newHabitEvent = (HabitEvent) getIntent().getSerializableExtra("New HabitEvent");
-        HashMap<String, HabitEvent> data = new HashMap<>();
-        data.put("EventID", newHabitEvent);
-        if (newHabitEvent != null) {
-            collectionReference.document(newHabitEvent.getHabitTitle()).set(data);
-        }
-
-        //get the data of firestore
+        final CollectionReference collectionReference = database.collection("user003")
+                .document("fcb8d39b37ac49e182b21b6fcdc3d7af")
+                .collection("HabitEvent");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -71,29 +64,23 @@ public class HabitEventListViewActivity extends AppCompatActivity {
 
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(doc.getData().get("EventID")));
-                    String EventID = doc.getId();
-                    if (doc.getData().get("HabitClass") != null) {
-                        if (doc.getData().get("EventID") != null) {
-                            HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitEventClass");
-                            //assert map != null;
-                            boolean location = (boolean) map.get("LocationRecorded");
-                            String eventComment = (String) map.get("eventComment");
-                            LocalDate completeDate = (LocalDate) map.get("completeDate");
-                            String eventID = (String) map.get("eventID");
-                            String habitTitle = (String) map.get("habitTitle");
-                            double latitude = (double) map.get("latitude");
-                            double longitude = (double) map.get("longitude");
-                            String userID = (String) map.get("userID");
+                    Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
+                    // TODO: Retrieve data from firebase.
+                    // Adding the habits from FireStore
+                    HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
+                    if (doc.getData().get("Event") != null){
 
-                            List.add(new HabitEvent(location, completeDate, eventComment, eventID, habitTitle, latitude, longitude, userID));
+                        String habitTitle = (String)  map.get("habitTitle");
+                        String completeTime =  (String)  map.get("completeDate");
+                        List.add(new HabitEvent(completeTime,habitTitle));
                         }
-                    }
+
                 }
                 habitEventArrayAdapter.notifyDataSetChanged();
-                // Notifying the adapter to render any new data fetched from the cloud
             }
         });
-    }
 
+
+
+        }
 }
