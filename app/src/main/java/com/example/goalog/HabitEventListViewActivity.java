@@ -45,40 +45,52 @@ public class HabitEventListViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
+        String selectedHabitId= selectedHabit.getHabitID();
         setContentView(R.layout.habitevent_list_view);
         HabitEventList=findViewById(R.id.habit_event_list);
         List = new ArrayList<>();
         habitEventArrayAdapter= new HabitEventCustomList(this, List);
         HabitEventList.setAdapter(habitEventArrayAdapter);
+
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user003")
-                .document("fcb8d39b37ac49e182b21b6fcdc3d7af")
-                .collection("HabitEvent");
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onEvent(
-                    @Nullable QuerySnapshot queryDocumentSnapshots,
-                    @Nullable FirebaseFirestoreException error) {
-                List.clear();
+        try {
+            final CollectionReference collectionReference = database.collection("user003")
+                    .document(selectedHabitId)
+                    .collection("HabitEvent");
+            collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onEvent(
+                        @Nullable QuerySnapshot queryDocumentSnapshots,
+                        @Nullable FirebaseFirestoreException error) {
+                    List.clear();
 
-                assert queryDocumentSnapshots != null;
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
-                    // TODO: Retrieve data from firebase.
-                    // Adding the habits from FireStore
-                    HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
-                    if (doc.getData().get("Event") != null){
+                    assert queryDocumentSnapshots != null;
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
+                        // TODO: Retrieve data from firebase.
+                        // Adding the habits from FireStore
+                        HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
+                        if (doc.getData().get("Event") != null){
 
-                        String habitTitle = (String)  map.get("habitTitle");
-                        String completeTime =  (String)  map.get("completeDate");
-                        List.add(new HabitEvent(completeTime,habitTitle));
+                            String habitTitle = (String)  map.get("habitTitle");
+                            String completeTime =  (String)  map.get("completeDate");
+                            List.add(new HabitEvent(completeTime,habitTitle));
                         }
 
+                    }
+                    habitEventArrayAdapter.notifyDataSetChanged();
                 }
-                habitEventArrayAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        }
+        catch (Exception e){
+            Intent intent = new Intent(HabitEventListViewActivity.this, HabitListViewActivity.class);
+            startActivity(intent);
+        }
+
+
+
 
 
 

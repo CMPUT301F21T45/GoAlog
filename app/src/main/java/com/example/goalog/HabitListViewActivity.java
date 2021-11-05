@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
@@ -38,7 +39,7 @@ public class HabitListViewActivity extends AppCompatActivity{
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-
+    public Integer selection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,19 @@ public class HabitListViewActivity extends AppCompatActivity{
         final CollectionReference collectionReference = database.collection("user003");
 
         Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
+
+        HabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Habit selectedHabit=habitDataList.get(position);
+                Intent intent=new Intent(HabitListViewActivity.this,HabitEventListViewActivity.class);
+                intent.putExtra("Selected",selectedHabit);
+                startActivity(intent);
+
+
+
+            }
+        });
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,5 +188,6 @@ public class HabitListViewActivity extends AppCompatActivity{
                 // Notifying the adapter to render any new data fetched from the cloud
             }
         });
+
     }
 }
