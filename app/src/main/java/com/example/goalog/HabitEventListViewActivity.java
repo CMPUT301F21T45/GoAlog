@@ -41,10 +41,17 @@ public class HabitEventListViewActivity extends AppCompatActivity {
     ListView HabitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> List;
+    /** HabitListViewActivity:
+     * 1. Retrieve habitEvent data list from firebase
+     * 2. Map habitEvent["title","Date"] on listView
+     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
+     * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //-------set up parameters-------------------
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
         setContentView(R.layout.habitevent_list_view);
@@ -76,7 +83,9 @@ public class HabitEventListViewActivity extends AppCompatActivity {
 
                             String habitTitle = (String)  map.get("habitTitle");
                             String completeTime =  (String)  map.get("completeDate");
-                            List.add(new HabitEvent(completeTime,habitTitle));
+                            String eventCommentString = (String) map.get("eventComment");
+                            String eventID = (String) map.get("eventID");
+                            List.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
                         }
 
                     }
