@@ -33,13 +33,13 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
+/** HabitListViewActivity:
+ * 1. Retrieve habit data list from firebase
+ * 2. Map habit["title","reason","StartDate"] on listView
+ * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitActivity
+ * 4. Receive updated habit or new data from AddHabitActivity to firebase
+ */
 public class HabitListViewActivity extends AppCompatActivity{
-    /** HabitListViewActivity:
-     * 1. Retrieve habit data list from firebase
-     * 2. Map habit["title","reason","StartDate"] on listView
-     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitActivity
-     * 4. Receive updated habit or new data from AddHabitActivity to firebase
-     */
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;

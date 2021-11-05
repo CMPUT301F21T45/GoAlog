@@ -41,7 +41,7 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 /**
- * HabitListViewActivity:
+ * HabitEventListViewActivity:
  * 1. Retrieve habitEvent data list from firebase
  * 2. Map habitEvent["title","Date"] on listView
  * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
