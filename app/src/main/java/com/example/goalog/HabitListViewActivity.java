@@ -35,6 +35,12 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 public class HabitListViewActivity extends AppCompatActivity{
+    /** HabitListViewActivity:
+     * 1. Retrieve habit data list from firebase
+     * 2. Map habit["title","reason","StartDate"] on listView
+     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitActivity
+     * 4. Receive updated habit or new data from AddHabitActivity to firebase
+     */
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -43,18 +49,18 @@ public class HabitListViewActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-
+        //-------set up parameters-------------------
         setContentView(R.layout.habit_list_view);
+        Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
         HabitList = findViewById(R.id.habit_list);
-
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
-
         HabitList.setAdapter(habitAdapter);
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user001");
+        final CollectionReference collectionReference = database.collection("user003"); //assume we already logged in
+        //----------------------------------------------
 
-        Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
+        // Jump to Add Habit activity for to create a new habit
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,14 +69,15 @@ public class HabitListViewActivity extends AppCompatActivity{
             }
         });
 
-        //add an new habit to fireStore
+        //upload an new habit to firebase
         Habit newHabit = (Habit) getIntent().getSerializableExtra("New Habit");
         HashMap<String, Habit> data = new HashMap<>();
         data.put("HabitClass", newHabit);
         if (newHabit != null) {
             collectionReference.document(newHabit.getHabitID()).set(data);
         }
-        //update existed habits
+
+        //update existed habits to firebase
         Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
         HashMap<String, Object> editData = new HashMap<>();
         editData.put("HabitClass", updatedHabit);
@@ -119,14 +126,13 @@ public class HabitListViewActivity extends AppCompatActivity{
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        // edit
+                        // Edit (pen is clicked)
                         Intent intent = new Intent(com.example.goalog.HabitListViewActivity.this,AddHabitActivity.class);
                         intent.putExtra("Selected Habit",habitDataList.get(position));
                         startActivity(intent);
                         break;
                     case 1:
-                        // delete
-//                        TextView view = menu.findViewById(R.id.city_text);
+                        // Delete (trash can is clicked)
                         collectionReference.document(habitDataList.get(position).getHabitID())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -148,6 +154,7 @@ public class HabitListViewActivity extends AppCompatActivity{
             }
         });
 
+        //Retrieve Habit data list from firebase
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -157,10 +164,10 @@ public class HabitListViewActivity extends AppCompatActivity{
 
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    // Iterate document
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     if (doc.getData().get("HabitClass") != null) {
                         HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
-                        //assert map != null;
                         String habitTitle = (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");

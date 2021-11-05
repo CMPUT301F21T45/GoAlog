@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import com.example.goalog.databinding.ActivityScrollingBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 public class ScrollingActivity extends AppCompatActivity {
 
     private ActivityScrollingBinding binding;

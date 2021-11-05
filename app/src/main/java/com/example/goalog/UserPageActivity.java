@@ -29,6 +29,9 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 public class UserPageActivity extends AppCompatActivity {
+    /**
+     *
+     */
     ArrayList<Habit> habitDataList;
     ArrayAdapter<Habit> listAdapter;
     ListView todayList;
@@ -38,6 +41,9 @@ public class UserPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**
+         *
+         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_page);
 
@@ -85,7 +91,7 @@ public class UserPageActivity extends AppCompatActivity {
         todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("user001");
+        final CollectionReference collectionReference = db.collection("user003");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(

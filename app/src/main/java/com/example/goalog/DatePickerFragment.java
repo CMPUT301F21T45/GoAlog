@@ -1,7 +1,5 @@
 package com.example.goalog;
 
-// For date picker, i search android developer documents:https://developer.android.com/guide/topics/ui/controls/pickers#DatePicker
-//it will open the build-in date picker and update medicineDate String
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -15,6 +13,10 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
+    /**
+     * // For date picker, we search android developer documents:https://developer.android.com/guide/topics/ui/controls/pickers#DatePicker
+     * //it will open the build-in date picker and update medicineDate String
+     */
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

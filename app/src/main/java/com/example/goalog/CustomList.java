@@ -25,7 +25,6 @@ public class CustomList extends ArrayAdapter<Habit> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //return super.getView(position, convertView, parent);
         View view = convertView;
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
@@ -37,11 +36,9 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView habitReason= view.findViewById(R.id.habit_reason);
         TextView startDate= view.findViewById(R.id.startDate);
 
-
         habitName.setText(habit.getHabitTitle());
         habitReason.setText(habit.getHabitReason());
         startDate.setText(habit.getStartDate());
-
 
         return view;
 

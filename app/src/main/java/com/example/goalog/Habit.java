@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * A habit consists of the following attribute:
+ *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
+ *     [habitReason] is motivation, and has length constraint of 30 character;
+ *     [startDate] in yyyy-mm-dd format;
+ *     [weekdayPlan] "123" if want this habit done on Monday, Tuesday, Wednesday;
+ *     [isPublic] whether this object is public to others;
+ *     [habitID] is a unique id for each habit;
+ */
+
 public class Habit implements Serializable {
     // Members
     //private int uid;
@@ -18,6 +28,7 @@ public class Habit implements Serializable {
     private boolean isPublic;
     private String habitID;
 
+    //constructor
     public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic,String habitID){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
@@ -27,9 +38,10 @@ public class Habit implements Serializable {
         this.habitID = habitID;
     }
 
+    //getters and setters
     public void setHabitReason(String habitReason) {
-        if (habitReason.length() <= 30) {
-            this.habitReason = habitReason;
+        if (habitReason.length() > 30) {
+            this.habitReason = habitReason.substring(0,30);
         }
     }
 
@@ -38,8 +50,8 @@ public class Habit implements Serializable {
     }
 
     public void setHabitTitle(String habitTitle) {
-        if (habitTitle.length() <= 20) {
-            this.habitTitle = habitTitle;
+        if (habitTitle.length() > 20) {
+            this.habitTitle = habitTitle.substring(0,30);
         }
     }
 

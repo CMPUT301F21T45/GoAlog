@@ -32,17 +32,8 @@ public class CustomToday extends ArrayAdapter<Habit> {
         }
 
         Habit habit = Habits.get(position);
-
         TextView habitName= view.findViewById(R.id.habit_title);
-        //TextView habitReason= view.findViewById(R.id.habit_reason);
-        //TextView startDate= view.findViewById(R.id.startDate);
-
-
         habitName.setText(habit.getHabitTitle());
-        //habitReason.setText(habit.getHabitReason());
-        //startDate.setText(habit.getStartDate());
-
-
         return view;
 
     } // public view
