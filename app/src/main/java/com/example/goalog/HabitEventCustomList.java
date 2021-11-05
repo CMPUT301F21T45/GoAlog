@@ -35,14 +35,14 @@ public class HabitEventCustomList extends ArrayAdapter<HabitEvent> {
 
         HabitEvent habitEvent = HabitEvents.get(position);
 
-        TextView habitName= view.findViewById(R.id.habitTitle);
 
         TextView completeDate= view.findViewById(R.id.completeDate);
 
-
-        habitName.setText(habitEvent.getHabitTitle());
+        TextView eventComment= view.findViewById(R.id.eventComment);
 
         completeDate.setText(habitEvent.getCompleteDate().toString());
+        eventComment.setText(habitEvent.getEventComment().toString());
+
 
 
         return view;

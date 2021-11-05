@@ -71,7 +71,7 @@ public class AddHabitActivity extends AppCompatActivity{
         //if Selected Habit is not null, we jump here from a selected Habit ---> edit mode
         if(myHabit != null)
         {   //edit mode
-            activityTitle.setText("EDIT HABIT");
+            activityTitle.setText("EDIT GOAL");
             editMode = true;
 
             //filled in with Habit unedited details

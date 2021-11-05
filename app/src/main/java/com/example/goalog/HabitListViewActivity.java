@@ -19,6 +19,7 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
@@ -52,7 +53,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         FirebaseApp.initializeApp(this);
         //-------set up parameters-------------------
         setContentView(R.layout.habit_list_view);
-        Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
+        FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);

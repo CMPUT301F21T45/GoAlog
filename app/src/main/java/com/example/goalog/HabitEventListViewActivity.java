@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -56,6 +57,9 @@ public class HabitEventListViewActivity extends AppCompatActivity {
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
         setContentView(R.layout.habitevent_list_view);
+        TextView habitName= findViewById(R.id.habit_title_for_event_list);
+        habitName.setText(selectedHabit.getHabitTitle());
+
         HabitEventList=findViewById(R.id.habit_event_list);
         habitEventDataList = new ArrayList<>();
         habitEventArrayAdapter= new HabitEventCustomList(this, habitEventDataList);
