@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -56,7 +53,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomList(this, habitDataList);
+        habitAdapter = new CustomHabitList(this, habitDataList);
         HabitList.setAdapter(habitAdapter);
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = database.collection("user003"); //assume we already logged in

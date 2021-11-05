@@ -14,38 +14,57 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomTodayContent extends ArrayAdapter<Habit> {
+/**
+ * An ArrayAdapter for habit list, used in the page to show all habit of today
+ *
+ * @see UserPageActivity
+ */
+public class CustomTodayHabitList extends ArrayAdapter<Habit> {
     private final ArrayList<Habit> Habits;
     private final Context context;
     private static boolean doneClicked = false;
 
-    public CustomTodayContent(Context context, ArrayList<Habit> Habits) {
+    /**
+     * Constructor
+     *
+     * @param context
+     * @param Habits an array list of habits
+     */
+    public CustomTodayHabitList(Context context, ArrayList<Habit> Habits) {
         super(context,0,Habits);
         this.Habits = Habits;
         this.context = context;
-    }//public custom list
+    }
 
+
+    /**
+     * help to build the view inside a content of a list view
+     *
+     * @param position      the position of this content inside the list
+     * @param convertView   the view to be built
+     * @param parent        parent view group
+     * @return              the built view based on given information
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //return super.getView(position, convertView, parent);
         View view = convertView;
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.content_today_list, parent,false);
         }
-
+        // get corresponding Habit object
         Habit habit = Habits.get(position);
 
+        // show the Habit name
         TextView habitName= view.findViewById(R.id.habit_title);
-
         habitName.setText(habit.getHabitTitle());
 
         Button doneButton = (Button)view.findViewById(R.id.done_goal);
-
-//        if (doneClicked){doneButton.setVisibility(View.INVISIBLE);}
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            // once the done button is clicked
             public void onClick(View v) {
+                // go to AddHabitEventActivity page with the Habit object informantion
                 Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
                 intent.putExtra("Habit",habit);
                 parent.getContext().startActivity(intent);
@@ -53,12 +72,9 @@ public class CustomTodayContent extends ArrayAdapter<Habit> {
             }
         });
 
-
-
-
         return view;
 
-    } // public view
+    }
 
 
 }

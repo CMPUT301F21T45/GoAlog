@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScrollingActivity">
-        </activity>
-        <activity
             android:name=".AddHabitActivity"
             android:label="Goal Detail"
             android:exported="true">
@@ -34,11 +31,6 @@
             android:label="Goal List"
             android:exported="true"
             android:parentActivityName=".UserPageActivity">
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".HabitEventListViewActivity"
@@ -46,10 +38,6 @@
             android:exported="true"
             android:parentActivityName=".HabitListViewActivity">
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
 
         <activity
