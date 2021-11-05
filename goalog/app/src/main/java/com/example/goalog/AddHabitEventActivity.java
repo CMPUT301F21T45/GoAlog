@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +30,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private Button confirmButton;
     private String eventCommentString;
     private String completeDate;
+    private TextView title;
+    private TextView dateComplete;
+    private TextView id;
     private Uri filePath;
 
 
@@ -36,26 +40,31 @@ public class AddHabitEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
+        optimalComment = findViewById(R.id.comment_text);//create an optional comment
+        title = findViewById(R.id.habitTitle);
+        dateComplete = findViewById(R.id.eventDate);
+        id = findViewById(R.id.eventId);
+
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        completeDate = date.format(today);
+
+        final String habitEventID = UUID.randomUUID().toString().replace("-", "");
+        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
+        String clickedHabitID = (String) clickedHabit.getHabitID();
+
+        title.setText(clickedHabit.getHabitTitle());
+        dateComplete.setText(completeDate);
+        id.setText(habitEventID);
 
         confirmButton = (Button) findViewById(R.id.confirm_habit_event);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                optimalComment = findViewById(R.id.comment_text);//create an optional comment
-                // image = (ImageView) findViewById(R.id.first_image);
                 eventCommentString = optimalComment.getText().toString();
-                //Log.d("Sample", "onClick: "+eventCommentString);
-
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                Date today = new Date();
-                completeDate = date.format(today);
-
+                // image = (ImageView) findViewById(R.id.first_image);
                 //deleteIcon = (ImageView) findViewById(R.id.image_delete);
 
-                final String habitEventID = UUID.randomUUID().toString().replace("-", "");
-                Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
-                String clickedHabitID = (String) clickedHabit.getHabitID();
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
                 // Log.d("sample", "onClick: "+ clickedHabit);
@@ -66,12 +75,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     Log.d("sample", "onClick: "+ newHabitEvent);
                     collectionReference.document(newHabitEvent.getEventID()).set(data);
                 }
+
+                //Intent intent = new Intent(AddHabitEventActivity.this, CustomTodayActivity.class);
+                //intent.putExtra("success",true);
+                //startActivity(intent);
             }
         });
-
-
-
-        }
+    }
 }
 
 /*save for later, for optional photograph

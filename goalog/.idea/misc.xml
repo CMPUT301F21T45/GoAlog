@@ -4,11 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_habit_event.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_habit_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/content_today_list.xml" value="0.13802083333333334" />
+        <entry key="app/src/main/res/layout/content_today_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/habit_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/habit_list_view.xml" value="0.20006172437402103" />
         <entry key="app/src/main/res/layout/user_page.xml" value="0.2671875" />

@@ -36,12 +36,8 @@ public class CustomTodayActivity extends ArrayAdapter<Habit> {
         Habit habit = Habits.get(position);
 
         TextView habitName= view.findViewById(R.id.habit_title);
-        //TextView habitReason= view.findViewById(R.id.habit_reason);
-        //TextView startDate= view.findViewById(R.id.startDate);
 
         habitName.setText(habit.getHabitTitle());
-        //habitReason.setText(habit.getHabitReason());
-        //startDate.setText(habit.getStartDate());
 
         Button doneButton = (Button)view.findViewById(R.id.done_goal);
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -50,17 +46,14 @@ public class CustomTodayActivity extends ArrayAdapter<Habit> {
                 Intent intent = new Intent(parent.getContext(), AddHabitEventActivity.class);
                 intent.putExtra("Habit",habit);
                 parent.getContext().startActivity(intent);
-
             }
         });
-
-
 
 
 
         return view;
 
     } // public view
-//    public
+
 
 }
