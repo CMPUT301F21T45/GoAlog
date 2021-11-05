@@ -67,9 +67,6 @@ public class HabitListViewActivity extends AppCompatActivity{
                 Intent intent=new Intent(HabitListViewActivity.this,HabitEventListViewActivity.class);
                 intent.putExtra("Selected",selectedHabit);
                 startActivity(intent);
-
-
-
             }
         });
 

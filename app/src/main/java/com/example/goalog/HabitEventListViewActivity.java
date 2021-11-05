@@ -40,7 +40,7 @@ import javax.annotation.Nullable;
 public class HabitEventListViewActivity extends AppCompatActivity {
     SwipeMenuListView HabitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
-    ArrayList<HabitEvent> List;
+    ArrayList<HabitEvent> habitEventDataList;
     /** HabitListViewActivity:
      * 1. Retrieve habitEvent data list from firebase
      * 2. Map habitEvent["title","Date"] on listView
@@ -54,7 +54,7 @@ public class HabitEventListViewActivity extends AppCompatActivity {
         //-------set up parameters-------------------
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
-
+        setContentView(R.layout.habitevent_list_view);
         HabitEventList=findViewById(R.id.habit_event_list);
         habitEventDataList = new ArrayList<>();
         habitEventArrayAdapter= new HabitEventCustomList(this, habitEventDataList);
@@ -71,7 +71,7 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                 public void onEvent(
                         @Nullable QuerySnapshot queryDocumentSnapshots,
                         @Nullable FirebaseFirestoreException error) {
-                    List.clear();
+                    habitEventDataList.clear();
 
                     assert queryDocumentSnapshots != null;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
@@ -85,108 +85,87 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             String completeTime =  (String)  map.get("completeDate");
                             String eventCommentString = (String) map.get("eventComment");
                             String eventID = (String) map.get("eventID");
-                            List.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
+                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
                         }
 
-        final CollectionReference collectionReference = database.collection("user003")
-                .document(selectedHabitId)
-                .collection("HabitEvent");
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onEvent(
-                    @Nullable QuerySnapshot queryDocumentSnapshots,
-                    @Nullable FirebaseFirestoreException error) {
-                habitEventDataList.clear();
-
-                assert queryDocumentSnapshots != null;
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
-                    // TODO: Retrieve data from firebase.
-                    // Adding the habits from FireStore
-                    HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
-                    if (doc.getData().get("Event") != null){
-
-                        String habitTitle = (String)  map.get("habitTitle");
-                        String completeTime =  (String)  map.get("completeDate");
-                        habitEventDataList.add(new HabitEvent(completeTime,habitTitle));
                     }
-
+                    habitEventArrayAdapter.notifyDataSetChanged();
                 }
-                habitEventArrayAdapter.notifyDataSetChanged();
-            }
-        });
-        setContentView(R.layout.habitevent_list_view);
+            });
 
+            // for swipe delete
+            SwipeMenuCreator creator = new SwipeMenuCreator() {
 
+                @Override
+                public void create(SwipeMenu menu) {
+                    // create "open" item
+                    SwipeMenuItem openItem = new SwipeMenuItem(
+                            getApplicationContext());
+                    // set item background
+                    openItem.setBackground(new ColorDrawable(Color.rgb(0x33, 0x99,
+                            0xff)));
+                    // set item width
+                    openItem.setWidth(180);
+                    // set item title
+                    openItem.setIcon(R.drawable.ic_edit);
+                    // add to menu
+                    menu.addMenuItem(openItem);
 
-        // for swipe delete
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0x33, 0x99,
-                        0xff)));
-                // set item width
-                openItem.setWidth(180);
-                // set item title
-                openItem.setIcon(R.drawable.ic_edit);
-                // add to menu
-                menu.addMenuItem(openItem);
-
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
-                // set item width
-                deleteItem.setWidth(180);
-                // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete);
-                // add to menu
-                menu.addMenuItem(deleteItem);
-            }
-        };
-
-        // set creator
-        HabitEventList.setMenuCreator(creator);
-
-        HabitEventList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    case 0:
-                        // edit
-
-                    case 1:
-                        // delete
-
-//                        TextView view = menu.findViewById(R.id.city_text);
-                        collectionReference.document(habitEventDataList.get(position).getEventID())
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("Sample", "DocumentSnapshot successfully deleted!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("Sample", "Error deleting document", e);
-                                    }
-                                });
-                        break;
+                    // create "delete" item
+                    SwipeMenuItem deleteItem = new SwipeMenuItem(
+                            getApplicationContext());
+                    // set item background
+                    deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                            0x3F, 0x25)));
+                    // set item width
+                    deleteItem.setWidth(180);
+                    // set a icon
+                    deleteItem.setIcon(R.drawable.ic_delete);
+                    // add to menu
+                    menu.addMenuItem(deleteItem);
                 }
-                // false : close the menu; true : not close the menu
-                return false;
-            }
-        });
+            };
+
+            // set creator
+            HabitEventList.setMenuCreator(creator);
+
+            HabitEventList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                    switch (index) {
+                        case 0:
+                            // Edit (pen is clicked)
+
+                            break;
+                        case 1:
+                            // Delete (trash can is clicked)
+                            collectionReference.document(habitEventDataList.get(position).getEventID())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Sample", "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Sample", "Error deleting document", e);
+                                        }
+                                    });
+                            break;
+                    }
+                    // false : close the menu; true : not close the menu
+                    return false;
+                }
+            });
+
+        }
+        catch (Exception e){
+            Intent intent = new Intent(HabitEventListViewActivity.this, HabitListViewActivity.class);
+            startActivity(intent);
+        }
+
 
 
 
