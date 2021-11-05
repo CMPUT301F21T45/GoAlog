@@ -19,7 +19,9 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -32,11 +34,10 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
-public class HabitListViewActivity extends AppCompatActivity /*implements AddHabitActivityConfirmListener*/ {
+public class HabitListViewActivity extends AppCompatActivity{
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-    boolean delete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
 
         HabitList.setAdapter(habitAdapter);
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user001");
+        final CollectionReference collectionReference = database.collection("user003");
 
         Button buttonAddHabit = (Button) findViewById(R.id.add_habit_button);
         buttonAddHabit.setOnClickListener(new View.OnClickListener() {
@@ -62,55 +63,21 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
             }
         });
 
+        //add an new habit to fireStore
         Habit newHabit = (Habit) getIntent().getSerializableExtra("New Habit");
         HashMap<String, Habit> data = new HashMap<>();
         data.put("HabitClass", newHabit);
         if (newHabit != null) {
-            collectionReference.document(newHabit.getHabitTitle()).set(data);
+            collectionReference.document(newHabit.getHabitID()).set(data);
+        }
+        //update existed habits
+        Habit updatedHabit = (Habit) getIntent().getSerializableExtra("Updated Habit");
+        HashMap<String, Object> editData = new HashMap<>();
+        editData.put("HabitClass", updatedHabit);
+        if (updatedHabit != null) {
+            collectionReference.document(updatedHabit.getHabitID()).update(editData);
         }
 
-
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(
-                    @Nullable QuerySnapshot queryDocumentSnapshots,
-                    @Nullable FirebaseFirestoreException error) {
-                habitDataList.clear();
-
-                assert queryDocumentSnapshots != null;
-                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    String habitTitle = doc.getId();
-                    if (doc.getData().get("HabitClass") != null) {
-                        HashMap<String, String> map = (HashMap<String, String>) doc.getData().get("HabitClass");
-                        //assert map != null;
-                        String habitReason = map.get("habitReason");
-                        String startDate = map.get("startDate");
-                        String weekdayPlan = map.get("weekdayPlan");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan));
-                    }
-                }
-                habitAdapter.notifyDataSetChanged();
-                // Notifying the adapter to render any new data fetched from the cloud
-            }
-        });
-
-
-/*
-        HabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!delete)
-                {
-                    Intent intent = new Intent(com.example.goalog.HabitList.this,AddHabitActivity.class);
-                    intent.putExtra("Selected Habit",habitDataList.get(i));
-                    startActivity(intent);
-                }else
-                {//implement delete here
-                }
-            }
-        });
- */
         // for swipe delete
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -153,11 +120,14 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
                 switch (index) {
                     case 0:
                         // edit
+                        Intent intent = new Intent(com.example.goalog.HabitListViewActivity.this,AddHabitActivity.class);
+                        intent.putExtra("Selected Habit",habitDataList.get(position));
+                        startActivity(intent);
                         break;
                     case 1:
                         // delete
 //                        TextView view = menu.findViewById(R.id.city_text);
-                        collectionReference.document(habitDataList.get(position).getHabitTitle())
+                        collectionReference.document(habitDataList.get(position).getHabitID())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -175,6 +145,33 @@ public class HabitListViewActivity extends AppCompatActivity /*implements AddHab
                 }
                 // false : close the menu; true : not close the menu
                 return false;
+            }
+        });
+
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(
+                    @Nullable QuerySnapshot queryDocumentSnapshots,
+                    @Nullable FirebaseFirestoreException error) {
+                habitDataList.clear();
+
+                assert queryDocumentSnapshots != null;
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
+                    if (doc.getData().get("HabitClass") != null) {
+                        HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
+                        //assert map != null;
+                        String habitTitle = (String) map.get("habitTitle");
+                        String habitReason = (String) map.get("habitReason");
+                        String startDate = (String)  map.get("startDate");
+                        String weekdayPlan = (String)  map.get("weekdayPlan");
+                        boolean isPublic = (boolean) map.get("public");
+                        String habitID = (String) map.get("habitID");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                    }
+                }
+                habitAdapter.notifyDataSetChanged();
+                // Notifying the adapter to render any new data fetched from the cloud
             }
         });
     }

@@ -1,6 +1,9 @@
 package com.example.goalog;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 public class Habit implements Serializable {
     // Members

@@ -1,0 +1,86 @@
+===========
+
+Habit
+
+Responsibilities
+Store details of a habit, including:
+- title
+- reason 
+- date to start
+- a plan for what days of the week it should regularly occur
+- how closely a doer follows its plan over time.
+
+Collaboration
+-Doer
+-Habit list
+-Habit event
+
+============
+
+
+Habit list
+
+Responsibilities
+-store a list of habits
+-show what habits a doer need to do today
+-allow doer to add habits
+-allow doer to view the details of habits
+-allow doer to edit the details of habits
+-allow doer to delete  habits
+
+Collaboration
+-Habit
+-Doer
+
+============
+
+Doer
+
+Responsibilities
+-Interact with doer’s own habit list and habit event list 
+-Store the information of doer profile 
+
+Collaboration
+-Habit list
+-Habit event list
+-Following list
+
+============
+
+Habit event
+
+Responsibilities
+Store the details of a habit event, including:
+-20 characters optional comment
+-optional photograph
+-optional location
+
+Collaboration
+-Doer
+-Habit event list
+-Habit
+
+============
+
+Habit event list
+
+Responsibilities
+Store a list of habit events
+Allow doer to delete his/her habit events
+Allow doer to edit his/her habit events
+
+Collaboration
+-Habit event
+-Doer
+
+============
+
+Following list
+
+Responsibilities
+-Store the information a list of doers that a doer follows
+-Show the habits and visual indicators of the other doers that a doer is granted to follow
+-A doer can grant or deny another doer to add him/her to his/her following list (Follow request)
+
+Collaboration
+-Doer
