@@ -3,17 +3,17 @@ package com.example.goalog;
 import java.util.ArrayList;
 
 public class User {
-    private String loginName;
+    private String userID; // Unique to database
     private String publicName;
     private String password;
     private ArrayList<Habit> habits;
 
-    public String getLoginName() {
-        return loginName;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getPublicName() {

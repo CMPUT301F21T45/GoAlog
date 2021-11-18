@@ -30,6 +30,13 @@
 
         </activity>
         <activity
+            android:name=".LoginRegistrationActivity"
+            android:label="LoginRegistration"
+            android:exported="true"
+            android:theme="@style/Theme.Goalog.NoActionBar">
+
+        </activity>
+        <activity
             android:name=".HabitListViewActivity"
             android:label="Goal List"
             android:exported="true"
