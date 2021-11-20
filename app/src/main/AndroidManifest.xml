@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Goalog">
         <activity
+            android:name=".NotificationActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Goalog.NoActionBar"/>
+        <activity
+            android:name=".MainPagesActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Goalog.NoActionBar"/>
+        <activity
             android:name=".UserPageActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -22,48 +30,33 @@
         </activity>
         <activity
             android:name=".AddHabitActivity"
-            android:label="Goal Detail"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".LoginRegistrationActivity"
-            android:label="LoginRegistration"
             android:exported="true"
-            android:theme="@style/Theme.Goalog.NoActionBar">
-
-        </activity>
+            android:label="Goal Detail" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true"
+            android:label="Welcome"
+            android:theme="@style/Theme.Goalog.NoActionBar" />
         <activity
             android:name=".HabitListViewActivity"
-            android:label="Goal List"
             android:exported="true"
-            android:parentActivityName=".UserPageActivity">
-        </activity>
+            android:label="Goal List"
+            android:parentActivityName=".UserPageActivity" />
         <activity
             android:name=".HabitEventListViewActivity"
-            android:label="Footprints"
             android:exported="true"
-            android:parentActivityName=".HabitListViewActivity">
-
-        </activity>
-
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="true">
-        </activity>
-
+            android:label="Footprints"
+            android:parentActivityName=".HabitListViewActivity" />
         <activity
             android:name=".AddHabitEventActivity"
-            android:label="Goal Completion Detail"
-            android:exported="true">
-
+            android:exported="true"
+            android:label="Goal Completion Detail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

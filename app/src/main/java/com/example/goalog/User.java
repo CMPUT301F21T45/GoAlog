@@ -1,6 +1,10 @@
 package com.example.goalog;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * User Class
@@ -15,10 +19,23 @@ import java.util.ArrayList;
 public class User {
     private String userID; // Unique to database
     private String email;
-    private String publicName;
-    private String password;
+    private String displayName;
     private final ArrayList<User> followings = new ArrayList<>();
     private final ArrayList<User> followers = new ArrayList<>();
+
+    public User(String userID, String email, String publicName) {
+        this.userID = userID;
+        this.email = email;
+        this.displayName = publicName;
+    }
+
+    public void sendToFirebase() {
+        HashMap<String, User> data = new HashMap<>();
+        data.put("UserInfo", this);
+
+        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.userID);
+        ref.document("Info").set(data);
+    }
 
     public String getEmail() {
         return email;
@@ -36,20 +53,12 @@ public class User {
         this.userID = userID;
     }
 
-    public String getPublicName() {
-        return publicName;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setPublicName(String publicName) {
-        this.publicName = publicName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public ArrayList<User> getFollowings() {

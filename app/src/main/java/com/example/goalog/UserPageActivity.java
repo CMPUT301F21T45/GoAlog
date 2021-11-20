@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,9 +11,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -164,6 +168,33 @@ public class UserPageActivity extends AppCompatActivity {
             }
         });
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_my_page);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.navigation_trend:
+                        startActivity(new Intent(getApplicationContext(), MainPagesActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.navigation_notifications:
+                        startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.navigation_my_page:
+                        return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Disable Back Button.
     }
 }
 

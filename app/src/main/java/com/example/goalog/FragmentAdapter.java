@@ -18,9 +18,9 @@ public class FragmentAdapter extends FragmentStateAdapter {
         switch (position) {
 
             case 1:
-                return new RegistrationFragment();
+                return new WelcomeFragment2();
         }
-        return new LoginFragment();
+        return new WelcomeFragment1();
     }
 
     @Override
