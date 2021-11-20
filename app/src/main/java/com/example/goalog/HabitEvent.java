@@ -1,6 +1,7 @@
 package com.example.goalog;
 
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -30,6 +31,7 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     private String eventComment;
     private String completeDate;
     private String habitTitle;
+    private String image;
     private double latitude;
     private double longitude;
     private Boolean hasLocation;
@@ -49,12 +51,13 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
      *   The habitTitle has no use.
      *   Other attributes need to be included later.
      */
-    public HabitEvent(String eventID,String eventCommentString,String completeDate, String habitTitle) {
+    public HabitEvent(String eventID, String eventCommentString, String completeDate, String habitTitle, String image) {
         this.completeDate = completeDate;
         this.eventID=eventID;
         this.habitTitle = habitTitle;
         this.eventComment=eventCommentString;
         this.hasLocation = true;
+        this.image = image;
     }
 
      /*
@@ -153,6 +156,13 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         }
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public boolean hasLocation() {
         return this.hasLocation;  // maybe no .thhis?? not sure will check later

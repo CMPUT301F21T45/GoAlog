@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +98,8 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             String completeTime =  (String)  map.get("completeDate");
                             String eventCommentString = (String) map.get("eventComment");
                             String eventID = (String) map.get("eventID");
-                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
+                            String image = (String) map.get("image");
+                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle,image));
                         }
 
                     }
