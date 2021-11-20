@@ -32,7 +32,12 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 /**
+ * UserPageActivity
  * The class for User Page and other interactions.
+ * The page displays the user profile, a progress indicator, today's habit list.
+ * Current Issues:
+ *   1. Need to set the "Done" button to invisible after successfully create a Event for the habit.
+ *   2. Finish Visual Indicator
  */
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
@@ -95,7 +100,7 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         habitDataList = new ArrayList<>();
-        listAdapter = new CustomTodayContent(this,habitDataList);
+        listAdapter = new CustomTodayHabitList(this,habitDataList);
         todayList = findViewById(R.id.today_list);
         todayList.setAdapter(listAdapter);
 
@@ -149,6 +154,7 @@ public class UserPageActivity extends AppCompatActivity {
                         ratioNum = (int) 100 * 1/numOfHabit;
                     }
 
+                    // TODO: Finish Visual Indicator
                     // Today's Progress:
                     percentage.setText(ratioNum+"%");
                     indicator.setProgress(ratioNum, true);

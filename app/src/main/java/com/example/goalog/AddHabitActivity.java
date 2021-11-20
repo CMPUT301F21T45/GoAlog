@@ -3,7 +3,6 @@ package com.example.goalog;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,18 +20,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+/**
+ * an Activity page with fields to show attributes of an Habit object and makes update to firestore
+ * Used in two cases:
+ *  1. the add Habit page, with all fields blank and needed to be filled by user
+ *  2. the Habit detail page, with all fields of a given Habit and allows user to edit
+ *
+ */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class AddHabitActivity extends AppCompatActivity{
-    /**AddHabitActivity:
-     * 1.Receive selected Habit from intent,
-     * if Habit != null, edit mode,other wise create a new habit
-     * 2. In add mode, check length of title and reason,
-     * create a new habit, send the new Habit to HabitListViewActivity to upload it to firebase
-     * 3. In edit mode, filled in the editTexts with habit details
-     * send the updated Habit to HabitListViewActivity to upload it to firebase
-     * 4. In edit mode, input constraints is deal in Habit Title/reason setters
-     */
 
+    // all fields
     private Button selectDate;
     private Button confirmButton;
     private EditText habitTitle;
@@ -44,9 +42,10 @@ public class AddHabitActivity extends AppCompatActivity{
     private boolean habitPrivacy = false;
     public static String habitDateString;
     protected static TextView dateDisplay;
-    public static boolean editMode = false;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    // check whether the Activity is used for add or edit a Habit
+    public static boolean editMode = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -54,7 +53,7 @@ public class AddHabitActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
-        //set up parameters
+        // get realated views
         activityTitle = findViewById(R.id.activity_add_habit_title);
         dateDisplay = findViewById(R.id.display_start_date_add_habit);
         habitTitle = findViewById(R.id.habit_title);
@@ -69,13 +68,13 @@ public class AddHabitActivity extends AppCompatActivity{
         privacy = findViewById(R.id.checkbox_privacy_add);
 
         Habit myHabit = (Habit) getIntent().getSerializableExtra("Selected Habit");
-        //if Selected Habit is not null, we jump here from a selected Habit ---> edit mode
-        if(myHabit != null)
-        {   //edit mode
+        //if there's a selected Habit, this is an edit Habit page
+        if(myHabit != null) {
+            //edit mode
             activityTitle.setText("EDIT GOAL");
             editMode = true;
 
-            //filled in with Habit unedited details
+            // filled in Habit details
             habitTitle.setText(myHabit.getHabitTitle());
             habitReason.setText(myHabit.getHabitReason());
             dateDisplay.setText(myHabit.getStartDate());
@@ -90,6 +89,7 @@ public class AddHabitActivity extends AppCompatActivity{
             if (weekPlan.contains("7")){sun.setChecked(true);}
             if (myHabit.isPublic()){privacy.setChecked(true);}
         }
+        //if there's no selected Habit, this is an add Habit page
         else
         {   //add mode
             LocalDateTime now = LocalDateTime.now();
@@ -97,6 +97,7 @@ public class AddHabitActivity extends AppCompatActivity{
             editMode = false;
         }
 
+        // for date selection
         selectDate = (Button) findViewById(R.id.select_date_add_habit);
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +115,8 @@ public class AddHabitActivity extends AppCompatActivity{
                 habitTitleString = habitTitle.getText().toString();
                 habitReasonString = habitReason.getText().toString();
                 habitDateString = dateDisplay.getText().toString();
-                //input constrain
+
+                // input constrains
                 if(habitTitleString.length()> 20) {
                     habitTitleString = habitTitleString.substring(0,30);
                 }
@@ -137,9 +139,9 @@ public class AddHabitActivity extends AppCompatActivity{
 
                 if (privacy.isChecked()){habitPrivacy = true;}
 
-                if(editMode)
-                {   //In edit mode
-                    //update with new information
+                // In edit mode
+                if(editMode) {
+                    // if inputs fits all constraints, update with new information
                     if (habitTitleString.length()>0 && habitReason.length()>0 && isScheduled) {
                         editMode = false;
                         myHabit.setHabitTitle(habitTitleString);
@@ -148,29 +150,39 @@ public class AddHabitActivity extends AppCompatActivity{
                         myHabit.setWeekdayPlan(checked.toString());
                         myHabit.setPublic(habitPrivacy);
 
-                        //send the Habit back to AddHabit
+                        // back to last page with the updated habit information
                         Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
                         intent.putExtra("Updated Habit", myHabit);
                         Toast.makeText(v.getContext(), "Successfully Edited!",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(intent);
-                    } else {
+
+                    }
+                    // if inputs don't fit the constraints, nothing happens
+                    else {
                         Toast.makeText(v.getContext(),
                                 "Please enter a title & reason, and schedule for your habit!",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
-                else
-                {   //in add mode
+
+                //in add mode
+                else {
+                    // if inputs fits all constraints, update with new information
                     if (habitTitleString.length()>0 && habitReason.length()>0 && isScheduled) {
+                        // generate an ID for new Habit
                         final String habitID = UUID.randomUUID().toString().replace("-", "");
                         Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID);
+
+                        // back to last page with the new habit information
                         Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
                         intent.putExtra("New Habit", newHabit);
                         Toast.makeText(v.getContext(), "The habit has been added to your list!",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(intent);
-                    } else {
+                    }
+                    // if inputs don't fit the constraints, nothing happens
+                    else {
                         Toast.makeText(v.getContext(),
                                 "Please enter a title & reason, and schedule for your habit!",
                                 Toast.LENGTH_SHORT).show();

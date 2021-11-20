@@ -20,8 +20,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-
+/**
+ * An Activity page with fields to show attributes of an HabitEvent object and makes update to firestore
+ * Used in two cases:
+ *  1. the add HabitEvent page, with all fields blank and needed to be filled by user
+ *  2. the HabitEvent detail page, with all fields of a given HabitEvent and allows user to edit
+ *
+ *  Currently unsolved issues: the optional photograph of HabitEvent is not yet implemented,
+ *  so there are some related unused attributes as well as related commented-out code
+ */
 public class AddHabitEventActivity extends AppCompatActivity {
+
+    // all fields
     private EditText optimalComment;
     private ImageView image;
     private ImageView deleteIcon;
@@ -34,33 +44,40 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private TextView title;
     private TextView dateComplete;
     private Uri filePath;
-    private boolean editMode = false;
 
+    // check whether the Activity is used for add or edit a HabitEvent
+    private boolean editMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
+
+        // get realated views
         optimalComment = findViewById(R.id.comment_text);//create an optional comment
         title = findViewById(R.id.habitTitle);
         dateComplete = findViewById(R.id.eventDate);
-
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         completeDate = date.format(today);
 
+        // get related Habit of this HabitEvent
         Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
         String clickedHabitID = (String) clickedHabit.getHabitID();
+        // get HabitEvent
         HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");
-        if(needUpdatedEvent != null)
-        {
+        //if there's a selected HabitEvent, this is an edit HabitEvent page
+        if(needUpdatedEvent != null) {
+            // edit mode
             editMode = true;
+            // filled in HabitEvent details
             optimalComment.setText(needUpdatedEvent.getEventComment());
         }
         else {
+            // add mode
             editMode =false;
         }
-        final String habitEventID = UUID.randomUUID().toString().replace("-", "");
+        // event
         title.setText(clickedHabit.getHabitTitle());
         dateComplete.setText(completeDate);
 
@@ -71,27 +88,34 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 eventCommentString = optimalComment.getText().toString();
                 // image = (ImageView) findViewById(R.id.first_image);
                 //deleteIcon = (ImageView) findViewById(R.id.image_delete);
-
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
+
+                // edit mode
                 if(editMode) {
                     editMode = false;
+                    // updates HabitEvent to firebase
                     needUpdatedEvent.setEventComment(eventCommentString);
                     HashMap<String,Object> data = new HashMap<>();
                     data.put("Event",needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
+                    // back to last page
                     Intent intent = new Intent(AddHabitEventActivity.this, HabitEventListViewActivity.class);
                     Toast.makeText(v.getContext(), "Event Successfully Edited", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
-                } else {
+                }
+                // add mode
+                else {
+                    final String habitEventID = UUID.randomUUID().toString().replace("-", "");
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate,clickedHabit.getHabitTitle());
                     HashMap<String, HabitEvent> data = new HashMap<>();
                     data.put("Event", newHabitEvent);
                     if (newHabitEvent != null) {
+                        // updates new HabitEvent to firebase
                         collectionReference.document(newHabitEvent.getEventID()).set(data);
                     }
+                    // back to user page (the one with today's habits list)
                     Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
-                    //intent.putExtra("success",true);
                     Toast.makeText(v.getContext(), "New Event Created", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
@@ -102,6 +126,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 }
+
+// the following commented-out codes are related to the
+// unimplemented optional photigraph of Habit Event, please ignore them
 
 /*save for later, for optional photograph
         /*
