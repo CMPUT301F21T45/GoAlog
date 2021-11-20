@@ -1,6 +1,10 @@
 package com.example.goalog;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -9,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 
 public class LoginRegistrationActivity extends AppCompatActivity {
+    // TODO: Change to main page
 
     private TabLayout loginTab;
     private ViewPager2 viewPager;
@@ -22,7 +27,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         loginTab = findViewById(R.id.tabLayout_login);
         viewPager = findViewById(R.id.view_pager_login);
 
-        /*
+
         Button loginButton = findViewById(R.id.login_button);
         Button registrationButton = findViewById(R.id.regis_button);
 
@@ -31,8 +36,6 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         EditText userLoginPWD = findViewById(R.id.password_login_edittext);
         EditText userRegisPWD = findViewById(R.id.password_regis_edittext);
         EditText nameRegis = findViewById(R.id.name_regis_edittext);
-
-         */
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new FragmentAdapter(fragmentManager, getLifecycle());
@@ -64,7 +67,6 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                 loginTab.selectTab(loginTab.getTabAt(position));
             }
         });
-
 
 
     }

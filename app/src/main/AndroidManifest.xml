@@ -60,6 +60,11 @@
         </activity>
 
         <activity
+            android:name=".SignUpActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".AddHabitEventActivity"
             android:label="Goal Completion Detail"
             android:exported="true">

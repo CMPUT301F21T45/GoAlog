@@ -14,10 +14,19 @@ import java.util.ArrayList;
  */
 public class User {
     private String userID; // Unique to database
+    private String email;
     private String publicName;
     private String password;
     private final ArrayList<User> followings = new ArrayList<>();
     private final ArrayList<User> followers = new ArrayList<>();
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getUserID() {
         return userID;
