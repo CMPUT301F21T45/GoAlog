@@ -85,6 +85,7 @@ public class NotificationActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO: no empty email allowed
                 String targetEmail = targetEmailEditText.getText().toString();
                 String reasonString = reasonEditText.getText().toString();
 
