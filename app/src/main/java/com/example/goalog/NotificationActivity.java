@@ -117,8 +117,8 @@ public class NotificationActivity extends AppCompatActivity {
                 });
             }
         });
-        //TODO: list of all notifications
-        //TODO: grant deny permissions from another doer:grant-->add toUser to following, fromUser to toUsers' followers
+        // TODO: list of all notifications
+        // TODO: grant deny permissions from another doer:grant-->add toUser to following, fromUser to toUsers' followers
         //                                                Deny-->delete this request on firebase
     }
 }

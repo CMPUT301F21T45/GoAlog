@@ -33,7 +33,7 @@ public class User {
         HashMap<String, User> data = new HashMap<>();
         data.put("UserInfo", this);
 
-        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.userID);
+        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
         ref.document("Info").set(data);
     }
 
