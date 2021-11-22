@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,18 @@ public class NotificationActivity extends AppCompatActivity {
         targetEmailEditText = findViewById(R.id.send_request_email);
         reasonEditText = findViewById(R.id.send_request_reason);
         Button sendButton = (Button) findViewById(R.id.send_request_button);
+        Button cancelButton = findViewById(R.id.cancel_request_button);
+        Button callToMakeRequestButton = findViewById(R.id.call_to_make_request);
+        LinearLayout makeRequestLayout = findViewById(R.id.request_making_layout);
+
+        callToMakeRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRequestLayout.setVisibility(View.VISIBLE);
+                callToMakeRequestButton.setVisibility(View.GONE);
+            }
+        });
+
         db = FirebaseFirestore.getInstance();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -58,6 +71,14 @@ public class NotificationActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRequestLayout.setVisibility(View.GONE);
+                callToMakeRequestButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -87,6 +108,9 @@ public class NotificationActivity extends AppCompatActivity {
                                 followRequest newRequest = new followRequest(currentUser.getEmail(), targetEmail, reasonString);
                                 newRequest.sendToFirebase();
                             }
+                            Toast.makeText(view.getContext(), "Request Sent!", Toast.LENGTH_LONG).show();
+                            makeRequestLayout.setVisibility(View.GONE);
+                            callToMakeRequestButton.setVisibility(View.VISIBLE);
                         }
                     }
                 });

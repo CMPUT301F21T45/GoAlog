@@ -40,14 +40,16 @@
         <entry key="..\:/Users/wbb19/Desktop/GoAlog-main/app/src/main/res/layout/user_page.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/selector_navi.xml" value="0.2984375" />
+        <entry key="app/src/main/res/layout-v21/activity_notification.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_add_habit_event.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_main_pages.xml" value="0.2682291666666667" />
-        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.356215532601857" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.19444444444444445" />
+        <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.335" />
         <entry key="app/src/main/res/layout/choose_type_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_habitevent_list_view.xml" value="0.28229166666666666" />
@@ -57,7 +59,7 @@
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_welcome_1.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/layout/habit_list.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/habit_list_view.xml" value="0.20006172437402103" />
+        <entry key="app/src/main/res/layout/habit_list_view.xml" value="0.1023567090009692" />
         <entry key="app/src/main/res/layout/habitevent_list_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/user_page.xml" value="0.2671875" />
         <entry key="app/src/main/res/layout/welcome.xml" value="0.14635416666666667" />

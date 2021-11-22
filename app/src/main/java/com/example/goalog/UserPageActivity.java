@@ -63,7 +63,7 @@ public class UserPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_page);
+        setContentView(R.layout.activity_user_page);
 
         Button myGoalButton = findViewById(R.id.my_goal);
         myGoalButton.setOnClickListener(new View.OnClickListener() {

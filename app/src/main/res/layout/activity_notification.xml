@@ -11,46 +11,113 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notifications"
+        android:text="Requests"
         android:textStyle="bold"
         android:textSize="40sp"
         android:padding="10dp"
         android:textColor="@color/black"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="15"
-            android:hint="Email"
-            android:id="@+id/send_request_email">
-        </EditText>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:hint="Message"
-            android:id="@+id/send_request_reason">
-        </EditText>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="enter"
-            android:id="@+id/send_request_button">
-        </Button>
-    </LinearLayout>
-
-    <TextView
+    <Button
+        android:id="@+id/call_to_make_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Send a Request"
+        android:visibility="visible"
+        android:textSize="16sp"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:textColor="@color/blue"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/request_making_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:textColorHint="#E9E9E9"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make a Request"
+            android:textSize="16sp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:textColor="@color/black"
+            android:textStyle="italic"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Email"
+            android:id="@+id/send_request_email"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"
+            android:hint="Message"
+            android:id="@+id/send_request_reason"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            android:layout_gravity="right">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:text="cancel"
+                android:textColor="#525252"
+                android:id="@+id/cancel_request_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:textColor="@color/blue"
+                android:text="send"
+                android:id="@+id/send_request_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Todo: List View -->
+    <!--
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+        -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textStyle="bold"
-        android:textSize="40sp"
-        android:padding="10dp"
-        android:textColor="@color/black"/>
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:text="  To be deleted\n  Replace it with a list view"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
