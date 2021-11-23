@@ -40,7 +40,7 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
 
         requestAdapter = new RequestAdapter(this, R.layout.content_request_list, requests);
-        requests.add(new FollowRequest("sender 1", "receiver", "hi there, hottie"));
+        requests.add(new FollowRequest("sender 1", "receiver", "'hi there, hottie'"));
         requests.add(new FollowRequest("sender 2", "receiver", "'Sample Long Message \n long long'"));
         requestListView = findViewById(R.id.request_list_view);
         requestListView.setAdapter(requestAdapter);
@@ -115,7 +115,9 @@ public class RequestActivity extends AppCompatActivity {
                             //TODO??: doer can only send request !once! to another doer?
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             if (!currentUser.getEmail().equals(targetEmail)) {
-                                FollowRequest newRequest = new FollowRequest(currentUser.getEmail(), targetEmail, reasonString);
+                                // Todo: Check
+                                String quoteReason = "'" + reasonString + "'";
+                                FollowRequest newRequest = new FollowRequest(currentUser.getEmail(), targetEmail, quoteReason);
                                 newRequest.sendToFirebase();
                             }
                             Toast.makeText(view.getContext(), "Request Sent!", Toast.LENGTH_LONG).show();
