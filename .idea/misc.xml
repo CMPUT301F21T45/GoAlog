@@ -54,6 +54,7 @@
         <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.32829361591126366" />
         <entry key="app/src/main/res/layout/choose_type_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/content_follow_listview.xml" value="0.375" />
         <entry key="app/src/main/res/layout/content_habitevent_list_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content_request_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.25885416666666666" />

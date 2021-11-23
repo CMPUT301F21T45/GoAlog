@@ -20,7 +20,8 @@ public class FollowRequest {
         HashMap<String, FollowRequest> data = new HashMap<>();
         data.put("requestInfo", this);
 
-        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.toUser).document("Notification").collection(this.fromUser);
+        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.toUser).
+                document("Notification").collection("notification");
         ref.document(this.fromUser).set(data);
     }
 
