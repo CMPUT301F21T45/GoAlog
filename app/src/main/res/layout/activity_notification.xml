@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationActivity"
+    tools:context=".RequestActivity"
     android:orientation="vertical">
 
     <TextView
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Make a Request"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:textColor="@color/black"
@@ -102,22 +102,25 @@
 
     </LinearLayout>
 
-    <!-- Todo: List View -->
-    <!--
-    <ListView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-        -->
+        android:layout_height="20dp"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:text="INBOX"
+        android:padding="10dp"
         android:textSize="20sp"
-        android:textColor="@color/white"
-        android:background="@color/black"
-        android:text="  To be deleted\n  Replace it with a list view"/>
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <ListView
+        android:id="@+id/request_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

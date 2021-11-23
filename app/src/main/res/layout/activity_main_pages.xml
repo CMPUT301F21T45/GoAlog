@@ -5,16 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainPagesActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/black">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, "
+            android:text="Tuesday "
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
             android:textSize="40sp"
             android:padding="10dp"
             android:textColor="@color/black"/>
@@ -22,32 +27,76 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_name"
-            android:text="Mr. Name"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:padding="10dp"
-            android:textColor="@color/black"/>
+            android:text="October 11"
+            android:gravity="right"
+            android:textSize="28sp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/black" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello!"
+                android:textSize="26sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="4dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_name"
+                android:text="Mr. Name"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:padding="4dp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have 3 tasks today."
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You have 3 tasks today."
-        android:layout_weight="1"
-        android:textSize="30sp"
-        android:padding="10dp"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Trending"
-        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:textSize="30sp"
-        android:padding="10dp"
-        android:textColor="@color/black"/>
+        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:layout_width="match_parent"

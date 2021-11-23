@@ -6,12 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainPagesActivity extends AppCompatActivity {
 
@@ -41,7 +38,7 @@ public class MainPagesActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.navigation_notifications:
-                        startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+                        startActivity(new Intent(getApplicationContext(), RequestActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.navigation_trend:

@@ -38,7 +38,9 @@
         <entry key="..\:/Users/wbb19/Desktop/GoAlog-main/app/src/main/res/layout/habit_list_view.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/wbb19/Desktop/GoAlog-main/app/src/main/res/layout/habitevent_list_view.xml" value="0.2" />
         <entry key="..\:/Users/wbb19/Desktop/GoAlog-main/app/src/main/res/layout/user_page.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/drawable-v24/ic_delete.xml" value="0.2513157894736842" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.2984375" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.2513157894736842" />
         <entry key="app/src/main/res/drawable/selector_navi.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout-v21/activity_notification.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.335" />
@@ -49,12 +51,13 @@
         <entry key="app/src/main/res/layout/activity_main_pages.xml" value="0.2682291666666667" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.356215532601857" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.19444444444444445" />
-        <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.32829361591126366" />
         <entry key="app/src/main/res/layout/choose_type_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_habitevent_list_view.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/content_request_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/content_today_list.xml" value="0.13802083333333334" />
+        <entry key="app/src/main/res/layout/content_today_list.xml" value="0.17509393349417784" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_welcome_1.xml" value="0.14895833333333333" />

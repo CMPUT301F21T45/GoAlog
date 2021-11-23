@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Goalog">
         <activity
-            android:name=".NotificationActivity"
+            android:name=".RequestActivity"
             android:exported="true"
             android:theme="@style/Theme.Goalog.NoActionBar"/>
         <activity
