@@ -41,7 +41,7 @@ public class RequestActivity extends AppCompatActivity {
 
         requestAdapter = new RequestAdapter(this, R.layout.content_request_list, requests);
         requests.add(new FollowRequest("sender 1", "receiver", "hi there, hottie"));
-        requests.add(new FollowRequest("sender 2", "receiver", "no way u looser"));
+        requests.add(new FollowRequest("sender 2", "receiver", "'Sample Long Message \n long long'"));
         requestListView = findViewById(R.id.request_list_view);
         requestListView.setAdapter(requestAdapter);
 

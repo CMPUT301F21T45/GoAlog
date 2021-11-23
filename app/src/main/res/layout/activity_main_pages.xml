@@ -86,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="You have 3 tasks today."
+            android:textStyle="italic"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:paddingStart="10dp"

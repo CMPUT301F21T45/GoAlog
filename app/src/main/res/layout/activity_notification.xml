@@ -71,6 +71,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:padding="10dp"
+            android:maxLength="150"
             android:hint="Message"
             android:id="@+id/send_request_reason"/>
 

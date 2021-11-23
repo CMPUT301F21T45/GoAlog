@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,10 +73,10 @@
                 <TextView
                     android:id="@+id/message_request_text_view"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="'Sample messages'"
+                    android:text="'Sample Long Message \n long long'"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="italic" />
