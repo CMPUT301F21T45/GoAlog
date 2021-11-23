@@ -13,10 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
+
         <TextView
+            android:id="@+id/day_of_week_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tuesday "
+            android:text="Sunday"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:textStyle="bold"
@@ -25,13 +27,14 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/date_today_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="October 11"
             android:gravity="right"
             android:textSize="28sp"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
+            android:paddingEnd="20dp"
+            android:paddingRight="20dp"
             android:paddingBottom="4dp"
             android:textColor="@color/black" />
 
@@ -62,7 +65,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:padding="4dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,12 +82,15 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/reminder_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="You have 3 tasks today."
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="22sp"
             android:padding="5dp"
             android:textColor="@color/black"/>
     </LinearLayout>
@@ -91,11 +99,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Trending"
+        android:textStyle="bold"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
         android:textSize="30sp"
         android:paddingTop="10dp"
-        android:paddingLeft="5dp"
         android:textColor="@color/white"/>
 
     <TextView
