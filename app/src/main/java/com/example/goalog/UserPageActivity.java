@@ -1,4 +1,5 @@
 package com.example.goalog;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -178,6 +181,61 @@ public class UserPageActivity extends AppCompatActivity {
                     ratio.setText("1/"+numOfHabit);
                     // Notifying the adapter to render any new data fetched from the cloud
                 }
+            }
+        });
+
+        LinearLayout followerLayout, followingLayout, todayLinearLayout;
+        followerLayout = findViewById(R.id.follower_click_layout);
+        followingLayout = findViewById(R.id.following_click_layout);
+        todayLinearLayout = findViewById(R.id.my_today_linear_layout);
+        TextView followerText = findViewById(R.id.follower_textview);
+        TextView followingText = findViewById(R.id.following_textview);
+        LinearLayout followerLLayout = findViewById(R.id.follower_list_layout);
+        LinearLayout followingLLayout = findViewById(R.id.following_list_layout);
+        ImageButton imageFollowerButton = findViewById(R.id.close_er_button);
+        ImageButton imageFollowingButton = findViewById(R.id.close_ing_button);
+        //Todo: following, follower;
+        ArrayList<User> following, follower;
+
+        imageFollowerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followerText.setTextColor(getResources().getColor(R.color.white));
+                followingLLayout.setVisibility(View.GONE);
+                followerLLayout.setVisibility(View.GONE);
+                todayLinearLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imageFollowingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followingText.setTextColor(getResources().getColor(R.color.white));
+                followingLLayout.setVisibility(View.GONE);
+                followerLLayout.setVisibility(View.GONE);
+                todayLinearLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        followerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followingText.setTextColor(getResources().getColor(R.color.white));
+                todayLinearLayout.setVisibility(View.GONE);
+                followingLLayout.setVisibility(View.GONE);
+                followerLLayout.setVisibility(View.VISIBLE);
+                followerText.setTextColor(getResources().getColor(R.color.blue));
+            }
+        });
+
+        followingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followerText.setTextColor(getResources().getColor(R.color.white));
+                todayLinearLayout.setVisibility(View.GONE);
+                followerLLayout.setVisibility(View.GONE);
+                followingLLayout.setVisibility(View.VISIBLE);
+                followingText.setTextColor(getResources().getColor(R.color.blue));
             }
         });
 

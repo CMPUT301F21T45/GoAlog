@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -34,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -42,6 +45,7 @@ public class RequestActivity extends AppCompatActivity {
     private EditText targetEmailEditText;
     private EditText reasonEditText;
     ListView requestListView;
+    Integer selection;
     ArrayList<FollowRequest> requests = new ArrayList<>();
     ArrayAdapter<FollowRequest> requestAdapter;
     FirebaseFirestore db;
@@ -52,10 +56,39 @@ public class RequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        db = FirebaseFirestore.getInstance();
         requestAdapter = new RequestAdapter(this, R.layout.content_request_list, requests);
-        try {
+        requestListView = findViewById(R.id.request_list_view);
+        requestListView.setAdapter(requestAdapter);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
+        targetEmailEditText = findViewById(R.id.send_request_email);
+        reasonEditText = findViewById(R.id.send_request_reason);
+        Button sendButton = (Button) findViewById(R.id.send_request_button);
+        Button cancelButton = findViewById(R.id.cancel_request_button);
+        Button callToMakeRequestButton = findViewById(R.id.call_to_make_request);
+        LinearLayout makeRequestLayout = findViewById(R.id.request_making_layout);
 
-            final CollectionReference collectionReference = db.collection(currentUser.getEmail())
+
+
+        requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selection = i;
+            }
+        });
+
+
+        callToMakeRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRequestLayout.setVisibility(View.VISIBLE);
+                callToMakeRequestButton.setVisibility(View.GONE);
+            }
+        });
+
+        try {
+            final CollectionReference collectionReference = db.collection(Objects.requireNonNull(currentUser.getEmail()))
                     .document("Notification")
                     .collection("notification");
             collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -84,26 +117,6 @@ public class RequestActivity extends AppCompatActivity {
                 }
             });
         }catch (Exception e) {}
-        requestListView = findViewById(R.id.request_list_view);
-        requestListView.setAdapter(requestAdapter);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
-        targetEmailEditText = findViewById(R.id.send_request_email);
-        reasonEditText = findViewById(R.id.send_request_reason);
-        Button sendButton = (Button) findViewById(R.id.send_request_button);
-        Button cancelButton = findViewById(R.id.cancel_request_button);
-        Button callToMakeRequestButton = findViewById(R.id.call_to_make_request);
-        LinearLayout makeRequestLayout = findViewById(R.id.request_making_layout);
-
-        callToMakeRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeRequestLayout.setVisibility(View.VISIBLE);
-                callToMakeRequestButton.setVisibility(View.GONE);
-            }
-        });
-
-        db = FirebaseFirestore.getInstance();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -169,4 +182,20 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
     }
+    public void deleteRequest () {
+
+    }
+        /*
+        ImageButton dismissButton = findViewById(R.id.dismiss_button);
+                dismissButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selection != null) {
+                            requests.remove(selection.intValue());
+                            requestAdapter.notifyDataSetChanged();
+                            selection = null;
+                        }
+                    }
+                });
+         */
 }

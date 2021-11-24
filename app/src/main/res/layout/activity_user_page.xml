@@ -36,50 +36,98 @@
             android:paddingBottom="6dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/following_click_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Following"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView
+                    android:id="@+id/following_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Following"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="379"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="20dp"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="379"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingRight="20dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Follower"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/white"/>
+           <LinearLayout
+               android:id="@+id/follower_click_layout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:clickable="true"
+               android:focusable="true">
+               <TextView
+                   android:id="@+id/follower_textview"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Follower"
+                   android:textStyle="bold"
+                   android:textSize="18sp"
+                   android:textColor="@color/white"/>
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:text="301"
-                android:textSize="18sp"
-                android:textColor="@color/white"/>
+               <TextView
+                   android:layout_width="90dp"
+                   android:layout_height="wrap_content"
+                   android:paddingLeft="10dp"
+                   android:paddingStart="10dp"
+                   android:text="301"
+                   android:textSize="18sp"
+                   android:textColor="@color/white"/>
+           </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/follower_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                android:text="Follower List"/>
+
+            <ImageButton
+                android:id="@+id/close_er_button"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white"
+                android:scaleType="fitCenter"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_delete_cross" />
+        </LinearLayout>
 
         <ListView
             android:id="@+id/follower_listview"
@@ -89,26 +137,65 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/following_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <ListView
-            android:id="@+id/follower_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                android:text="Following List" />
+
+            <ImageButton
+                android:id="@+id/close_ing_button"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white"
+                android:scaleType="fitCenter"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_delete_cross"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/following_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/my_today_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_weight="1"
+        android:visibility="visible">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/my_today_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -117,11 +204,11 @@
             android:textStyle="bold"
             android:textSize="34sp"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ProgressBar
+                <ProgressBar
                 android:id="@+id/progress_bar_indicator"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -134,7 +221,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
+                <TextView
                 android:id="@+id/percentage_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +235,7 @@
                 app:layout_constraintStart_toStartOf="@+id/progress_bar_indicator"
                 app:layout_constraintTop_toTopOf="@+id/progress_bar_indicator" />
 
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -159,7 +246,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.836">
 
-            <TextView
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Habits Done: "
@@ -167,7 +254,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
+                <TextView
                 android:id="@+id/finished_all_ratio_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,9 +263,9 @@
                 android:textSize="18sp" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <Button
+            <Button
             android:id="@+id/my_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,12 +281,8 @@
             style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -213,20 +296,20 @@
         <ListView
             android:id="@+id/today_list"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="0dp"/>
+            tools:ignore="NestedWeights" />
 
     </LinearLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bottom_navi"
-            app:itemTextColor="@drawable/selector_navi"
-            app:itemIconTint="@drawable/selector_navi"
-            app:menu="@menu/bottom_nav_menu"
-            android:layout_gravity="bottom"/>
-
     </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_navi"
+        app:itemTextColor="@drawable/selector_navi"
+        app:itemIconTint="@drawable/selector_navi"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </LinearLayout>
