@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -42,10 +44,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,7 +69,7 @@ import java.util.UUID;
 public class AddHabitEventActivity extends AppCompatActivity {
 
     // all fields
-    private EditText optimalComment;
+    private EditText optionalComment;
     private ImageView image;
     private ImageView deleteIcon;
     private Button camera;
@@ -75,11 +79,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String eventCommentString;
     private String completeDate;
     private String imgPath = "";
-    private String currentPhotoPath;
     private TextView title;
     private TextView dateComplete;
     private Uri filePath;
-    private Uri photoURI;
+    private Uri imageUri;
+    private Bitmap bitmap = null;
+    private Context PostImage;
 
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -93,11 +98,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_event);
 
         // get related views
-        optimalComment = findViewById(R.id.comment_text);//create an optional comment
-        title = findViewById(R.id.habitTitle);
-        dateComplete = findViewById(R.id.eventDate);
-        image = (ImageView) findViewById(R.id.first_image);
-        deleteIcon = (ImageView) findViewById(R.id.image_delete);
+        optionalComment = findViewById(R.id.comment_text);//create an optional comment
+        title = findViewById(R.id.habitTitle);//get clicked habit title
+        dateComplete = findViewById(R.id.eventDate);//event complete date
+        image = (ImageView) findViewById(R.id.first_image);//an imageview to add image
+        deleteIcon = (ImageView) findViewById(R.id.image_delete);//delete the added image
+
+        //set today for complete day
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         completeDate = date.format(today);
@@ -114,38 +121,43 @@ public class AddHabitEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 image.setImageResource(R.mipmap.ic_upload_image);
                 deleteIcon.setVisibility(View.INVISIBLE);
-
             }
-        });
+        });//click to delete photograph
 
-        // get related Habit of this HabitEvent
-        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");
-        String clickedHabitID = (String) clickedHabit.getHabitID();
-        // get HabitEvent
-        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");
+        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");// get related Habit of this HabitEvent
+        String clickedHabitID = (String) clickedHabit.getHabitID();//get related Habit ID of this HabitEvent
+        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");//get related HabitEvent detail
+
         //if there's a selected HabitEvent, this is an edit HabitEvent page
         if (needUpdatedEvent != null) {
             // edit mode
             editMode = true;
             // filled in HabitEvent details
-            optimalComment.setText(needUpdatedEvent.getEventComment());
+            optionalComment.setText(needUpdatedEvent.getEventComment());
+            image.setImageURI(Uri.parse(needUpdatedEvent.getImage()));
+            deleteIcon.setVisibility(View.VISIBLE);
+            if (needUpdatedEvent.getImage() == ""){
+                image.setImageResource(R.mipmap.ic_upload_image);
+                deleteIcon.setVisibility(View.INVISIBLE);
+            };
+
         } else {
             // add mode
             editMode = false;
         }
-        // event
-        title.setText(clickedHabit.getHabitTitle());
-        dateComplete.setText(completeDate);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        title.setText(clickedHabit.getHabitTitle());//set title with habit title
+        dateComplete.setText(completeDate);//display today date
 
+        storage = FirebaseStorage.getInstance();//initialized with the default Firebase
+        storageReference = storage.getReference();//initialized at the root Firebase Storage location
 
         confirmButton = (Button) findViewById(R.id.confirm_habit_event);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventCommentString = optimalComment.getText().toString();
+                eventCommentString = optionalComment.getText().toString();
+
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
 
@@ -153,7 +165,15 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 if (editMode) {
                     editMode = false;
                     // updates HabitEvent to firebase
+                    if (filePath != null) {
+                        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+                        ref.putFile(filePath);
+                        imgPath = filePath.toString();
+                        needUpdatedEvent.setImage(imgPath);
+                    }
                     needUpdatedEvent.setEventComment(eventCommentString);
+
+                    //needUpdatedEvent.setImage(imgPath);
                     HashMap<String, Object> data = new HashMap<>();
                     data.put("Event", needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
@@ -168,11 +188,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                         ref.putFile(filePath);
                         imgPath = filePath.toString();
-                    }
+                    }//save image to storage under images folder
 
-
-                    final String habitEventID = UUID.randomUUID().toString().replace("-", "");
-
+                    final String habitEventID = UUID.randomUUID().toString().replace("-", "");//generate random habit event ID
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate, clickedHabit.getHabitTitle(), imgPath);
                     HashMap<String, HabitEvent> data = new HashMap<>();
                     data.put("Event", newHabitEvent);
@@ -186,10 +204,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-
         });
     }
 
+    /*
+     * A view to select choose type
+     */
     private void setChoosePhoto() {
         View chooseTypeView = LayoutInflater.from(this).inflate(R.layout.choose_type_view, null);
         AlertDialog selection = new AlertDialog.Builder(this).setView(chooseTypeView).setCancelable(false).create();
@@ -205,7 +225,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 selection.dismiss();
                 openCamera();
             }
-        });
+        });//take photo
 
         album.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,39 +233,27 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 selection.dismiss();
                 openGallery();
             }
-        });
+        });//choose photo from gallery
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selection.dismiss();
             }
-        });
+        });//return to add page
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }//request permission
+
     }
 
-
-    // open phone camera
-
+    /*
+     * Open phone camera
+     */
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                Log.e(TAG, "Fail to capture");
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                openCameraResultLauncher.launch(takePictureIntent);
-            }
-
-        }
+        openCameraResultLauncher.launch(takePictureIntent);
     }
 
     ActivityResultLauncher<Intent> openCameraResultLauncher = registerForActivityResult(
@@ -255,12 +263,14 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
-                            filePath = photoURI;
-                            galleryAddPic(filePath);
+                            PostImage = getApplicationContext();
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
-                            image.setImageBitmap(imageBitmap);//Display image on screen
-                            deleteIcon.setVisibility(View.VISIBLE);
+                            imageUri = getImageUri(getApplicationContext(), imageBitmap);
+                            filePath = imageUri;//copy image uri
+                            image.setImageBitmap(imageBitmap);//display image on screen
+                            deleteIcon.setVisibility(View.VISIBLE);//display delete button
+                            saveImage();
                         }
                     }
                 }
@@ -290,52 +300,32 @@ public class AddHabitEventActivity extends AppCompatActivity {
     /*
      * save picture to gallery
      */
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
+    public void saveImage(){
+        try{
+            InputStream imageStream = getContentResolver().openInputStream(imageUri);//open input stream
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            bitmap = selectedImage.copy(selectedImage.getConfig(),selectedImage.isMutable());//copy bitmap
+            image.setImageBitmap(bitmap);
 
-    private void galleryAddPic(Uri photoPath) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-    public void saveImageSd(Bitmap bitmap, String fileName) {
-        FileOutputStream fos = null;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            String imagePath = Environment.getExternalStorageDirectory().getPath() + "/service";
-            try {
-                File file = new File(imagePath, fileName + ".jpg");
-                System.out.println(file.getPath());
-                fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                Toast.makeText(this, "图片保存成功" + imagePath, Toast.LENGTH_SHORT).show();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (bitmap != null) {
+                Intent intent = new Intent();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();//create a byte array output stream
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream));//reduce the size of the image and put extra Data
+            } else {
+                Toast.makeText(PostImage,"Cannot save image!", Toast.LENGTH_SHORT).show();
             }
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri uri = Uri.parse("file://" + imagePath + fileName);
-            intent.setData(uri);
-            this.sendBroadcast(intent);
+        } catch (FileNotFoundException e){
         }
+    }
+
+    /*
+     * get image uri
+     * code from https://stackoverflow.com/questions/67844042/update-user-profileimage-in-firebase-android-studio
+     */
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000,true);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), OutImage, "Title", null);
+        return Uri.parse(path);
     }
 }
 
