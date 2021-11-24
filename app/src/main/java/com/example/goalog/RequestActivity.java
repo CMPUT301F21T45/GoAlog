@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -44,7 +51,7 @@ import javax.annotation.Nullable;
 public class RequestActivity extends AppCompatActivity {
     private EditText targetEmailEditText;
     private EditText reasonEditText;
-    ListView requestListView;
+    SwipeMenuListView requestListView;
     Integer selection;
     ArrayList<FollowRequest> requests = new ArrayList<>();
     ArrayAdapter<FollowRequest> requestAdapter;
@@ -116,6 +123,72 @@ public class RequestActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            // for swipe delete
+            SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+                /**
+                 * Create the "left swipe" menu
+                 * @param menu
+                 *  Swipe menu
+                 */
+                @Override
+                public void create(SwipeMenu menu) {
+                    // create "open" item
+                    SwipeMenuItem openItem = new SwipeMenuItem(
+                            getApplicationContext());
+                    // set item background
+                    openItem.setBackground(new ColorDrawable(Color.rgb(0xB2, 0xff,
+                            0x66)));
+                    // set item width
+                    openItem.setWidth(180);
+                    // set item title
+                    openItem.setIcon(R.drawable.ic_baseline_check);
+                    // add to menu
+                    menu.addMenuItem(openItem);
+
+                    // create "delete" item
+                    SwipeMenuItem deleteItem = new SwipeMenuItem(
+                            getApplicationContext());
+                    // set item background
+                    deleteItem.setBackground(new ColorDrawable(Color.rgb(0xFF,
+                            0x66, 0x66)));
+                    // set item width
+                    deleteItem.setWidth(180);
+                    // set a icon
+                    deleteItem.setIcon(R.drawable.ic_delete);
+                    // add to menu
+                    menu.addMenuItem(deleteItem);
+                }
+            };
+
+            // set creator
+            requestListView.setMenuCreator(creator);
+
+            requestListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+                /**
+                 * On Menu Item Click
+                 * @param position Clicked position in menu.
+                 * @param menu The current menu
+                 * @param index The index
+                 * @return A boolean value
+                 */
+                @Override
+                public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                    switch (index) {
+                        case 0:
+                            // Edit (pen is clicked)
+                            break;
+                        case 1:
+                            // Delete (trash can is clicked)
+
+                            break;
+                    }
+                    // false : close the menu; true : not close the menu
+                    return false;
+                }
+            });
+
         }catch (Exception e) {}
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

@@ -30,26 +30,9 @@ public class RequestAdapter extends ArrayAdapter<FollowRequest> {
 
         TextView senderName = convertView.findViewById(R.id.sender_text_view);
         TextView message = convertView.findViewById(R.id.message_request_text_view);
-        Button acceptButton = convertView.findViewById(R.id.accept_request_button);
-        ImageButton dismissButton = convertView.findViewById(R.id.dismiss_button);
 
         senderName.setText(followRequest.getFromUser());
         message.setText(followRequest.getMessage());
-
-        acceptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // todo: accept
-            }
-        });
-
-        dismissButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // todo: delete from firebase and list
-            }
-        });
-
 
 
         return convertView;
