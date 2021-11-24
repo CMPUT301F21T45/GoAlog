@@ -49,7 +49,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         //-------set up parameters-------------------
-        setContentView(R.layout.habit_list_view);
+        setContentView(R.layout.habit_list_view_swipe_to_edit);
         FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();

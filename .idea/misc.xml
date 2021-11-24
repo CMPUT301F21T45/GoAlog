@@ -16,12 +16,20 @@
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_add_habit.xml" value="0.25" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_add_habit_event.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_event.xml" value="0.33" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_list..xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_login_registration.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_scrolling.xml" value="0.18" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/choose_type_view.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/content.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/content_habitevent_list_view.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/content_today_list.xml" value="0.22" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/fragment_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view.xml" value="0.18" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_content.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_reorder.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_swipe_to_edit.xml" value="0.16" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_reorder_list_view_content.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habitevent_list_view.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/user_page.xml" value="0.25" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/goalog/app/src/main/res/drawable-v24/ic_delete.xml" value="0.23796296296296296" />
@@ -40,10 +48,6 @@
         <entry key="..\:/Users/wbb19/Desktop/GoAlog-main/app/src/main/res/layout/user_page.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_add_habit_event.xml" value="0.28229166666666666" />
-<<<<<<< HEAD
-=======
-        <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.14895833333333333" />
->>>>>>> Louie
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout/choose_type_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
@@ -58,11 +62,7 @@
     </option>
   </component>
   <component name="JavadocGenerationManager">
-<<<<<<< HEAD
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../javadoc" />
-=======
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../.." />
->>>>>>> Louie
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

@@ -55,4 +55,6 @@ dependencies {
     implementation "io.grpc:grpc-okhttp:1.32.2"
     // fot swipe edit/delete
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
+    // for drag-sort
+    implementation 'com.github.woxthebox:draglistview:1.7.2'
 }
