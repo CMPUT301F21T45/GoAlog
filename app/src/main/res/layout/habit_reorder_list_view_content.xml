@@ -4,10 +4,11 @@
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal"
+    android:background="@color/white"
 android:id="@+id/habit_list_view_item_used_in_RecyclerView">
 
     <LinearLayout
-        android:layout_width="278dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:orientation="vertical"
@@ -52,8 +53,10 @@ android:id="@+id/habit_list_view_item_used_in_RecyclerView">
     </LinearLayout>
 
     <ImageView
-        android:layout_width="178dp"
-        android:layout_height="122dp"
+        android:id="@+id/reorder_hadler"
+        android:layout_width="52dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="35dp"
         android:src="@drawable/ic_baseline_reorder">
 
     </ImageView>

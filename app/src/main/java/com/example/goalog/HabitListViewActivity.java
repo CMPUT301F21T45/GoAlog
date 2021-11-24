@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
@@ -51,6 +52,8 @@ public class HabitListViewActivity extends AppCompatActivity{
         //-------set up parameters-------------------
         setContentView(R.layout.habit_list_view_swipe_to_edit);
         FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
+        FloatingActionButton buttonReorder = findViewById(R.id.reorder_button);
+
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomHabitList(this, habitDataList);
@@ -73,6 +76,24 @@ public class HabitListViewActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HabitListViewActivity.this, AddHabitActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // enter reorder page
+        buttonReorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = 0;
+                for (Habit habit: habitDataList) {
+                    Log.d("TAG", habit.getOrderID().toString());
+                    habit.setOrderID(new Long(index));
+                    HashMap<String, Object> data = new HashMap<>();
+                    data.put("HabitClass", habit);
+                    collectionReference.document(habit.getHabitID()).update(data);
+                    index++;
+                }
+                Intent intent = new Intent(HabitListViewActivity.this, HabitListViewReorderActivity.class);
                 startActivity(intent);
             }
         });
@@ -182,10 +203,13 @@ public class HabitListViewActivity extends AppCompatActivity{
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                        Long orderID = (Long) map.get("orderID");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID, orderID));
                     }
                 }
+                Collections.sort(habitDataList); // sort by habit OrderID
                 habitAdapter.notifyDataSetChanged();
+
                 // Notifying the adapter to render any new data fetched from the cloud
             }
         });

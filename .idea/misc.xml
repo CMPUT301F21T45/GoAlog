@@ -17,6 +17,7 @@
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_add_habit_event.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_event.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_list..xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_list.xml" value="0.1" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_login_registration.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_scrolling.xml" value="0.18" />
@@ -29,7 +30,7 @@
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_content.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_reorder.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_list_view_swipe_to_edit.xml" value="0.16" />
-        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_reorder_list_view_content.xml" value="0.33" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habit_reorder_list_view_content.xml" value="0.25" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/habitevent_list_view.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/user_page.xml" value="0.25" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/goalog/app/src/main/res/drawable-v24/ic_delete.xml" value="0.23796296296296296" />

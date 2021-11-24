@@ -172,7 +172,7 @@ public class AddHabitActivity extends AppCompatActivity{
                     if (habitTitleString.length()>0 && habitReason.length()>0 && isScheduled) {
                         // generate an ID for new Habit
                         final String habitID = UUID.randomUUID().toString().replace("-", "");
-                        Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID);
+                        Habit newHabit = new Habit(habitTitleString, habitReasonString, habitDateString, checked.toString(), habitPrivacy, habitID, new Long(-1));
 
                         // back to last page with the new habit information
                         Intent intent = new Intent(AddHabitActivity.this, HabitListViewActivity.class);
