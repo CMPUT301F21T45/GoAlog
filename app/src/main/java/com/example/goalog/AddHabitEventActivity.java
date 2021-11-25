@@ -1,20 +1,15 @@
 package com.example.goalog;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,34 +22,19 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -66,7 +46,7 @@ import java.util.UUID;
  *  Currently unsolved issues: the optional photograph of HabitEvent is not yet implemented,
  *  so there are some related unused attributes as well as related commented-out code
  */
-public class AddHabitEventActivity extends AppCompatActivity {
+public class AddHabitEventActivity extends AppCompatActivity  {
 
     // all fields
     private EditText optionalComment;
@@ -93,16 +73,16 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private boolean editMode = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
 
         // get related views
-        optionalComment = findViewById(R.id.comment_text);//create an optional comment
-        title = findViewById(R.id.habitTitle);//get clicked habit title
-        dateComplete = findViewById(R.id.eventDate);//event complete date
-        image = (ImageView) findViewById(R.id.first_image);//an imageview to add image
-        deleteIcon = (ImageView) findViewById(R.id.image_delete);//delete the added image
+        optionalComment = findViewById(R.id.comment_text);          //create an optional comment
+        title = findViewById(R.id.habitTitle);                      //get clicked habit title
+        dateComplete = findViewById(R.id.eventDate);                //event complete date
+        image = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
+        deleteIcon = (ImageView) findViewById(R.id.image_delete);   //delete the added image
 
         //set today for complete day
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,7 +119,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             if (needUpdatedEvent.getImage() == ""){
                 image.setImageResource(R.mipmap.ic_upload_image);
                 deleteIcon.setVisibility(View.INVISIBLE);
-            };
+            }
 
         } else {
             // add mode
@@ -206,7 +186,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
             }
         });
     }
-
     /*
      * A view to select choose type
      */
@@ -267,9 +246,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
-                            filePath = imageUri;//copy image uri
-                            image.setImageBitmap(imageBitmap);//display image on screen
-                            deleteIcon.setVisibility(View.VISIBLE);//display delete button
+                            filePath = imageUri;                    //copy image uri
+                            image.setImageBitmap(imageBitmap);      //display image on screen
+                            deleteIcon.setVisibility(View.VISIBLE); //display delete button
                             saveImage();
                         }
                     }
