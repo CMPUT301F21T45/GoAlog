@@ -135,10 +135,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textAlignment="center"
-                android:gravity="bottom"
+                android:gravity="center_horizontal"
                 android:textSize="30dp"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:text="+"/>
+                android:text="+" />
         </LinearLayout>
 
         <ListView
