@@ -46,6 +46,7 @@ public class UserPageActivity extends AppCompatActivity {
     FirebaseFirestore db;
     String weekday;
     int numOfHabit;
+    CollectionReference collectionReference;
 
     /**
      * User: Today's Habit List, Visual Indicator, Button to all habits, habit events.
@@ -105,7 +106,7 @@ public class UserPageActivity extends AppCompatActivity {
         todayList.setAdapter(listAdapter);
 
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("user003");
+        collectionReference = db.collection("user003");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -118,6 +119,7 @@ public class UserPageActivity extends AppCompatActivity {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
+                    int completedOnTodayNum = 0;
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
                         String habitTitle = (String) map.get("habitTitle");
@@ -134,6 +136,9 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                        if (checkCompletedEventofToday(habitID)) {
+                                            completedOnTodayNum++;
+                                        }
                                     }
                                 }
                             }
@@ -151,19 +156,58 @@ public class UserPageActivity extends AppCompatActivity {
                     if (numOfHabit ==0) {
                         ratioNum = 0;
                     } else {
-                        ratioNum = (int) 100 * 1/numOfHabit;
+                        ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
                     }
 
                     // TODO: Finish Visual Indicator
                     // Today's Progress:
                     percentage.setText(ratioNum+"%");
                     indicator.setProgress(ratioNum, true);
-                    ratio.setText("1/"+numOfHabit);
+                    ratio.setText(completedOnTodayNum+"/"+numOfHabit);
                     // Notifying the adapter to render any new data fetched from the cloud
                 }
             }
         });
 
+    }
+
+    public Boolean checkCompletedEventofToday(String habitID) {
+//        return false;
+        // check the habit event list finished or not
+
+        Boolean hasEvent = false;
+        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
+                .collection("HabitEvent");
+        habitEventCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(
+                    @Nullable QuerySnapshot queryDocumentSnapshots,
+                    @Nullable FirebaseFirestoreException error) {
+
+                assert queryDocumentSnapshots != null;
+                for (QueryDocumentSnapshot habitEvent : queryDocumentSnapshots) {
+                    Log.d("Retrieve", String.valueOf(habitEvent.getData().get("Event")));
+                    // TODO: Retrieve data from firebase.
+                    HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.getData().get("Event");
+                    if (habitEvent.getData().get("Event") != null) {
+                        String completeDate = (String) map.get("completeDate");
+                        Date today = new Date();
+                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            if (today.equals(date.parse(completeDate))) {
+                                return;
+                                //have
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                // dont have
+
+            }
+        });
+        return hasEvent;
     }
 }
 
