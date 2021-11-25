@@ -226,7 +226,9 @@ public class RequestActivity extends AppCompatActivity {
                 }
             });
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

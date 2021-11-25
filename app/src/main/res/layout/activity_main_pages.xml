@@ -131,6 +131,7 @@
                 android:textColor="@color/white" />
 
             <Button
+                android:id="@+id/add_reminder_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -141,10 +142,76 @@
                 android:text="+" />
         </LinearLayout>
 
-        <ListView
+        <LinearLayout
+            android:id="@+id/add_reminder_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/reminder_listview"/>
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Make a Reminder"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20sp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:maxLength="140"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Notes..."
+                android:id="@+id/reminder_edit_text"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/cancel_reminder_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cancel"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/grey"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_marginEnd="20dp" />
+
+                <Button
+                    android:id="@+id/confirm_reminder_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="confirm"
+                    android:textColor="@color/blue"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#212125"/>
+
+        </LinearLayout>
+        <ListView
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_listview" />
     </LinearLayout>
 
 

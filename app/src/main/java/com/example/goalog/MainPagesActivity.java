@@ -8,7 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,10 +21,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainPagesActivity extends AppCompatActivity {
+
+    private final ArrayList<String> reminders = new ArrayList<>();
+    private ArrayAdapter<?> reminderAdapter;
+    ListView reminderListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,41 @@ public class MainPagesActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        LinearLayout makeReminderLayout = findViewById(R.id.add_reminder_layout);
+        reminderAdapter = new ArrayAdapter<>(this, R.layout.content_reminder_list, reminders);
+        reminderListView = findViewById(R.id.reminder_listview);
+        reminderListView.setAdapter(reminderAdapter);
+        Button addReminderButton = findViewById(R.id.add_reminder_button);
+        Button confirmReminderButton = findViewById(R.id.confirm_reminder_button);
+        Button cancelReminderButton = findViewById(R.id.cancel_reminder_button);
+
+        addReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeReminderLayout.setVisibility(View.VISIBLE);
+                addReminderButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        confirmReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeReminderLayout.setVisibility(View.GONE);
+                EditText note = findViewById(R.id.reminder_edit_text);
+                reminders.add(note.getText().toString());
+                addReminderButton.setVisibility(View.VISIBLE);
+                reminderAdapter.notifyDataSetChanged();
+            }
+        });
+
+        cancelReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeReminderLayout.setVisibility(View.GONE);
+                addReminderButton.setVisibility(View.VISIBLE);
             }
         });
 
