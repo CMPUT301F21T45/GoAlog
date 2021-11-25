@@ -17,6 +17,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -136,9 +137,14 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-                                        if (checkCompletedEventofToday(habitID)) {
-                                            completedOnTodayNum++;
-                                        }
+                                        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
+                                                .collection("HabitEvent");
+                                        Query habitEvent = habitEventCollectionReference.limit(1);
+//                                        HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.get().get("Event");
+
+//                                        if (checkCompletedEventofToday(habitID)) {
+//                                            completedOnTodayNum++;
+//                                        }
                                     }
                                 }
                             }
