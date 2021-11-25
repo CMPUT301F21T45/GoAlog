@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainPagesActivity"
     android:orientation="vertical"
-    android:background="@color/black">
+    android:background="@color/dark_grey">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:layout_margin="10dp"
+        android:background="#2A2A30">
 
         <TextView
             android:id="@+id/day_of_week_text_view"
@@ -24,7 +25,7 @@
             android:textStyle="bold"
             android:textSize="40sp"
             android:padding="10dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/date_today_text_view"
@@ -36,12 +37,12 @@
             android:paddingEnd="20dp"
             android:paddingRight="20dp"
             android:paddingBottom="4dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="@color/black"/>
+            android:background="#212125"/>
 
     </LinearLayout>
 
@@ -49,13 +50,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/yellow_white"
+        android:layout_margin="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,6 +95,11 @@
             android:textSize="22sp"
             android:padding="5dp"
             android:textColor="@color/black"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="#212125"/>
     </LinearLayout>
 
     <TextView

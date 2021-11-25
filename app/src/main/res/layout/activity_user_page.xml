@@ -8,11 +8,14 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="@color/black"
+        android:background="@color/dark_grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
         <TextView
             android:id="@+id/my_user_name_text_view"
             android:layout_width="wrap_content"
@@ -61,6 +64,7 @@
                     android:paddingRight="20dp"
                     android:textSize="18sp"
                     android:textColor="@color/white" />
+
             </LinearLayout>
 
            <LinearLayout
@@ -93,11 +97,17 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#212125"/>
+
     <LinearLayout
         android:id="@+id/follower_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:background="#FCFBF2"
         android:visibility="gone">
 
         <LinearLayout
@@ -132,15 +142,22 @@
         <ListView
             android:id="@+id/follower_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/yellow_white"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/following_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:background="#FCFBF2"
         android:visibility="gone">
 
         <LinearLayout
@@ -178,8 +195,14 @@
         <ListView
             android:id="@+id/following_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:visibility="visible"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/yellow_white"/>
     </LinearLayout>
 
     <LinearLayout
@@ -187,7 +210,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:background="@color/yellow_white">
 
         <LinearLayout
             android:id="@+id/my_today_linear_layout"

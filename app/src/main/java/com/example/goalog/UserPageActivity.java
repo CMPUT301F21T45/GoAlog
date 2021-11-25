@@ -348,6 +348,7 @@ public class UserPageActivity extends AppCompatActivity {
                 Intent intent = new Intent(UserPageActivity.this, UserPageActivity.class);
                 intent.putExtra("emailString", userFollowings.get(i));
                 startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -409,6 +410,10 @@ public class UserPageActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.navigation_my_page:
+                        if (isFromIntent) {
+                            startActivity(new Intent(getApplicationContext(), UserPageActivity.class));
+                            overridePendingTransition(0, 0);
+                        }
                         return true;
                 }
                 return false;
