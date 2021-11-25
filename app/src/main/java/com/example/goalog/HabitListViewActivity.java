@@ -50,7 +50,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         //-------set up parameters-------------------
-        setContentView(R.layout.habit_list_view_swipe_to_edit);
+        setContentView(R.layout.activity_habit_list_view);
         FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
         FloatingActionButton buttonReorder = findViewById(R.id.reorder_button);
 
@@ -84,6 +84,7 @@ public class HabitListViewActivity extends AppCompatActivity{
         buttonReorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // update every habit orderID for new added habits
                 int index = 0;
                 for (Habit habit: habitDataList) {
                     Log.d("TAG", habit.getOrderID().toString());
@@ -93,6 +94,7 @@ public class HabitListViewActivity extends AppCompatActivity{
                     collectionReference.document(habit.getHabitID()).update(data);
                     index++;
                 }
+                // go to reorder page
                 Intent intent = new Intent(HabitListViewActivity.this, HabitListViewReorderActivity.class);
                 startActivity(intent);
             }

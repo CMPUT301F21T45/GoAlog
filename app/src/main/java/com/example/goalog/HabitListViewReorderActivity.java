@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
@@ -45,7 +40,7 @@ public class HabitListViewReorderActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         //-------set up parameters-------------------
-        setContentView(R.layout.habit_list_view_reorder);
+        setContentView(R.layout.activity_habit_list_view_reorder);
         FloatingActionButton buttonDone = findViewById(R.id.reorder_done_button);
         HabitList = findViewById(R.id.habit_list);
 
@@ -53,7 +48,7 @@ public class HabitListViewReorderActivity extends AppCompatActivity{
 //        habitDataList.add(h1);
 
         HabitList.setLayoutManager(new LinearLayoutManager(HabitListViewReorderActivity.this));
-        listAdapter = new ReorderListItemAdapter(habitDataList, R.layout.habit_reorder_list_view_content, R.id.reorder_hadler, false);
+        listAdapter = new ReorderListItemAdapter(habitDataList, R.layout.content_habit_reorder_list_view, R.id.reorder_hadler, false);
         HabitList.setAdapter(listAdapter, false);
         HabitList.setCanDragHorizontally(false);
 
