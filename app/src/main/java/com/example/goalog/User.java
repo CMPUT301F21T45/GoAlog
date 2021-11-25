@@ -20,8 +20,6 @@ public class User {
     private String userID; // Unique to database
     private String email;
     private String displayName;
-    private final ArrayList<User> followings = new ArrayList<>();
-    private final ArrayList<User> followers = new ArrayList<>();
 
     public User(String userID, String email, String publicName) {
         this.userID = userID;
@@ -34,7 +32,7 @@ public class User {
         data.put("UserInfo", this);
 
         CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
-        ref.document("Info").set(data);
+        ref.document("Info").update("UserInfo",data);
     }
 
     public String getEmail() {
@@ -59,13 +57,5 @@ public class User {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public ArrayList<User> getFollowings() {
-        return followings;
-    }
-
-    public ArrayList<User> getFollowers() {
-        return followers;
     }
 }

@@ -41,8 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:clickable="true"
-                android:focusable="true">
+                android:clickable="true">
                 <TextView
                     android:id="@+id/following_textview"
                     android:layout_width="wrap_content"
@@ -53,6 +52,7 @@
                     android:textColor="@color/white"/>
 
                 <TextView
+                    android:id="@+id/num_following_text_view"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="379"
@@ -68,8 +68,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:orientation="horizontal"
-               android:clickable="true"
-               android:focusable="true">
+               android:clickable="true">
                <TextView
                    android:id="@+id/follower_textview"
                    android:layout_width="wrap_content"
@@ -80,6 +79,7 @@
                    android:textColor="@color/white"/>
 
                <TextView
+                   android:id="@+id/num_follower_text_view"
                    android:layout_width="90dp"
                    android:layout_height="wrap_content"
                    android:paddingLeft="10dp"
@@ -285,6 +285,7 @@
 
 
         <TextView
+            android:id="@+id/today_or_public_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="34dp"
@@ -298,6 +299,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingLeft="10dp"
             tools:ignore="NestedWeights" />
 
     </LinearLayout>

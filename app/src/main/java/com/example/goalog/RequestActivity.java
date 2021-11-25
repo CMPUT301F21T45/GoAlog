@@ -25,14 +25,19 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -76,8 +81,6 @@ public class RequestActivity extends AppCompatActivity {
         Button callToMakeRequestButton = findViewById(R.id.call_to_make_request);
         LinearLayout makeRequestLayout = findViewById(R.id.request_making_layout);
 
-
-
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -113,14 +116,10 @@ public class RequestActivity extends AppCompatActivity {
                             String fromUser = (String) map.get("fromUser");
                             String message = (String) map.get("message");
                             String toUser = (String) map.get("toUser");
-                            try {
-                                requests.add(new FollowRequest(fromUser, toUser, message));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            requestAdapter.notifyDataSetChanged();
+                            requests.add(new FollowRequest(fromUser, toUser, message));
                         }
                     }
+                    requestAdapter.notifyDataSetChanged();
                 }
             });
 
@@ -177,19 +176,57 @@ public class RequestActivity extends AppCompatActivity {
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
                         case 0:
-                            // Edit (pen is clicked)
+                            // Check (check icon is clicked)
+                            // update toUser's followers array
+                            // update fromUser's following array
+                            User toUserOb;
+                            User fromUserOb;
+                            FollowRequest selectedRequests = requests.get(position);
+                            String toUser = selectedRequests.getToUser();
+                            String fromUser = selectedRequests.getFromUser();
+
+                            DocumentReference toUserRef = db.collection(toUser).document("Info");
+                            toUserRef.update("followers", FieldValue.arrayUnion(fromUser));
+                            DocumentReference fromUserRef = db.collection(fromUser).document("Info");
+                            fromUserRef.update("following",FieldValue.arrayUnion(toUser));
+
+                            collectionReference.document(selectedRequests.getFromUser()).delete();
                             break;
                         case 1:
                             // Delete (trash can is clicked)
-
+                            collectionReference.document(requests.get(position).getFromUser()).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                /**
+                                 * Successfully deleted a document.
+                                 * @param aVoid
+                                 *  aVoid
+                                 */
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Sample", "DocumentSnapshot successfully deleted!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                /**
+                                 * Failed to delete a document
+                                 * @param e
+                                 *  Exception e
+                                 */
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Sample", "Error deleting document", e);
+                                }
+                            });
+                            //finish();
+                            //startActivity(getIntent());
                             break;
                     }
                     // false : close the menu; true : not close the menu
                     return false;
                 }
             });
-
-        }catch (Exception e) {}
+        }
+        catch (Exception e) {}
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -239,7 +276,6 @@ public class RequestActivity extends AppCompatActivity {
                         else{
                             //user exits, create a new followRequest
                             // update that user's notification document
-                            //TODO??: doer can only send request !once! to another doer?
                             if (!currentUser.getEmail().equals(targetEmail)) {
                                 // Todo: Check
                                 String quoteReason = "'" + reasonString + "'";

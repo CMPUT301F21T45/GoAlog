@@ -197,7 +197,6 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                     return false;
                 }
             });
-
         }
         catch (Exception e){
             Intent intent = new Intent(HabitEventListViewActivity.this, HabitListViewActivity.class);

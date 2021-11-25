@@ -1,4 +1,6 @@
 package com.example.goalog;
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
@@ -6,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,15 +17,20 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -38,7 +46,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -52,11 +62,14 @@ import javax.annotation.Nullable;
  */
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
-    ArrayAdapter<Habit> listAdapter;
+    ArrayList<String> habitTitleDataList;
+    ArrayAdapter<?> listAdapter;
     ListView todayList;
     FirebaseFirestore db;
     String weekday;
     int numOfHabit;
+    boolean isFromIntent = false;
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     /**
      * User: Today's Habit List, Visual Indicator, Button to all habits, habit events.
@@ -75,11 +88,6 @@ public class UserPageActivity extends AppCompatActivity {
         TextView userName = findViewById(R.id.my_user_name_text_view);
         TextView email = findViewById(R.id.my_email_text_view);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
-        String nameString = user.getDisplayName();
-        String emailString = user.getEmail();
-        userName.setText(nameString);
-        email.setText(emailString);
 
         Button myGoalButton = findViewById(R.id.my_goal);
         myGoalButton.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +101,8 @@ public class UserPageActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
-        //first three letters for Weekday
-        String sdf = new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime());//get today's weekday
+        //first three letters for Weekday - get the weekday of the day
+        String sdf = new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime());
         switch (sdf){
             case "Mon":
                 weekday = "1";
@@ -120,12 +128,70 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         habitDataList = new ArrayList<>();
-        listAdapter = new CustomTodayHabitList(this,habitDataList);
-        todayList = findViewById(R.id.today_list);
-        todayList.setAdapter(listAdapter);
+        habitTitleDataList = new ArrayList<>();
+        //listAdapter = new CustomTodayHabitList(this,habitDataList);
+        //listAllAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
 
+        todayList = findViewById(R.id.today_list);
+
+        String emailExtra = getIntent().getStringExtra("emailString");
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("user003");
+        CollectionReference collectionReference = db.collection("user003");
+
+        if (emailExtra != null) {
+            isFromIntent = true;
+            collectionReference = db.collection(emailExtra);
+            assert user != null;
+            String nameString = user.getDisplayName();
+            TextView todayPublicTextView = findViewById(R.id.today_or_public_text_view);
+            todayPublicTextView.setText("Public Goals");
+            myGoalButton.setVisibility(View.INVISIBLE);
+            email.setText(emailExtra);
+            DocumentReference viewUser = db.collection(emailExtra).document("Info");
+            viewUser.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        assert document != null;
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            HashMap<String, Object> infoMap = (HashMap<String, Object>) document.getData().get("UserInfo");
+                            if (infoMap != null) {
+                                HashMap<String, String> map = (HashMap<String, String>) infoMap.get("UserInfo");
+                                if (map != null) {
+                                    String name = map.get("displayName");
+                                    userName.setText(name);
+                                } else {
+                                    userName.setText(emailExtra);
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+            LinearLayout ingLLayout = findViewById(R.id.following_click_layout);
+            LinearLayout erLLayout = findViewById(R.id.follower_click_layout);
+            ingLLayout.setVisibility(View.INVISIBLE);
+            erLLayout.setVisibility(View.INVISIBLE);
+            listAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
+            todayList.setAdapter(listAdapter);
+        } else {
+            isFromIntent = false;
+            assert user != null;
+            String nameString = user.getDisplayName();
+            String emailString = user.getEmail();
+            userName.setText(nameString);
+            email.setText(emailString);
+            listAdapter = new CustomTodayHabitList(this,habitDataList);
+            todayList.setAdapter(listAdapter);
+        }
+
+        // TODO: add case for view user: All Habits - Public
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -136,7 +202,6 @@ public class UserPageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
@@ -148,18 +213,26 @@ public class UserPageActivity extends AppCompatActivity {
                         String habitID = (String) map.get("habitID");
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
-                        try {
-                            if(today.after(date.parse(startDate))) {
-                                for (int i = 0; i < weekdayPlan.length(); i++) {
-                                    char ch = weekdayPlan.charAt(i);
-                                    if (weekday.equals(String.valueOf(ch))) {
-                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                        if (emailExtra!=null) {
+                            if(isPublic) {
+                                habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                habitTitleDataList.add(habitTitle);
+                            }
+                        } else {
+                            try {
+                                if(today.after(date.parse(startDate))) {
+                                    for (int i = 0; i < weekdayPlan.length(); i++) {
+                                        char ch = weekdayPlan.charAt(i);
+                                        if (weekday.equals(String.valueOf(ch))) {
+                                            habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                        }
                                     }
                                 }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
                             }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }}
+                        }
+                    }
                     listAdapter.notifyDataSetChanged();
                     ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
                     TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
@@ -194,8 +267,89 @@ public class UserPageActivity extends AppCompatActivity {
         LinearLayout followingLLayout = findViewById(R.id.following_list_layout);
         ImageButton imageFollowerButton = findViewById(R.id.close_er_button);
         ImageButton imageFollowingButton = findViewById(R.id.close_ing_button);
+
+        ListView followerListView = findViewById(R.id.follower_listview);
+        ListView followingListView = findViewById(R.id.following_listview);
         //Todo: following, follower;
-        ArrayList<User> following, follower;
+        ArrayList<String> userFollowings = new ArrayList<>();
+        ArrayList<String> userFollowers = new ArrayList<>();
+        ArrayAdapter<String> followingAdapter, followerAdapter;
+
+        followerAdapter = new ArrayAdapter<>(this,R.layout.content_follow_user_list, userFollowers);
+        followerListView.setAdapter(followerAdapter);
+        followingAdapter = new ArrayAdapter<>(this,R.layout.content_follow_user_list, userFollowings);
+        followingListView.setAdapter(followingAdapter);
+
+        DocumentReference followingRef = db.collection(Objects.requireNonNull(currentUser.getEmail()))
+                .document("Info");
+        followingRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        try {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("following"));
+                            List<String> followers = (List<String>) document.getData().get("following");
+                            for (int i = 0; i < followers.size(); i++) {
+                                //TODO map to adapter！
+                                userFollowings.add(followers.get(i));
+                                followingAdapter.notifyDataSetChanged();
+                                TextView numFollowings = findViewById(R.id.num_following_text_view);
+                                numFollowings.setText(Integer.toString(userFollowings.size()));
+                            }
+                            Log.d(TAG, "DocumentSnapshot data2: " + userFollowings);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        followingRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        try {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("followers"));
+                            List<String> followers = (List<String>) document.getData().get("followers");
+                            for (int i = 0; i < followers.size(); i++) {
+                                //TODO map to adapter！
+                                userFollowers.add(followers.get(i));
+                                followerAdapter.notifyDataSetChanged();
+                                TextView numFollowers = findViewById(R.id.num_follower_text_view);
+                                numFollowers.setText(Integer.toString(userFollowers.size()));
+                            }
+                            Log.d(TAG, "DocumentSnapshot data2: " + followers);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        followingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent intent = new Intent(UserPageActivity.this, UserPageActivity.class);
+                intent.putExtra("emailString", userFollowings.get(i));
+                startActivity(intent);
+            }
+        });
 
         imageFollowerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +420,10 @@ public class UserPageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Disable Back Button.
+        if (isFromIntent) {
+            Intent intent = new Intent(this, UserPageActivity.class);
+            startActivity(intent);
+        }
     }
 }
 

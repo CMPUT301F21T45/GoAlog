@@ -19,28 +19,28 @@
             android:paddingStart="20sp"
             android:layout_width="wrap_content"
             android:layout_height="40dp" />
-        <Button
-            android:id="@+id/remove_follow_object_button"
-            android:text="Unfollow"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/warning_red"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+<!--        <Button-->
+<!--            android:id="@+id/remove_follow_object_button"-->
+<!--            android:text="Unfollow"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:textColor="@color/warning_red"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            style="@style/Widget.AppCompat.Button.Borderless.Colored" />-->
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/other_email_text_view"
-        android:text="sample@gmail.com"
-        android:textSize="16sp"
-        android:paddingLeft="20dp"
-        android:paddingStart="20dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:textColor="@color/grey" />
+<!--    <TextView-->
+<!--        android:id="@+id/other_email_text_view"-->
+<!--        android:text="sample@gmail.com"-->
+<!--        android:textSize="16sp"-->
+<!--        android:paddingLeft="20dp"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:layout_marginEnd="9dp"-->
+<!--        android:layout_marginRight="9dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:textColor="@color/grey" />-->
 
 </LinearLayout>
