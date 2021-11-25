@@ -82,19 +82,21 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/reminder_text_view"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/add_goal_text_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You have 3 tasks today."
+            android:text="Set up a new goal "
             android:textStyle="italic"
+            android:clickable="true"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:padding="5dp"
-            android:textColor="@color/black"/>
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textColor="@color/dark_grey"/>
 
         <View
             android:layout_width="match_parent"
@@ -102,26 +104,49 @@
             android:background="#212125"/>
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Trending"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:paddingStart="10dp"
-        android:paddingLeft="10dp"
-        android:textSize="30sp"
-        android:paddingTop="10dp"
-        android:textColor="@color/white"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="30sp"
-        android:padding="10dp"
-        android:textColor="@color/black"/>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reminder"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingEnd="20dp"
+                android:textSize="30sp"
+                android:paddingTop="10dp"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                android:textSize="30dp"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="+"/>
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reminder_listview"/>
+    </LinearLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

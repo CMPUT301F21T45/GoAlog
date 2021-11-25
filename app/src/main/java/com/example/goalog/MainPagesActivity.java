@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -68,6 +70,15 @@ public class MainPagesActivity extends AppCompatActivity {
             }
         });
 
+
+        Button setupButton = findViewById(R.id.add_goal_text_view);
+        setupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AddHabitActivity.class));
+                overridePendingTransition(1, 1);
+            }
+        });
     }
 
     @Override
