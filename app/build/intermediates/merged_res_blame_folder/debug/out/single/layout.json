@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login_registration.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\activity_login_registration.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\habitevent_list_view.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\habitevent_list_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\content_today_list.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\content_today_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\habit_list_view.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\habit_list_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\choose_type_view.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\choose_type_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\content_habitevent_list_view.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\content_habitevent_list_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_add_habit_event.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\activity_add_habit_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_login.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\fragment_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_registration.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\fragment_registration.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_add_habit.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\activity_add_habit.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\user_page.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\user_page.xml"
+    },
+    {
+        "merged": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\content.xml",
+        "source": "C:\\Users\\hamee\\AndroidStudioProjects\\GoAlog\\app\\src\\main\\res\\layout\\content.xml"
+    }
+]
