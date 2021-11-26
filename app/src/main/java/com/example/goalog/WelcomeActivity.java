@@ -20,12 +20,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class WelcomeActivity extends AppCompatActivity {
-    // TODO: Change to main page
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user!=null) {
+            startActivity(new Intent(getApplicationContext(), MainPagesActivity.class));
+            finish();
+        }
 
         TabLayout tablayout = findViewById(R.id.tabLayout_login);
         ViewPager2 viewPager = findViewById(R.id.view_pager_login);
@@ -66,10 +72,10 @@ public class WelcomeActivity extends AppCompatActivity {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             Intent intent = new Intent(this, MainPagesActivity.class);
-            assert user != null;
-            User newUser = new User(user.getUid(), user.getEmail(), user.getDisplayName());
+            assert currentUser != null;
+            User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
             newUser.sendToFirebase();
             finish();
             startActivity(intent);

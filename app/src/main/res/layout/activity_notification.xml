@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".RequestActivity"
     android:orientation="vertical"
-    android:background="@color/yellow_white">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="match_parent"
