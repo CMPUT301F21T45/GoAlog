@@ -99,7 +99,8 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             String eventCommentString = (String) map.get("eventComment");
                             String eventID = (String) map.get("eventID");
                             String img = (String) map.get("image");
-                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle,img));
+                            HashMap location = (HashMap)map.get("location");
+                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle,img,location));
                         }
 
                     }

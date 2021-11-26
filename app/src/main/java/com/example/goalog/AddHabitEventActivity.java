@@ -1,11 +1,13 @@
 package com.example.goalog;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -58,9 +61,13 @@ public class AddHabitEventActivity extends AppCompatActivity  {
     private Button confirmButton;
     private String eventCommentString;
     private String completeDate;
+    private String longitude="";
+    private String latitude="";
     private String imgPath = "";
     private TextView title;
     private TextView dateComplete;
+    private TextView map;
+    private TextView location;
     private Uri filePath;
     private Uri imageUri;
     private Bitmap bitmap = null;
@@ -83,11 +90,17 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         dateComplete = findViewById(R.id.eventDate);                //event complete date
         image = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
         deleteIcon = (ImageView) findViewById(R.id.image_delete);   //delete the added image
+        map = (TextView) findViewById(R.id.map_text);               //a textview to add location information
+        location = findViewById(R.id.location_text);
 
         //set today for complete day
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         completeDate = date.format(today);
+
+        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");// get related Habit of this HabitEvent
+        String clickedHabitID = (String) clickedHabit.getHabitID();//get related Habit ID of this HabitEvent
+        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");//get related HabitEvent detail
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +117,14 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             }
         });//click to delete photograph
 
-        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");// get related Habit of this HabitEvent
-        String clickedHabitID = (String) clickedHabit.getHabitID();//get related Habit ID of this HabitEvent
-        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");//get related HabitEvent detail
+        map.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent=new Intent(AddHabitEventActivity.this,MapActivity.class);
+                setLocationResultLauncher.launch(mapIntent);
+            }
+        });
 
         //if there's a selected HabitEvent, this is an edit HabitEvent page
         if (needUpdatedEvent != null) {
@@ -170,8 +188,13 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                         imgPath = filePath.toString();
                     }//save image to storage under images folder
 
+                    HashMap<String, String> newLocation  = new HashMap<String, String>() {{
+                        put("latitude",latitude );
+                        put("longitude",longitude );
+                    }};
+
                     final String habitEventID = UUID.randomUUID().toString().replace("-", "");//generate random habit event ID
-                    HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate, clickedHabit.getHabitTitle(), imgPath);
+                    HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate, clickedHabit.getHabitTitle(), imgPath, newLocation);
                     HashMap<String, HabitEvent> data = new HashMap<>();
                     data.put("Event", newHabitEvent);
                     if (newHabitEvent != null) {
@@ -306,6 +329,23 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), OutImage, "Title", null);
         return Uri.parse(path);
     }
+
+    ActivityResultLauncher<Intent> setLocationResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() != RESULT_CANCELED) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            latitude = result.getData().getStringExtra("latitude");
+                            longitude = result.getData().getStringExtra("longitude");
+                            String display_text = "(" + latitude + "," + longitude + ")";
+                            location.setText(display_text);
+                        }
+                    }
+                }
+            });
+
 }
 
 
