@@ -205,7 +205,7 @@ public class MainPagesActivity extends AppCompatActivity {
         signOutButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new AlertDialog.Builder(MainPagesActivity.this)
+                AlertDialog alert = new AlertDialog.Builder(MainPagesActivity.this)
                         .setTitle("Sign Out").setMessage("ARE YOU SURE?")
                         .setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
                             @Override
@@ -220,7 +220,15 @@ public class MainPagesActivity extends AppCompatActivity {
                             }
                         })
                         .setNegativeButton("Not Now", null)
-                        .show();
+                        .create();
+                alert.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                                .setTextColor(getResources().getColor(R.color.warning_red));
+                    }
+                });
+                alert.show();
                 return false;
             }
         });
