@@ -3,11 +3,16 @@ package com.example.goalog;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +20,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -170,6 +177,7 @@ public class MainPagesActivity extends AppCompatActivity {
                         .update("Reminder", FieldValue.arrayRemove(reminders.get(position)));
                 reminders.remove(reminders.get(position));
                 reminderAdapter.notifyDataSetChanged();
+
                 return true;
             }
         });
@@ -191,6 +199,32 @@ public class MainPagesActivity extends AppCompatActivity {
                 overridePendingTransition(1, 1);
             }
         });
+
+        // Sign Out
+        ImageButton signOutButton = findViewById(R.id.sign_out_button);
+        signOutButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(MainPagesActivity.this)
+                        .setTitle("Sign Out").setMessage("ARE YOU SURE?")
+                        .setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AuthUI.getInstance().signOut(getApplicationContext()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                                        finish();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Not Now", null)
+                        .show();
+                return false;
+            }
+        });
+
     }
 
     @Override
