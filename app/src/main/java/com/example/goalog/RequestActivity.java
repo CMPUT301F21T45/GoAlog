@@ -217,8 +217,6 @@ public class RequestActivity extends AppCompatActivity {
                                     Log.w("Sample", "Error deleting document", e);
                                 }
                             });
-                            //finish();
-                            //startActivity(getIntent());
                             break;
                     }
                     // false : close the menu; true : not close the menu

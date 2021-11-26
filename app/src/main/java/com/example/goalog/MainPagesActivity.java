@@ -1,13 +1,17 @@
 package com.example.goalog;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,26 +19,41 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class MainPagesActivity extends AppCompatActivity {
 
     private final ArrayList<String> reminders = new ArrayList<>();
     private ArrayAdapter<?> reminderAdapter;
     ListView reminderListView;
+    FirebaseFirestore db;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        db = FirebaseFirestore.getInstance();
         Calendar todayCal = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfDay = new SimpleDateFormat("EEEE");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfDate = new SimpleDateFormat("MMMM dd");
@@ -43,7 +62,7 @@ public class MainPagesActivity extends AppCompatActivity {
 
         // Set name
         TextView userName = findViewById(R.id.user_name);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         String name = user.getDisplayName();
         userName.setText(name);
@@ -95,14 +114,63 @@ public class MainPagesActivity extends AppCompatActivity {
             }
         });
 
+        final CollectionReference reference = db.collection(Objects.requireNonNull(user.getEmail()));
         confirmReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeReminderLayout.setVisibility(View.GONE);
                 EditText note = findViewById(R.id.reminder_edit_text);
-                reminders.add(note.getText().toString());
+                // reminders.add(note.getText().toString());
+                reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        String content = note.getText().toString();
+                        reference.document("Info")
+                                .update("Reminder", FieldValue.arrayUnion(content));
+                        reminders.add(content);
+                        reminderAdapter.notifyDataSetChanged();
+                        note.setText("");
+                    }
+                });
+                makeReminderLayout.setVisibility(View.GONE);
                 addReminderButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // get reminders from firebase
+        final DocumentReference docRef = reference.document("Info");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        try {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("Reminder"));
+                            List<String> reminderList = (List<String>) document.getData().get("Reminder");
+                            assert reminderList != null;
+                            reminders.addAll(reminderList);
+                            reminderAdapter.notifyDataSetChanged();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        reminderListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                reference.document("Info")
+                        .update("Reminder", FieldValue.arrayRemove(reminders.get(position)));
+                reminders.remove(reminders.get(position));
                 reminderAdapter.notifyDataSetChanged();
+                return true;
             }
         });
 

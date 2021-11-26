@@ -291,13 +291,11 @@ public class UserPageActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("following"));
                             List<String> followers = (List<String>) document.getData().get("following");
-                            for (int i = 0; i < followers.size(); i++) {
-                                //TODO map to adapter！
-                                userFollowings.add(followers.get(i));
-                                followingAdapter.notifyDataSetChanged();
-                                TextView numFollowings = findViewById(R.id.num_following_text_view);
-                                numFollowings.setText(Integer.toString(userFollowings.size()));
-                            }
+                            assert followers != null;
+                            userFollowings.addAll(followers);
+                            followingAdapter.notifyDataSetChanged();
+                            TextView numFollowings = findViewById(R.id.num_following_text_view);
+                            numFollowings.setText(Integer.toString(userFollowings.size()));
                             Log.d(TAG, "DocumentSnapshot data2: " + userFollowings);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -321,13 +319,11 @@ public class UserPageActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("followers"));
                             List<String> followers = (List<String>) document.getData().get("followers");
-                            for (int i = 0; i < followers.size(); i++) {
-                                //TODO map to adapter！
-                                userFollowers.add(followers.get(i));
-                                followerAdapter.notifyDataSetChanged();
-                                TextView numFollowers = findViewById(R.id.num_follower_text_view);
-                                numFollowers.setText(Integer.toString(userFollowers.size()));
-                            }
+                            assert followers != null;
+                            userFollowers.addAll(followers);
+                            followerAdapter.notifyDataSetChanged();
+                            TextView numFollowers = findViewById(R.id.num_follower_text_view);
+                            numFollowers.setText(Integer.toString(userFollowers.size()));
                             Log.d(TAG, "DocumentSnapshot data2: " + followers);
                         } catch (Exception e) {
                             e.printStackTrace();
