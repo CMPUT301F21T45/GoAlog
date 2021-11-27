@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GOALOG"
+        android:background="@color/dark_grey"
+        android:textStyle="italic|bold"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:gravity="center"/>
+
     <LinearLayout
         android:background="@color/dark_grey"
         android:layout_width="match_parent"
