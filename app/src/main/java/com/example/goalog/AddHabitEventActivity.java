@@ -62,6 +62,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String longitude = "";
     private String latitude = "";
     private String imgPath = "";
+    private String edit_location;
     private TextView title;
     private TextView dateComplete;
     private TextView map;
@@ -71,13 +72,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private Bitmap bitmap = null;
     private Context PostImage;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
-
     Object editLatitude;
     Object editLongitude ;
-    String edit_location;
     HashMap editLocation;
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     // check whether the Activity is used for add or edit a HabitEvent
     private boolean editMode = false;
@@ -91,20 +91,20 @@ public class AddHabitEventActivity extends AppCompatActivity {
         optionalComment = findViewById(R.id.comment_text);          //create an optional comment
         title = findViewById(R.id.habitTitle);                      //get clicked habit title
         dateComplete = findViewById(R.id.eventDate);                //event complete date
-        image_display = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
-        deleteImage = (ImageView) findViewById(R.id.image_delete);   //delete the added image
-        map = (TextView) findViewById(R.id.map_text);               //a textview to add location information
-        location = findViewById(R.id.location_text);
-        deleteLocation = findViewById(R.id.location_delete);
+        image_display = (ImageView) findViewById(R.id.first_image); //an imageview to add image
+        deleteImage = (ImageView) findViewById(R.id.image_delete);  //delete the added image
+        map = (TextView) findViewById(R.id.map_text);               //a textview to access location information
+        location = findViewById(R.id.location_text);                //a textview to show location information
+        deleteLocation = findViewById(R.id.location_delete);        //delete the added location
 
         //set today for complete day
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         completeDate = date.format(today);
 
-        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");// get related Habit of this HabitEvent
-        String clickedHabitID = (String) clickedHabit.getHabitID();//get related Habit ID of this HabitEvent
-        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");//get related HabitEvent detail
+        Habit clickedHabit = (Habit) getIntent().getSerializableExtra("Habit");                             //get related Habit of this HabitEvent
+        String clickedHabitID = (String) clickedHabit.getHabitID();                                               //get related Habit ID of this HabitEvent
+        HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");   //get related HabitEvent detail
 
         image_display.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +129,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 Intent mapIntent = new Intent(AddHabitEventActivity.this, MapActivity.class);
                 setLocationResultLauncher.launch(mapIntent);
             }
-        });
+        });//click to get location
 
         deleteLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,9 +139,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 latitude = "";
                 longitude = "";
             }
-        });
-
-
+        });//click to delete location
 
         //if there's a selected HabitEvent, this is an edit HabitEvent page
         if (needUpdatedEvent != null) {
@@ -149,7 +147,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
             editMode = true;
             // filled in HabitEvent details
             optionalComment.setText(needUpdatedEvent.getEventComment());
-
             editLocation = needUpdatedEvent.getLocation();
             editLatitude = editLocation.get("latitude");
             editLongitude = editLocation.get("longitude");
@@ -158,33 +155,32 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 edit_location = "(" + editLatitude + "," + editLongitude + ")";
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
-            }else if(editLatitude == "" && editLongitude == "" && latitude != "" && longitude != "") {
+            }//show detail when have a location
+            else if(editLatitude == "" && editLongitude == "" && latitude != "" && longitude != "") {
                 edit_location = "(" + latitude + "," + longitude + ")";
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
-            }else{
-
-            }
-
+            }//show detail when add a new location
             if (needUpdatedEvent.getImage() == "") {
                 filePath = Uri.parse(needUpdatedEvent.getImage());
                 image_display.setImageResource(R.mipmap.ic_upload_image);
                 deleteImage.setVisibility(View.INVISIBLE);
-            } else {
+            } //show when no image
+            else {
                 filePath = Uri.parse(needUpdatedEvent.getImage());
                 image_display.setImageURI(filePath);
                 deleteImage.setVisibility(View.VISIBLE);
-            }
+            }//show when have a image
         } else {
             // add mode
             editMode = false;
         }
 
-        title.setText(clickedHabit.getHabitTitle());//set title with habit title
-        dateComplete.setText(completeDate);//display today date
+        title.setText(clickedHabit.getHabitTitle());    //set title with habit title
+        dateComplete.setText(completeDate);             //display today date
 
-        storage = FirebaseStorage.getInstance();//initialized with the default Firebase
-        storageReference = storage.getReference();//initialized at the root Firebase Storage location
+        storage = FirebaseStorage.getInstance();        //initialized with the default Firebase
+        storageReference = storage.getReference();      //initialized at the root Firebase Storage location
 
         confirmButton = (Button) findViewById(R.id.confirm_habit_event);
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -199,21 +195,21 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 if (editMode) {
                     editMode = false;
                     // updates HabitEvent to firebase
-                    editLatitude = editLocation.get("latitude").toString();
-                    editLongitude = editLocation.get("longitude").toString();
+                    editLatitude = editLocation.get("latitude");
+                    editLongitude = editLocation.get("longitude");
 
                     if (filePath != null) {
                         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                         ref.putFile(filePath);
                         imgPath = filePath.toString();
                         needUpdatedEvent.setImage(imgPath);
-
-                    } else if (needUpdatedEvent.getImage() == "") {
+                    } //add image when file path not null
+                    else if (needUpdatedEvent.getImage() == "") {
                         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                         ref.putFile(filePath);
                         imgPath = filePath.toString();
                         needUpdatedEvent.setImage(imgPath);
-                    }
+                    }//update image when no image at imageview
 
                     if (needUpdatedEvent.getLocation().get("latitude") == "" && needUpdatedEvent.getLocation().get("longitude") == "" ){
                         HashMap<String, String> newLocation = new HashMap<String, String>() {{
@@ -221,24 +217,23 @@ public class AddHabitEventActivity extends AppCompatActivity {
                             put("longitude", longitude);
                         }};
                         needUpdatedEvent.setLocation(newLocation);
-                    }else if(latitude != "" || longitude != ""){
+                    }//update when no location added before and add a new location
+                    else if(needUpdatedEvent.getLocation().get("latitude") != latitude && needUpdatedEvent.getLocation().get("longitude") != longitude && latitude != "" || longitude != ""){
                         HashMap<String, String> newLocation = new HashMap<String, String>() {{
                             put("latitude", latitude);
                             put("longitude", longitude);
                         }};
                         needUpdatedEvent.setLocation(newLocation);
-                    }else if(latitude == "" || longitude == "") {
+                    }//update when change a location
+                    else if(latitude == "" || longitude == "") {
                         HashMap<String, String> newLocation = new HashMap<String, String>() {{
                             put("latitude", latitude);
                             put("longitude", longitude);
                         }};
                         needUpdatedEvent.setLocation(newLocation);
-                    }else{
-                        needUpdatedEvent.setLocation(editLocation);
-                    }
+                    }//update when user delete the location
 
                     needUpdatedEvent.setEventComment(eventCommentString);
-
 
                     HashMap<String, Object> data = new HashMap<>();
                     data.put("Event", needUpdatedEvent);
@@ -409,6 +404,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    /*
+     * go to map and return location
+     */
     ActivityResultLauncher<Intent> setLocationResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -417,9 +415,10 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
                             latitude = result.getData().getStringExtra("latitude");
-                            longitude = result.getData().getStringExtra("longitude");
+                            longitude = result.getData().getStringExtra("longitude"); //get data from map
                             String display_text = "(" + latitude + "," + longitude + ")";
                             location.setText(display_text);
+                            location.setVisibility(View.VISIBLE);
                             deleteLocation.setVisibility(View.VISIBLE);
                         }
                     }

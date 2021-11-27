@@ -29,38 +29,33 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_map);
-        Bundle bundle;
-        //set the bundle
+        Bundle bundle;//set the bundle
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //reference from https://www.ibm.com/docs/hr/mpf/7.1.0?topic=permissions-location-services-in-android
             ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
-        }else{
-            // Write you code here if permission already given.
-        }
+        }else{ }
 
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        //get the location of the device.
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);//get the location of the device.
         double longitude1 = location.getLongitude();
         double latitude1 = location.getLatitude();
         bundle = new Bundle();
         bundle.putString("LAT", String.valueOf(latitude1));
         bundle.putString("LOG", String.valueOf(longitude1));
-        //init fragment
-        Fragment fragment = new MapFragment();
-        //open fragment
-        fragment.setArguments(bundle);
-        ////reference from https://www.youtube.com/watch?v=YCFPClPjDIQ
+        Fragment fragment = new MapFragment();//init fragment
+        fragment.setArguments(bundle);//open fragment
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_layout, fragment)
-                .commit();
+                .commit();//reference from https://www.youtube.com/watch?v=YCFPClPjDIQ
         latitude = findViewById(R.id.latitude_Text);
         longitude = findViewById(R.id.longitude_Text);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
                 MapActivity.this
         );
+
         OK_press=findViewById(R.id.OK);
         OK_press.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,18 +69,11 @@ public class MapActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-
     public void f1(String s1, String s2){
-        //get the location of mapFragment
         latitude=findViewById(R.id.latitude_Text);
-        longitude=findViewById(R.id.longitude_Text);
-        //set the location
+        longitude=findViewById(R.id.longitude_Text);//get the location of mapFragment
         latitude.setText(s1);
         longitude.setText(s2);
     }
-
-
 }
