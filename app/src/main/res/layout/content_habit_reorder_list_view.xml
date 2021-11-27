@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+    android:background="@color/white"
+android:id="@+id/habit_list_view_item_used_in_RecyclerView">
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp">
+
+        <TextView
+            android:id="@+id/habit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:text="habitTitle"
+            android:textSize="30sp"
+            android:textStyle="bold"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From"
+                android:textSize="20sp"></TextView>
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="startDate"
+                android:textSize="20sp"></TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/habit_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="habitReason"
+            android:textSize="25sp"></TextView>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/reorder_hadler"
+        android:layout_width="52dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/ic_baseline_reorder">
+
+    </ImageView>
+
+
+</LinearLayout>

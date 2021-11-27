@@ -42,6 +42,12 @@
             android:label="Goal List"
             android:parentActivityName=".UserPageActivity" />
         <activity
+            android:name=".HabitListViewReorderActivity"
+            android:label="Goal List"
+            android:exported="true"
+            android:parentActivityName=".UserPageActivity">
+        </activity>
+        <activity
             android:name=".HabitEventListViewActivity"
             android:exported="true"
             android:label="Footprints"

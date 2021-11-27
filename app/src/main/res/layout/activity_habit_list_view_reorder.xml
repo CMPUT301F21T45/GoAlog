@@ -12,8 +12,9 @@ tools:context=".HabitListViewActivity">
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_habit_button"
+        android:id="@+id/reorder_done_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -25,7 +26,8 @@ tools:context=".HabitListViewActivity">
         android:backgroundTint="@color/white"
         app:fabCustomSize="75dp"
         app:maxImageSize="40dp"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_baseline_check"
+        tools:ignore="VectorDrawableCompat"
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp" />
 
@@ -34,7 +36,7 @@ tools:context=".HabitListViewActivity">
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.baoyz.swipemenulistview.SwipeMenuListView
+        <com.woxthebox.draglistview.DragListView
             android:id="@+id/habit_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
