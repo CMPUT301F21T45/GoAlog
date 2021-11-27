@@ -53,7 +53,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
 
     // all fields
     private EditText optionalComment;
-    private ImageView image;
+    private ImageView image_display;
     private ImageView deleteIcon;
     private Button camera;
     private Button album;
@@ -88,7 +88,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         optionalComment = findViewById(R.id.comment_text);          //create an optional comment
         title = findViewById(R.id.habitTitle);                      //get clicked habit title
         dateComplete = findViewById(R.id.eventDate);                //event complete date
-        image = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
+        image_display = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
         deleteIcon = (ImageView) findViewById(R.id.image_delete);   //delete the added image
         map = (TextView) findViewById(R.id.map_text);               //a textview to add location information
         location = findViewById(R.id.location_text);
@@ -102,7 +102,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         String clickedHabitID = (String) clickedHabit.getHabitID();//get related Habit ID of this HabitEvent
         HabitEvent needUpdatedEvent = (HabitEvent) getIntent().getSerializableExtra("Update HabitEvent");//get related HabitEvent detail
 
-        image.setOnClickListener(new View.OnClickListener() {
+        image_display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setChoosePhoto();
@@ -112,7 +112,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                image.setImageResource(R.mipmap.ic_upload_image);
+                image_display.setImageResource(R.mipmap.ic_upload_image);
                 deleteIcon.setVisibility(View.INVISIBLE);
             }
         });//click to delete photograph
@@ -132,12 +132,28 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             editMode = true;
             // filled in HabitEvent details
             optionalComment.setText(needUpdatedEvent.getEventComment());
-            image.setImageURI(Uri.parse(needUpdatedEvent.getImage()));
-            deleteIcon.setVisibility(View.VISIBLE);
+            HashMap editLocation = needUpdatedEvent.getLocation();
+            Object editLatitude = editLocation.get("latitude");
+            Object editLongitude = editLocation.get("longitude");
+            String edit_location = "(" + editLatitude + "," + editLongitude + ")";
+            location.setText(edit_location);
+
             if (needUpdatedEvent.getImage() == ""){
-                image.setImageResource(R.mipmap.ic_upload_image);
+                image_display.setImageResource(R.mipmap.ic_upload_image);
                 deleteIcon.setVisibility(View.INVISIBLE);
+            }else{
+                InputStream imageStream = null;//open input stream
+                try {
+                    imageStream = getContentResolver().openInputStream(Uri.parse(needUpdatedEvent.getImage()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                bitmap = selectedImage.copy(selectedImage.getConfig(),selectedImage.isMutable());//copy bitmap
+                image_display.setImageBitmap(bitmap);
+                deleteIcon.setVisibility(View.VISIBLE);
             }
+
 
         } else {
             // add mode
@@ -270,7 +286,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
                             filePath = imageUri;                    //copy image uri
-                            image.setImageBitmap(imageBitmap);      //display image on screen
+                            image_display.setImageBitmap(imageBitmap);      //display image on screen
                             deleteIcon.setVisibility(View.VISIBLE); //display delete button
                             saveImage();
                         }
@@ -292,7 +308,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
                             filePath = result.getData().getData();
-                            image.setImageURI(filePath);
+                            image_display.setImageURI(filePath);
                             deleteIcon.setVisibility(View.VISIBLE);
                         }
                     }
@@ -307,7 +323,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             InputStream imageStream = getContentResolver().openInputStream(imageUri);//open input stream
             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
             bitmap = selectedImage.copy(selectedImage.getConfig(),selectedImage.isMutable());//copy bitmap
-            image.setImageBitmap(bitmap);
+            image_display.setImageBitmap(bitmap);
 
             if (bitmap != null) {
                 Intent intent = new Intent();

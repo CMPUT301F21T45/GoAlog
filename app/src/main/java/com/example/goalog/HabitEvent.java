@@ -74,6 +74,8 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         return completeDate;
     }
     public HashMap getLocation() { return Location; }
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
 
     public void setUserID(String userID) { this.userID = userID; }
     public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
