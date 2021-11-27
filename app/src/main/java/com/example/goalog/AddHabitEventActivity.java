@@ -1,13 +1,11 @@
 package com.example.goalog;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,7 +35,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -49,20 +46,21 @@ import java.util.UUID;
  *  Currently unsolved issues: the optional photograph of HabitEvent is not yet implemented,
  *  so there are some related unused attributes as well as related commented-out code
  */
-public class AddHabitEventActivity extends AppCompatActivity  {
+public class AddHabitEventActivity extends AppCompatActivity {
 
     // all fields
     private EditText optionalComment;
     private ImageView image_display;
-    private ImageView deleteIcon;
+    private ImageView deleteImage;
+    private ImageView deleteLocation;
     private Button camera;
     private Button album;
     private Button cancelButton;
     private Button confirmButton;
     private String eventCommentString;
     private String completeDate;
-    private String longitude="";
-    private String latitude="";
+    private String longitude = "";
+    private String latitude = "";
     private String imgPath = "";
     private TextView title;
     private TextView dateComplete;
@@ -76,11 +74,16 @@ public class AddHabitEventActivity extends AppCompatActivity  {
     FirebaseStorage storage;
     StorageReference storageReference;
 
+    Object editLatitude;
+    Object editLongitude ;
+    String edit_location;
+    HashMap editLocation;
+
     // check whether the Activity is used for add or edit a HabitEvent
     private boolean editMode = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
 
@@ -89,9 +92,10 @@ public class AddHabitEventActivity extends AppCompatActivity  {
         title = findViewById(R.id.habitTitle);                      //get clicked habit title
         dateComplete = findViewById(R.id.eventDate);                //event complete date
         image_display = (ImageView) findViewById(R.id.first_image);         //an imageview to add image
-        deleteIcon = (ImageView) findViewById(R.id.image_delete);   //delete the added image
+        deleteImage = (ImageView) findViewById(R.id.image_delete);   //delete the added image
         map = (TextView) findViewById(R.id.map_text);               //a textview to add location information
         location = findViewById(R.id.location_text);
+        deleteLocation = findViewById(R.id.location_delete);
 
         //set today for complete day
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
@@ -109,11 +113,12 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             }
         });//click to add optional photograph
 
-        deleteIcon.setOnClickListener(new View.OnClickListener() {
+        deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                filePath = Uri.parse("");
                 image_display.setImageResource(R.mipmap.ic_upload_image);
-                deleteIcon.setVisibility(View.INVISIBLE);
+                deleteImage.setVisibility(View.INVISIBLE);
             }
         });//click to delete photograph
 
@@ -121,10 +126,22 @@ public class AddHabitEventActivity extends AppCompatActivity  {
 
             @Override
             public void onClick(View v) {
-                Intent mapIntent=new Intent(AddHabitEventActivity.this,MapActivity.class);
+                Intent mapIntent = new Intent(AddHabitEventActivity.this, MapActivity.class);
                 setLocationResultLauncher.launch(mapIntent);
             }
         });
+
+        deleteLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location.setVisibility(View.INVISIBLE);
+                deleteLocation.setVisibility(View.INVISIBLE);
+                latitude = "";
+                longitude = "";
+            }
+        });
+
+
 
         //if there's a selected HabitEvent, this is an edit HabitEvent page
         if (needUpdatedEvent != null) {
@@ -132,29 +149,32 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             editMode = true;
             // filled in HabitEvent details
             optionalComment.setText(needUpdatedEvent.getEventComment());
-            HashMap editLocation = needUpdatedEvent.getLocation();
-            Object editLatitude = editLocation.get("latitude");
-            Object editLongitude = editLocation.get("longitude");
-            String edit_location = "(" + editLatitude + "," + editLongitude + ")";
-            location.setText(edit_location);
 
-            if (needUpdatedEvent.getImage() == ""){
-                image_display.setImageResource(R.mipmap.ic_upload_image);
-                deleteIcon.setVisibility(View.INVISIBLE);
+            editLocation = needUpdatedEvent.getLocation();
+            editLatitude = editLocation.get("latitude");
+            editLongitude = editLocation.get("longitude");
+
+            if (editLatitude != "" && editLongitude != "") {
+                edit_location = "(" + editLatitude + "," + editLongitude + ")";
+                location.setText(edit_location);
+                deleteLocation.setVisibility(View.VISIBLE);
+            }else if(editLatitude == "" && editLongitude == "" && latitude != "" && longitude != "") {
+                edit_location = "(" + latitude + "," + longitude + ")";
+                location.setText(edit_location);
+                deleteLocation.setVisibility(View.VISIBLE);
             }else{
-                InputStream imageStream = null;//open input stream
-                try {
-                    imageStream = getContentResolver().openInputStream(Uri.parse(needUpdatedEvent.getImage()));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                bitmap = selectedImage.copy(selectedImage.getConfig(),selectedImage.isMutable());//copy bitmap
-                image_display.setImageBitmap(bitmap);
-                deleteIcon.setVisibility(View.VISIBLE);
+
             }
 
-
+            if (needUpdatedEvent.getImage() == "") {
+                filePath = Uri.parse(needUpdatedEvent.getImage());
+                image_display.setImageResource(R.mipmap.ic_upload_image);
+                deleteImage.setVisibility(View.INVISIBLE);
+            } else {
+                filePath = Uri.parse(needUpdatedEvent.getImage());
+                image_display.setImageURI(filePath);
+                deleteImage.setVisibility(View.VISIBLE);
+            }
         } else {
             // add mode
             editMode = false;
@@ -179,44 +199,75 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                 if (editMode) {
                     editMode = false;
                     // updates HabitEvent to firebase
+                    editLatitude = editLocation.get("latitude").toString();
+                    editLongitude = editLocation.get("longitude").toString();
+
                     if (filePath != null) {
                         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                         ref.putFile(filePath);
                         imgPath = filePath.toString();
                         needUpdatedEvent.setImage(imgPath);
+
+                    } else if (needUpdatedEvent.getImage() == "") {
+                        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+                        ref.putFile(filePath);
+                        imgPath = filePath.toString();
+                        needUpdatedEvent.setImage(imgPath);
                     }
+
+                    if (needUpdatedEvent.getLocation().get("latitude") == "" && needUpdatedEvent.getLocation().get("longitude") == "" ){
+                        HashMap<String, String> newLocation = new HashMap<String, String>() {{
+                            put("latitude", latitude);
+                            put("longitude", longitude);
+                        }};
+                        needUpdatedEvent.setLocation(newLocation);
+                    }else if(latitude != "" || longitude != ""){
+                        HashMap<String, String> newLocation = new HashMap<String, String>() {{
+                            put("latitude", latitude);
+                            put("longitude", longitude);
+                        }};
+                        needUpdatedEvent.setLocation(newLocation);
+                    }else if(latitude == "" || longitude == "") {
+                        HashMap<String, String> newLocation = new HashMap<String, String>() {{
+                            put("latitude", latitude);
+                            put("longitude", longitude);
+                        }};
+                        needUpdatedEvent.setLocation(newLocation);
+                    }else{
+                        needUpdatedEvent.setLocation(editLocation);
+                    }
+
                     needUpdatedEvent.setEventComment(eventCommentString);
 
-                    //needUpdatedEvent.setImage(imgPath);
+
                     HashMap<String, Object> data = new HashMap<>();
                     data.put("Event", needUpdatedEvent);
                     collectionReference.document(needUpdatedEvent.getEventID()).update(data);
                     // back to last page
                     Intent intent = new Intent(AddHabitEventActivity.this, HabitEventListViewActivity.class);
                     Toast.makeText(v.getContext(), "Event Successfully Edited", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                }
-                // add mode
-                else {
+                    finish();
+                }else {
+                    // add mode
                     if (filePath != null) {
                         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                         ref.putFile(filePath);
                         imgPath = filePath.toString();
                     }//save image to storage under images folder
 
-                    HashMap<String, String> newLocation  = new HashMap<String, String>() {{
-                        put("latitude",latitude );
-                        put("longitude",longitude );
+                    HashMap<String, String> newLocation = new HashMap<String, String>() {{
+                        put("latitude", latitude);
+                        put("longitude", longitude);
                     }};
 
                     final String habitEventID = UUID.randomUUID().toString().replace("-", "");//generate random habit event ID
                     HabitEvent newHabitEvent = new HabitEvent(habitEventID, eventCommentString, completeDate, clickedHabit.getHabitTitle(), imgPath, newLocation);
                     HashMap<String, HabitEvent> data = new HashMap<>();
                     data.put("Event", newHabitEvent);
-                    if (newHabitEvent != null) {
+                    if (newHabitEvent != null)
                         // updates new HabitEvent to firebase
                         collectionReference.document(newHabitEvent.getEventID()).set(data);
-                    }
+
                     // back to user page (the one with today's habits list)
                     Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);
                     Toast.makeText(v.getContext(), "New Event Created", Toast.LENGTH_SHORT).show();
@@ -225,6 +276,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
             }
         });
     }
+
     /*
      * A view to select choose type
      */
@@ -285,9 +337,9 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
-                            filePath = imageUri;                    //copy image uri
+                            filePath = imageUri;                            //copy image uri
                             image_display.setImageBitmap(imageBitmap);      //display image on screen
-                            deleteIcon.setVisibility(View.VISIBLE); //display delete button
+                            deleteImage.setVisibility(View.VISIBLE);         //display delete button
                             saveImage();
                         }
                     }
@@ -308,8 +360,18 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
                             filePath = result.getData().getData();
-                            image_display.setImageURI(filePath);
-                            deleteIcon.setVisibility(View.VISIBLE);
+                            InputStream imageStream = null;//open input stream
+                            try {
+                                imageStream = getContentResolver().openInputStream(filePath);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            bitmap = selectedImage.copy(selectedImage.getConfig(), selectedImage.isMutable());//copy bitmap
+                            image_display.setImageBitmap(bitmap);
+                            imageUri = getImageUri(getApplicationContext(), bitmap);
+                            filePath = imageUri;
+                            deleteImage.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -318,21 +380,22 @@ public class AddHabitEventActivity extends AppCompatActivity  {
     /*
      * save picture to gallery
      */
-    public void saveImage(){
-        try{
+    public void saveImage() {
+        try {
             InputStream imageStream = getContentResolver().openInputStream(imageUri);//open input stream
             Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            bitmap = selectedImage.copy(selectedImage.getConfig(),selectedImage.isMutable());//copy bitmap
+            bitmap = selectedImage.copy(selectedImage.getConfig(), selectedImage.isMutable());//copy bitmap
             image_display.setImageBitmap(bitmap);
 
             if (bitmap != null) {
                 Intent intent = new Intent();
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();//create a byte array output stream
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream));//reduce the size of the image and put extra Data
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream));//reduce the size of the image and put extra Data
             } else {
-                Toast.makeText(PostImage,"Cannot save image!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostImage, "Cannot save image!", Toast.LENGTH_SHORT).show();
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
+
         }
     }
 
@@ -341,7 +404,7 @@ public class AddHabitEventActivity extends AppCompatActivity  {
      * code from https://stackoverflow.com/questions/67844042/update-user-profileimage-in-firebase-android-studio
      */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
-        Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000,true);
+        Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), OutImage, "Title", null);
         return Uri.parse(path);
     }
@@ -357,11 +420,11 @@ public class AddHabitEventActivity extends AppCompatActivity  {
                             longitude = result.getData().getStringExtra("longitude");
                             String display_text = "(" + latitude + "," + longitude + ")";
                             location.setText(display_text);
+                            deleteLocation.setVisibility(View.VISIBLE);
                         }
                     }
                 }
             });
-
 }
 
 

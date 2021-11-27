@@ -27,14 +27,11 @@ import java.util.HashMap;
  *  functionalities. All redundant data will be removed then.
  */
 public class HabitEvent implements Serializable, Comparable<HabitEvent>{
-    private String userID;
     private String eventID;
     private String eventComment;
     private String completeDate;
     private String habitTitle;
     private String image;
-    private double latitude;
-    private double longitude;
     private HashMap Location;
 
     /**
@@ -61,7 +58,6 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         this.Location = location;
     }
 
-    public String getUserID(){ return this.userID; }
     public String getHabitTitle() { return habitTitle; }
     public String getEventID() { return eventID; }
     public String getEventComment(){
@@ -74,10 +70,7 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         return completeDate;
     }
     public HashMap getLocation() { return Location; }
-    public double getLatitude() { return latitude; }
-    public double getLongitude() { return longitude; }
 
-    public void setUserID(String userID) { this.userID = userID; }
     public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
     public void setEventID(String eventID) { this.eventID = eventID; }
     public void setEventComment(String eventComment){
@@ -90,8 +83,7 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
     public void setImage(String image) {
         this.image = image;
     }
-    public void setLocation(HashMap location) { this.latitude = latitude;
-    this.longitude = longitude;}
+    public void setLocation(HashMap location) {this.Location = location;}
 
 
 
