@@ -1,5 +1,7 @@
 package com.example.goalog;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -20,6 +22,7 @@ public class User {
     private String userID; // Unique to database
     private String email;
     private String displayName;
+    private boolean isCreated = false;
 
     public User(String userID, String email, String publicName) {
         this.userID = userID;
@@ -27,12 +30,23 @@ public class User {
         this.displayName = publicName;
     }
 
+    /*
     public void sendToFirebase() {
         HashMap<String, User> data = new HashMap<>();
         data.put("UserInfo", this);
 
         CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
         ref.document("Info").update("UserInfo",data);
+    }
+
+     */
+
+    public void setToFirebase() {
+        HashMap<String, User> data = new HashMap<>();
+        data.put("UserInfo", this);
+
+        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
+        ref.document("Info").set(data);
     }
 
     public String getEmail() {
@@ -57,5 +71,13 @@ public class User {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public boolean isCreated() {
+        return isCreated;
+    }
+
+    public void setCreated(boolean created) {
+        isCreated = created;
     }
 }

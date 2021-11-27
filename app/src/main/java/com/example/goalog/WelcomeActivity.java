@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -15,9 +16,16 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class WelcomeActivity extends AppCompatActivity {
     FirebaseUser user;
@@ -75,8 +83,42 @@ public class WelcomeActivity extends AppCompatActivity {
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             Intent intent = new Intent(this, MainPagesActivity.class);
             assert currentUser != null;
+
+
+            final CollectionReference collRef = FirebaseFirestore.getInstance()
+                    .collection(currentUser.getEmail());
+            collRef.document("Info").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            try {
+                                HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("UserInfo");
+                                if (!(boolean) map.get("created")) {
+                                    User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
+                                    newUser.setCreated(true);
+                                    newUser.setToFirebase();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            });
+
+            /*
             User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
-            newUser.sendToFirebase();
+
+            // if is created, do not overview
+            if (!newUser.isCreated()) {
+                newUser.setCreated(true);
+                newUser.setToFirebase();
+            }
+             */
+
+            // Todo: distinguish.
             finish();
             startActivity(intent);
         } else {

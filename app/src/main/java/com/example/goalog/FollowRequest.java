@@ -25,6 +25,7 @@ public class FollowRequest {
         ref.document(this.fromUser).set(data);
     }
 
+
     public String getFromUser() {
         return fromUser;
     }

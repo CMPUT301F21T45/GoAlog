@@ -2,6 +2,7 @@ package com.example.goalog;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -138,6 +140,7 @@ public class UserPageActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection("user003");
 
+        // View My Page or Other User's Page
         if (emailExtra != null) {
             isFromIntent = true;
             collectionReference = db.collection(emailExtra);
@@ -179,7 +182,6 @@ public class UserPageActivity extends AppCompatActivity {
             ingLLayout.setVisibility(View.INVISIBLE);
             erLLayout.setVisibility(View.INVISIBLE);
             listAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
-            todayList.setAdapter(listAdapter);
         } else {
             isFromIntent = false;
             assert user != null;
@@ -188,7 +190,42 @@ public class UserPageActivity extends AppCompatActivity {
             userName.setText(nameString);
             email.setText(emailString);
             listAdapter = new CustomTodayHabitList(this,habitDataList);
-            todayList.setAdapter(listAdapter);
+        }
+        todayList.setAdapter(listAdapter);
+
+        // follow other's habits
+        if (emailExtra != null) {
+          todayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+              @Override
+              public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                  AlertDialog followHabitAlert = new  AlertDialog
+                          .Builder(UserPageActivity.this)
+                          .setTitle("Follow Habit")
+                          .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                              @Override
+                              public void onClick(DialogInterface dialog, int which) {
+                                  Habit selectedHabit = habitDataList.get(position);
+                                  // Todo: upload
+                                  HashMap<String, Habit> habitMap = new HashMap<>();
+                                  habitMap.put("HabitClass", selectedHabit);
+                                  CollectionReference collRef = db.collection(currentUser.getEmail());
+                                  if (selectedHabit!=null) {
+                                      collRef.document(selectedHabit.getHabitID()).set(habitMap);
+                                  }
+
+                              }
+                          }).setNegativeButton("No", null).create();
+                  followHabitAlert.setOnShowListener(new DialogInterface.OnShowListener() {
+                      @Override
+                      public void onShow(DialogInterface dialog) {
+                          followHabitAlert.getButton(AlertDialog.BUTTON_POSITIVE)
+                                  .setTextColor(getResources().getColor(R.color.warning_red));
+                      }
+                  });
+                  followHabitAlert.show();
+                  return false;
+              }
+          });
         }
 
         // TODO: add case for view user: All Habits - Public
@@ -291,7 +328,6 @@ public class UserPageActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("following"));
                             List<String> followers = (List<String>) document.getData().get("following");
-                            assert followers != null;
                             userFollowings.addAll(followers);
                             followingAdapter.notifyDataSetChanged();
                             TextView numFollowings = findViewById(R.id.num_following_text_view);
@@ -319,7 +355,6 @@ public class UserPageActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("followers"));
                             List<String> followers = (List<String>) document.getData().get("followers");
-                            assert followers != null;
                             userFollowers.addAll(followers);
                             followerAdapter.notifyDataSetChanged();
                             TextView numFollowers = findViewById(R.id.num_follower_text_view);

@@ -155,7 +155,6 @@ public class MainPagesActivity extends AppCompatActivity {
                         try {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("Reminder"));
                             List<String> reminderList = (List<String>) document.getData().get("Reminder");
-                            assert reminderList != null;
                             reminders.addAll(reminderList);
                             reminderAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
