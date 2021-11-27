@@ -53,6 +53,7 @@ public class UserPageActivity extends AppCompatActivity {
     String weekday;
     int numOfHabit;
     CollectionReference collectionReference;
+    int completedOnTodayNum;
 
     /**
      * User: Today's Habit List, Visual Indicator, Button to all habits, habit events.
@@ -125,7 +126,7 @@ public class UserPageActivity extends AppCompatActivity {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
-                    int completedOnTodayNum = 0;
+                    completedOnTodayNum = 0;
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
                         String habitTitle = (String) map.get("habitTitle");
@@ -142,11 +143,6 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-//                                        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
-//                                                .collection("HabitEvent");
-//                                        Query habitEvent = habitEventCollectionReference.limit(1);
-//                                        HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.get().get("Event");
-
                                         if (checkCompletedEventofToday(habitID)) {
                                             completedOnTodayNum++;
                                         }
@@ -206,10 +202,10 @@ public class UserPageActivity extends AppCompatActivity {
 //            }
 //        });
 
-        List<QueryDocumentSnapshot> documents = habitEventCollectionReference.get().getDocuments();
-        for (QueryDocumentSnapshot document : documents) {
-            System.out.println(document.getId() + " => " + document.toObject(City.class));
-        }
+//        List<QueryDocumentSnapshot> documents = habitEventCollectionReference.get().getDocuments();
+//        for (QueryDocumentSnapshot document : documents) {
+//            System.out.println(document.getId() + " => " + document.toObject(City.class));
+//        }
         habitEventCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -223,15 +219,20 @@ public class UserPageActivity extends AppCompatActivity {
                     HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.getData().get("Event");
                     if (habitEvent.getData().get("Event") != null) {
                         String completeDate = (String) map.get("completeDate");
-                        Date today = new Date();
+                        String fDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                        try {
-                            if (today.equals(date.parse(completeDate))) {
-                                exists[0] = Boolean.TRUE;
-                                return;
-                            }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+//                        try {
+//                            if (fDate.equals(completeDate)) {
+//                                exists[0] = Boolean.TRUE;
+//                                return;
+//                            }
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+                        if (fDate.equals(completeDate)) {
+                            exists[0] = Boolean.TRUE;
+                            completedOnTodayNum++;
+                            return;
                         }
                     }
                 }
