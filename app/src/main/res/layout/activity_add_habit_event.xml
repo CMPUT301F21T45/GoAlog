@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".AddHabitActivity">
 
     <LinearLayout
@@ -13,25 +14,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp">
+        >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/habitTitle"
-            android:textColor="@color/black"
-            android:textSize="30dp"
+            android:textColor="@color/dark_grey"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:text="Habit Name"
             app:layout_constraintTop_toTopOf="parent"
             />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:paddingTop="10dp"
+            android:textColor="@color/dark_grey"
             android:text="Completed on "
             app:layout_constraintStart_toStartOf="parent"
             />
@@ -40,44 +41,121 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/eventDate"
-            android:textSize="20dp"
+            android:textColor="@color/dark_grey"
+            android:textSize="20sp"
             android:text="2021-9-10"
 
-            />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:textSize="20dp"
-            android:text="Leave your comment:"
             />
 
         <EditText
             android:id="@+id/comment_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Share your experience!"
+            android:hint="Share your experience here!"
             android:inputType="text"
             android:textColor="@color/black"
-            android:paddingTop="10dp"
-            android:textSize="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="70dp"
+            android:textSize="20sp"
+            android:background="@color/white"
             android:maxLength="20"
             />
-
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/first_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:src="@mipmap/ic_upload_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/habit_event_detail_layout" />
+
+    <ImageView
+        android:id="@+id/image_delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_delete_image"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/first_image"
+        app:layout_constraintEnd_toEndOf="@id/first_image" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/map_text"
+        />
+
+    <TextView
+        android:id="@+id/map_text"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Location"
+        android:textSize="20sp"
+        android:paddingStart="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/first_image"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/map_text"
+        />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_map"
+        app:layout_constraintTop_toTopOf="@+id/map_text"
+        app:layout_constraintBottom_toBottomOf="@+id/map_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_arrow_right"
+        app:layout_constraintTop_toTopOf="@+id/map_text"
+        app:layout_constraintBottom_toBottomOf="@+id/map_text"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/location_text"
+        android:textColor="@color/dark_grey"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/map_text"
+        />
+
+    <ImageView
+        android:id="@+id/location_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_delete_image"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/location_text"
+        app:layout_constraintTop_toTopOf="@+id/location_text"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/confirm_habit_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:text="Confirm"
+        android:background="@color/dark_grey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/habit_event_detail_layout" />
-
+        app:layout_constraintTop_toBottomOf="@id/location_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
