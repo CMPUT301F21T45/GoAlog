@@ -10,10 +10,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -44,7 +49,7 @@ public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
     ArrayAdapter<Habit> listAdapter;
     ListView todayList;
-    FirebaseFirestore db;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     String weekday;
     int numOfHabit;
     CollectionReference collectionReference;
@@ -137,20 +142,21 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-                                        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
-                                                .collection("HabitEvent");
-                                        Query habitEvent = habitEventCollectionReference.limit(1);
+//                                        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
+//                                                .collection("HabitEvent");
+//                                        Query habitEvent = habitEventCollectionReference.limit(1);
 //                                        HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.get().get("Event");
 
-//                                        if (checkCompletedEventofToday(habitID)) {
-//                                            completedOnTodayNum++;
-//                                        }
+                                        if (checkCompletedEventofToday(habitID)) {
+                                            completedOnTodayNum++;
+                                        }
                                     }
                                 }
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }}
+//                    completedOnTodayNum = 2;
                     listAdapter.notifyDataSetChanged();
                     ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
                     TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
@@ -180,10 +186,30 @@ public class UserPageActivity extends AppCompatActivity {
     public Boolean checkCompletedEventofToday(String habitID) {
 //        return false;
         // check the habit event list finished or not
+        final boolean[] exists = new boolean[1];
+//        Boolean hasEvent = false;
 
-        Boolean hasEvent = false;
-        final CollectionReference habitEventCollectionReference = collectionReference.document(habitID)
-                .collection("HabitEvent");
+        final CollectionReference habitEventCollectionReference = getHasEventReference(habitID);
+//        habitEventCollectionReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+//                    } else {
+//                        Log.d("TAG", "No such document");
+//                    }
+//                } else {
+//                    Log.d("TAG", "get failed with ", task.getException());
+//                }
+//            }
+//        });
+
+        List<QueryDocumentSnapshot> documents = habitEventCollectionReference.get().getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            System.out.println(document.getId() + " => " + document.toObject(City.class));
+        }
         habitEventCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -201,8 +227,8 @@ public class UserPageActivity extends AppCompatActivity {
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         try {
                             if (today.equals(date.parse(completeDate))) {
+                                exists[0] = Boolean.TRUE;
                                 return;
-                                //have
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -210,10 +236,17 @@ public class UserPageActivity extends AppCompatActivity {
                     }
                 }
                 // dont have
+                exists[0] = Boolean.FALSE;
 
             }
         });
-        return hasEvent;
+
+        return exists[0];
+    }
+//
+    public CollectionReference getHasEventReference(String habitID) {
+        return db.collection("user003")
+                .document(habitID).collection("HabitEvent");
     }
 }
 
