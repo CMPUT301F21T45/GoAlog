@@ -12,12 +12,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="310dp"
             android:padding="10dp"
             android:textSize="30sp"
             android:textAlignment="center"
             android:text="Set Up Your Goals"
-            android:gravity="center_vertical"
+            android:gravity="top|center"
             tools:ignore="RtlCompat" />
 
     </LinearLayout>

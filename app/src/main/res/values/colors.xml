@@ -13,5 +13,6 @@
     <color name="dark_grey">#3D444D</color>
     <color name="yellow_white">#F7F5E9</color>
     <color name="dark">#2A2A30</color>
+    <color name="light_yellow_white">#F9F9F1</color>
 
 </resources>
