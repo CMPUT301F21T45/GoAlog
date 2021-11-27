@@ -172,7 +172,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="@color/yellow_white"/>
+            android:background="@color/white"/>
 
     </LinearLayout>
 
@@ -228,7 +228,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="@color/yellow_white"/>
+            android:background="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
