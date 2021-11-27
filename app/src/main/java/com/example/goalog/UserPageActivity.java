@@ -141,11 +141,14 @@ public class UserPageActivity extends AppCompatActivity {
         CollectionReference collectionReference = db.collection("user003");
 
         // View My Page or Other User's Page
+        final TextView myPageTextView = findViewById(R.id.top_my_page_textview);;
+
         if (emailExtra != null) {
             isFromIntent = true;
             collectionReference = db.collection(emailExtra);
             assert user != null;
             String nameString = user.getDisplayName();
+            myPageTextView.setText("Back To My Page");
             TextView todayPublicTextView = findViewById(R.id.today_or_public_text_view);
             todayPublicTextView.setText("Public Goals");
             myGoalButton.setVisibility(View.INVISIBLE);
@@ -193,6 +196,16 @@ public class UserPageActivity extends AppCompatActivity {
         }
         todayList.setAdapter(listAdapter);
 
+        myPageTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (emailExtra != null) {
+                    Intent intent = new Intent(getApplicationContext(), UserPageActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }
+            }
+        });
         // follow other's habits
         if (emailExtra != null) {
           todayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

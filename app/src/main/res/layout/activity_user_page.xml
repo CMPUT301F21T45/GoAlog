@@ -11,11 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GOALOG"
-        android:background="@color/dark_grey"
+        android:background="@color/dark"
         android:textStyle="italic|bold"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/top_my_page_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="MY PAGE"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:background="@color/dark"/>
 
     <LinearLayout
         android:background="@color/dark_grey"
@@ -118,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:background="#FCFBF2"
+        android:background="@color/white"
         android:visibility="gone">
 
         <LinearLayout
@@ -154,7 +165,9 @@
             android:id="@+id/follower_listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            tools:ignore="NestedWeights" />
 
         <View
             android:layout_width="match_parent"
@@ -169,7 +182,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:background="#FCFBF2"
+        android:background="@color/white"
         android:visibility="gone">
 
         <LinearLayout
@@ -208,8 +221,9 @@
             android:id="@+id/following_listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <View
             android:layout_width="match_parent"

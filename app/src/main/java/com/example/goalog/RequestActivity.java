@@ -262,32 +262,38 @@ public class RequestActivity extends AppCompatActivity {
                 String targetEmail = targetEmailEditText.getText().toString();
                 String reasonString = reasonEditText.getText().toString();
 
-                // run a query on that collection,
-                // get the document snapshots and then check if the snapshot is empty.
-                final CollectionReference reference = db.collection(targetEmail);
-                reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.isEmpty()){
-                            //this collection is empty -->the email has not been signed up
-                            Toast.makeText(view.getContext(), "The User does not exits",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            //user exits, create a new followRequest
-                            // update that user's notification document
-                            if (!currentUser.getEmail().equals(targetEmail)) {
-                                // Todo: Check
-                                String quoteReason = "'" + reasonString + "'";
-                                FollowRequest newRequest = new FollowRequest(currentUser.getEmail(), targetEmail, quoteReason);
-                                newRequest.sendToFirebase();
+                if (targetEmail.equals("")) {
+                    Toast.makeText(view.getContext(), "Please Enter an Email!",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    // run a query on that collection,
+                    // get the document snapshots and then check if the snapshot is empty.
+                    final CollectionReference reference = db.collection(targetEmail);
+                    reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (queryDocumentSnapshots.isEmpty()) {
+                                //this collection is empty -->the email has not been signed up
+                                Toast.makeText(view.getContext(), "The User does not exits",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                //user exits, create a new followRequest
+                                // update that user's notification document
+                                if (!currentUser.getEmail().equals(targetEmail)) {
+                                    // Todo: Check
+                                    String quoteReason = "'" + reasonString + "'";
+                                    FollowRequest newRequest = new FollowRequest(currentUser.getEmail(), targetEmail, quoteReason);
+                                    newRequest.sendToFirebase();
+                                    Toast.makeText(view.getContext(), "Request Sent!", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(view.getContext(), "Can't Send to Yourself!", Toast.LENGTH_LONG).show();
+                                }
+                                makeRequestLayout.setVisibility(View.GONE);
+                                callToMakeRequestButton.setVisibility(View.VISIBLE);
                             }
-                            Toast.makeText(view.getContext(), "Request Sent!", Toast.LENGTH_LONG).show();
-                            makeRequestLayout.setVisibility(View.GONE);
-                            callToMakeRequestButton.setVisibility(View.VISIBLE);
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }
