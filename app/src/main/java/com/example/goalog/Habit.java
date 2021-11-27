@@ -11,7 +11,7 @@ import java.util.UUID;
  *  It records a title, a reason, a date to start, a weekly plan, and your permission or denial to
  *  display the habit to  the public.
  */
-public class Habit implements Serializable {
+public class Habit implements Serializable, Comparable<Habit> {
 
     private String habitTitle;
     private String habitReason;
@@ -19,6 +19,7 @@ public class Habit implements Serializable {
     private String weekdayPlan;
     private boolean isPublic;
     private String habitID;
+    private Long orderID;
 
     /**
      * Habit Constructor:
@@ -42,6 +43,16 @@ public class Habit implements Serializable {
         this.weekdayPlan = weekdayPlan;
         this.isPublic = isPublic;
         this.habitID = habitID;
+    }
+
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID){
+        this.habitTitle = habitTitle;
+        this.habitReason = habitReason;
+        this.startDate = startDate;
+        this.weekdayPlan = weekdayPlan;
+        this.isPublic = isPublic;
+        this.habitID = habitID;
+        this.orderID = orderID;
     }
 
     public void setHabitReason(String habitReason) {
@@ -92,4 +103,17 @@ public class Habit implements Serializable {
         return habitID;
     }
 
+    public Long getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(Long orderID) {
+        this.orderID = orderID;
+    }
+
+    @Override
+    public int compareTo(Habit habit) {
+        Long diff = this.getOrderID() - habit.getOrderID();
+        return diff.intValue();
+    }
 }
