@@ -298,11 +298,12 @@
                 app:layout_constraintVertical_bias="0.836">
 
                 <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Habits Done: "
+                android:text="Taskes: "
+                    android:layout_weight="1"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
                 <TextView
@@ -311,7 +312,7 @@
                 android:layout_height="wrap_content"
                 android:text="8/12"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
 
             </LinearLayout>
@@ -322,11 +323,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="18dp"
             android:textColor="@color/blue"
-            android:layout_marginRight="16dp"
-            android:text="My Goals"
-            android:textSize="15dp"
+                android:text="View All Goals"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"/>

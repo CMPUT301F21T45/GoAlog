@@ -32,17 +32,6 @@ public class User {
         this.displayName = publicName;
     }
 
-    /*
-    public void sendToFirebase() {
-        HashMap<String, User> data = new HashMap<>();
-        data.put("UserInfo", this);
-
-        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
-        ref.document("Info").update("UserInfo",data);
-    }
-
-     */
-
     public void setToFirebase() {
         HashMap<String, User> data = new HashMap<>();
         data.put("UserInfo", this);

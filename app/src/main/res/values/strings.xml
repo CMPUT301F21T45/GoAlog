@@ -95,4 +95,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="to_sign_out">To Sign Out</string>
+    <string name="done">Done</string>
 </resources>
