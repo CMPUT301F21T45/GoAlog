@@ -122,11 +122,11 @@ public class UserPageActivity extends AppCompatActivity {
                 habitDataList.clear();
 
                 assert queryDocumentSnapshots != null;
+                completedOnTodayNum = 0;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
+//                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     // TODO: Retrieve data from firebase.
                     // Adding the habits from FireStore
-                    completedOnTodayNum = 0;
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
                         String habitTitle = (String) map.get("habitTitle");
@@ -143,9 +143,10 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-                                        if (checkCompletedEventofToday(habitID)) {
-                                            completedOnTodayNum++;
-                                        }
+//                                        if (checkCompletedEventofToday(habitID)) {
+                                        completedOnTodayNum++;
+//                                        }
+                                        checkCompletedEventofToday(habitID);
                                     }
                                 }
                             }
@@ -153,59 +154,46 @@ public class UserPageActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }}
 //                    completedOnTodayNum = 2;
-                    listAdapter.notifyDataSetChanged();
-                    ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
-                    TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
-                    TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
 
-                    int ratioNum;
-                    numOfHabit = habitDataList.size();
 
-                    if (numOfHabit ==0) {
-                        ratioNum = 0;
-                    } else {
-                        ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
-                    }
-
-                    // TODO: Finish Visual Indicator
-                    // Today's Progress:
-                    percentage.setText(ratioNum+"%");
-                    indicator.setProgress(ratioNum, true);
-                    ratio.setText(completedOnTodayNum+"/"+numOfHabit);
-                    // Notifying the adapter to render any new data fetched from the cloud
                 }
+                listAdapter.notifyDataSetChanged();
+                Log.d("FinalCompletedOntoday", String.valueOf(completedOnTodayNum));
+
+                ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
+                TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
+                TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
+
+                int ratioNum;
+                numOfHabit = habitDataList.size();
+
+                if (numOfHabit ==0) {
+                    ratioNum = 0;
+                } else {
+                    ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
+                }
+
+                // TODO: Finish Visual Indicator
+                // Today's Progress:
+                percentage.setText(ratioNum+"%");
+                indicator.setProgress(ratioNum, true);
+                ratio.setText(completedOnTodayNum+"/"+numOfHabit);
+                // Notifying the adapter to render any new data fetched from the cloud
             }
         });
 
+
+
+
     }
 
-    public Boolean checkCompletedEventofToday(String habitID) {
+    public void checkCompletedEventofToday(String habitID) {
 //        return false;
         // check the habit event list finished or not
         final boolean[] exists = new boolean[1];
 //        Boolean hasEvent = false;
 
         final CollectionReference habitEventCollectionReference = getHasEventReference(habitID);
-//        habitEventCollectionReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-//                    } else {
-//                        Log.d("TAG", "No such document");
-//                    }
-//                } else {
-//                    Log.d("TAG", "get failed with ", task.getException());
-//                }
-//            }
-//        });
-
-//        List<QueryDocumentSnapshot> documents = habitEventCollectionReference.get().getDocuments();
-//        for (QueryDocumentSnapshot document : documents) {
-//            System.out.println(document.getId() + " => " + document.toObject(City.class));
-//        }
         habitEventCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -220,29 +208,19 @@ public class UserPageActivity extends AppCompatActivity {
                     if (habitEvent.getData().get("Event") != null) {
                         String completeDate = (String) map.get("completeDate");
                         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-//                        try {
-//                            if (fDate.equals(completeDate)) {
-//                                exists[0] = Boolean.TRUE;
-//                                return;
-//                            }
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
+//                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         if (fDate.equals(completeDate)) {
                             exists[0] = Boolean.TRUE;
                             completedOnTodayNum++;
+                            Log.d("CompletedOntoday", String.valueOf(completedOnTodayNum));
                             return;
                         }
                     }
                 }
-                // dont have
-                exists[0] = Boolean.FALSE;
-
             }
         });
 
-        return exists[0];
+//        return Boolean.TRUE;
     }
 //
     public CollectionReference getHasEventReference(String habitID) {
