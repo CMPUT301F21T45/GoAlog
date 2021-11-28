@@ -7,63 +7,82 @@
     tools:context=".MapActivity"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:id="@+id/longitude"
-            android:layout_width="100dp"
-            android:textColor="@color/black"
-            android:layout_height="match_parent"
-            android:text="Longitude: "
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/longitude_Text"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:maxLength="10"
-            android:textSize="20dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-        <TextView
-            android:id="@+id/latitude"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="Latitude:"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/latitude_Text"
-            android:layout_width="100dp"
-            android:maxLength="10"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:textSize="20dp" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/frame_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:alpha="0.7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/longitude"
+                    android:layout_width="100dp"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Longitude: "
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/longitude_Text"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:maxLength="10"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/latitude"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="Latitude:"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/latitude_Text"
+                    android:layout_width="100dp"
+                    android:maxLength="10"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/OK"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="Confirm"
+        android:textSize="20sp"
+        android:background="@color/dark_grey"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_gravity="bottom"/>
 
 </LinearLayout>

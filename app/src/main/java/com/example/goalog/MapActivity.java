@@ -48,16 +48,17 @@ public class MapActivity extends AppCompatActivity {
         }
 
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);//get the location of the device.
-
-      //  double longitude1 = 113, latitude1 = 20;
-
-        double  longitude1 = location.getLongitude();
-        double  latitude1 = location.getLatitude();
-
-
+        double longitude1 = location.getLongitude();
+        double latitude1 = location.getLatitude();
         bundle = new Bundle();
         bundle.putString("LAT", String.valueOf(latitude1));
         bundle.putString("LOG", String.valueOf(longitude1));
+        Fragment fragment = new MapFragment();//init fragment
+        fragment.setArguments(bundle);//open fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .commit();//reference from https://www.youtube.com/watch?v=YCFPClPjDIQ
         latitude = findViewById(R.id.latitude_Text);
         longitude = findViewById(R.id.longitude_Text);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
@@ -77,7 +78,6 @@ public class MapActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
     public void f1(String s1, String s2){
         latitude=findViewById(R.id.latitude_Text);
