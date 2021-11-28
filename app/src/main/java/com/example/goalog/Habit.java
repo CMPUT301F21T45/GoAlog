@@ -112,7 +112,7 @@ public class Habit implements Serializable, Comparable<Habit> {
     public void setOrderID(Long orderID) {
         this.orderID = orderID;
     }
-        
+
 
     @Override
     public int compareTo(Habit habit) {

@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:paddingTop="10dp"
-        android:text="event commet(optional)"
+        android:text="event comment(optional)"
         android:textSize="20dp" />
 
 
