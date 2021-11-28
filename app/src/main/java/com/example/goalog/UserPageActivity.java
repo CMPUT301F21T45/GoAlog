@@ -38,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 
 import org.w3c.dom.Text;
@@ -58,9 +59,7 @@ import javax.annotation.Nullable;
  * UserPageActivity
  * The class for User Page and other interactions.
  * The page displays the user profile, a progress indicator, today's habit list.
- * Current Issues:
- *   1. Need to set the "Done" button to invisible after successfully create a Event for the habit.
- *   2. Finish Visual Indicator
+ * You can also follow other's habits by long click their habits (will ask your confirmation)
  */
 public class UserPageActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
@@ -225,7 +224,8 @@ public class UserPageActivity extends AppCompatActivity {
                                   habitMap.put("HabitClass", selectedHabit);
                                   CollectionReference collRef = db.collection(currentUser.getEmail());
                                   if (selectedHabit!=null) {
-                                      collRef.document(selectedHabit.getHabitID()).set(habitMap);
+                                      collRef.document(selectedHabit.getHabitID())
+                                              .set(habitMap, SetOptions.merge());
                                   }
 
                               }
