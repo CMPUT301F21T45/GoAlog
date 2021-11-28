@@ -28,8 +28,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
+/**
+ * WelcomeActivity
+ * In this activity, you are going to log in or sign up and use the application
+ * Once you logged in, your status will be kept until you sign out.
+ * (also the activity will be skipped if you've logged in)
+ */
 public class WelcomeActivity extends AppCompatActivity {
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +90,6 @@ public class WelcomeActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainPagesActivity.class);
             assert currentUser != null;
 
-
             final CollectionReference collRef = FirebaseFirestore.getInstance()
                     .collection(currentUser.getEmail());
             collRef.document("Info").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -94,7 +98,6 @@ public class WelcomeActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         if (!doc.exists()) {
-
                             User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
                             newUser.setCreated(true);
                             newUser.setToFirebase();
@@ -103,17 +106,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             });
 
-            /*
-            User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
-
-            // if is created, do not overview
-            if (!newUser.isCreated()) {
-                newUser.setCreated(true);
-                newUser.setToFirebase();
-            }
-             */
-
-            // Todo: distinguish.
             finish();
             startActivity(intent);
         } else {

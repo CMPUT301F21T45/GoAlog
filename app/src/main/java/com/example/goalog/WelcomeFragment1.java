@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 /**
+ * WelcomeFragment1
+ * Welcome Slogan
  * A simple {@link Fragment} subclass.
  * Use the {@link WelcomeFragment1#newInstance} factory method to
  * create an instance of this fragment.
@@ -46,16 +48,6 @@ public class WelcomeFragment1 extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_welcome_1, container, false);
 
-        /*
-        loginButton = (Button) view.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-         */
         // Inflate the layout for this fragment
         return view;
     }

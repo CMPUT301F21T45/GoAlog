@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * RequestAdapter
+ * Adapter for listView with requests.
+ */
 public class RequestAdapter extends ArrayAdapter<FollowRequest> {
     public RequestAdapter(Context context, int position, ArrayList<FollowRequest> requests) {
         super(context, position, requests);

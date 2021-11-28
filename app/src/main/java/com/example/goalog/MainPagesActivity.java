@@ -48,6 +48,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * MainPagesActivity
+ * View basic information; view, add and delete your reminders, set up your goal and logout in this
+ * activity. This is the page you see once you successfully logged in.
+ * 1. Logout: long click the logout icon. You'll see an Alert to confirm your logout.
+ * 2. Reminder: You can add your daily reminders here. Long click to delete.
+ * 3. Set up your goals. Tap the button to that activity.
+ */
 public class MainPagesActivity extends AppCompatActivity {
 
     private final ArrayList<String> reminders = new ArrayList<>();

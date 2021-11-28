@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,8 +55,9 @@ public class HabitListViewReorderActivity extends AppCompatActivity{
         HabitList.setCanDragHorizontally(false);
 
 
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user003"); //assume we already logged in
+        final CollectionReference collectionReference = database.collection(currentUser.getEmail()); //assume we already logged in
         HabitList.setDragListListener(new DragListView.DragListListener() {
             @Override
             public void onItemDragStarted(int position) {
@@ -132,10 +135,8 @@ public class HabitListViewReorderActivity extends AppCompatActivity{
                 }
                 Collections.sort(habitDataList);
 
-
                 // Notifying the adapter to render any new data fetched from the cloud
                 listAdapter.notifyDataSetChanged();
-
             }
         });
 
