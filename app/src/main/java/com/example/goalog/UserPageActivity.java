@@ -196,6 +196,7 @@ public class UserPageActivity extends AppCompatActivity {
         }
         todayList.setAdapter(listAdapter);
 
+        // Back to my page if in another user's page
         myPageTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,7 +219,8 @@ public class UserPageActivity extends AppCompatActivity {
                               @Override
                               public void onClick(DialogInterface dialog, int which) {
                                   Habit selectedHabit = habitDataList.get(position);
-                                  // Todo: upload
+                                  selectedHabit.setOrderID((long) -1);
+                                  selectedHabit.setLatestFinishDate("none");
                                   HashMap<String, Habit> habitMap = new HashMap<>();
                                   habitMap.put("HabitClass", selectedHabit);
                                   CollectionReference collRef = db.collection(currentUser.getEmail());
@@ -262,7 +264,7 @@ public class UserPageActivity extends AppCompatActivity {
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
-                        String lastestFinishDate = (String)  map.get("latestFinishDate");
+                        String latestFinishDate = (String)  map.get("latestFinishDate");
 
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
@@ -270,6 +272,9 @@ public class UserPageActivity extends AppCompatActivity {
                             if(isPublic) {
                                 habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                                 habitTitleDataList.add(habitTitle);
+                                if (latestFinishDate.equals(date.format(today))) {
+                                    completedOnTodayNum++;
+                                }
                             }
                         } else {
                             try {
@@ -278,7 +283,7 @@ public class UserPageActivity extends AppCompatActivity {
                                         char ch = weekdayPlan.charAt(i);
                                         if (weekday.equals(String.valueOf(ch))) {
                                             habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-                                            if (lastestFinishDate.equals(date.format(today))) {
+                                            if (latestFinishDate.equals(date.format(today))) {
                                                 completedOnTodayNum++;
                                             }
                                         }
@@ -305,8 +310,7 @@ public class UserPageActivity extends AppCompatActivity {
                     ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
                 }
 
-                // TODO: Finish Visual Indicator
-                // Today's Progress:
+                // Set the Visual Indicator: Today's Progress:
                 percentage.setText(ratioNum+"%");
                 indicator.setProgress(ratioNum, true);
                 ratio.setText(completedOnTodayNum+"/"+numOfHabit);
@@ -327,7 +331,8 @@ public class UserPageActivity extends AppCompatActivity {
 
         ListView followerListView = findViewById(R.id.follower_listview);
         ListView followingListView = findViewById(R.id.following_listview);
-        //Todo: following, follower;
+
+        // following, follower;
         ArrayList<String> userFollowings = new ArrayList<>();
         ArrayList<String> userFollowers = new ArrayList<>();
         ArrayAdapter<String> followingAdapter, followerAdapter;
