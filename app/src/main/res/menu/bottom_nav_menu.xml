@@ -10,7 +10,7 @@
     <item
         android:id="@+id/navigation_trend"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Trend"/>
+        android:title="Main"/>
 
     <item
         android:id="@+id/navigation_notifications"

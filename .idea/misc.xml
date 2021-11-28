@@ -46,14 +46,16 @@
         <entry key="app/src/main/res/layout-v21/activity_notification.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout-v31/activity_user_page.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_add_habit_event.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/activity_add_habit_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_main_page.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_main_pages.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.356215532601857" />
+        <entry key="app/src/main/res/layout/activity_map.xml" value="0.23162393162393163" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.19444444444444445" />
-        <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.32829361591126366" />
+        <entry key="app/src/main/res/layout/activity_user_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.25" />
         <entry key="app/src/main/res/layout/choose_type_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/content_follow_listview.xml" value="0.375" />
@@ -64,8 +66,10 @@
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/content_today_list.xml" value="0.17509393349417784" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.23162393162393163" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_welcome_1.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/fragment_welcome_2.xml" value="0.26096491228070173" />
         <entry key="app/src/main/res/layout/habit_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/habit_list_view.xml" value="0.1023567090009692" />
         <entry key="app/src/main/res/layout/habitevent_list_view.xml" value="0.28229166666666666" />
