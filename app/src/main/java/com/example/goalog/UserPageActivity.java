@@ -18,10 +18,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-=======
 import androidx.activity.result.contract.ActivityResultContracts;
->>>>>>> origin/MergeHere
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -29,21 +26,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-<<<<<<< HEAD
-import com.google.firebase.firestore.CollectionReference;
-=======
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
->>>>>>> origin/MergeHere
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -75,16 +67,11 @@ public class UserPageActivity extends AppCompatActivity {
     ArrayList<String> habitTitleDataList;
     ArrayAdapter<?> listAdapter;
     ListView todayList;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
     String weekday;
     int numOfHabit;
-<<<<<<< HEAD
-    CollectionReference collectionReference;
-    int completedOnTodayNum;
-=======
     boolean isFromIntent = false;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
->>>>>>> origin/MergeHere
 
     /**
      * User: Today's Habit List, Visual Indicator, Button to all habits, habit events.
@@ -151,9 +138,6 @@ public class UserPageActivity extends AppCompatActivity {
 
         String emailExtra = getIntent().getStringExtra("emailString");
         db = FirebaseFirestore.getInstance();
-<<<<<<< HEAD
-        collectionReference = db.collection("user003");
-=======
         CollectionReference collectionReference = db.collection("user003");
 
         // View My Page or Other User's Page
@@ -258,7 +242,6 @@ public class UserPageActivity extends AppCompatActivity {
         }
 
         // TODO: add case for view user: All Habits - Public
->>>>>>> origin/MergeHere
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
@@ -267,14 +250,8 @@ public class UserPageActivity extends AppCompatActivity {
                 habitDataList.clear();
 
                 assert queryDocumentSnapshots != null;
-                completedOnTodayNum = 0;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-<<<<<<< HEAD
-//                    Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
-                    // TODO: Retrieve data from firebase.
-=======
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
->>>>>>> origin/MergeHere
                     // Adding the habits from FireStore
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
@@ -284,25 +261,8 @@ public class UserPageActivity extends AppCompatActivity {
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
-                        String lastestFinishDate = "none";
-                        if (map.containsKey("latestFinishDate")) {
-                            lastestFinishDate = (String)  map.get("latestFinishDate");
-                        }
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
-<<<<<<< HEAD
-                        try {
-                            if(today.after(date.parse(startDate))) {
-                                for (int i = 0; i < weekdayPlan.length(); i++) {
-                                    char ch = weekdayPlan.charAt(i);
-                                    if (weekday.equals(String.valueOf(ch))) {
-                                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-
-                                        if (lastestFinishDate == date.format(today)) {
-                                            completedOnTodayNum++;
-                                        }
-//                                        checkCompletedEventofToday(habitID);
-=======
                         if (emailExtra!=null) {
                             if(isPublic) {
                                 habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
@@ -316,30 +276,11 @@ public class UserPageActivity extends AppCompatActivity {
                                         if (weekday.equals(String.valueOf(ch))) {
                                             habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                                         }
->>>>>>> origin/MergeHere
                                     }
                                 }
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-<<<<<<< HEAD
-                            listAdapter.notifyDataSetChanged();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }}
-//                    completedOnTodayNum = 2;
-
-
-                }
-                Log.d("FinalCompletedOntoday", String.valueOf(completedOnTodayNum));
-
-                ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
-                TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
-                TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
-
-                int ratioNum;
-                numOfHabit = habitDataList.size();
-=======
                         }
                     }
                     listAdapter.notifyDataSetChanged();
@@ -355,69 +296,17 @@ public class UserPageActivity extends AppCompatActivity {
                     } else {
                         ratioNum = (int) 100 * 1/numOfHabit;
                     }
->>>>>>> origin/MergeHere
 
-                if (numOfHabit ==0) {
-                    ratioNum = 0;
-                } else {
-                    ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
-                }
-
-                // TODO: Finish Visual Indicator
-                // Today's Progress:
-                percentage.setText(ratioNum+"%");
-                indicator.setProgress(ratioNum, true);
-                ratio.setText(completedOnTodayNum+"/"+numOfHabit);
-                // Notifying the adapter to render any new data fetched from the cloud
-            }
-        });
-
-<<<<<<< HEAD
-
-
-
-    }
-
-    public void checkCompletedEventofToday(String habitID) {
-//        return false;
-        // check the habit event list finished or not
-        final boolean[] exists = new boolean[1];
-//        Boolean hasEvent = false;
-
-        final CollectionReference habitEventCollectionReference = getHasEventReference(habitID);
-        habitEventCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(
-                    @Nullable QuerySnapshot queryDocumentSnapshots,
-                    @Nullable FirebaseFirestoreException error) {
-
-                assert queryDocumentSnapshots != null;
-                for (QueryDocumentSnapshot habitEvent : queryDocumentSnapshots) {
-                    Log.d("Retrieve", String.valueOf(habitEvent.getData().get("Event")));
-                    // TODO: Retrieve data from firebase.
-                    HashMap<String, Object> map = (HashMap<String, Object>) habitEvent.getData().get("Event");
-                    if (habitEvent.getData().get("Event") != null) {
-                        String completeDate = (String) map.get("completeDate");
-                        String fDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//                        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                        if (fDate.equals(completeDate)) {
-                            exists[0] = Boolean.TRUE;
-                            completedOnTodayNum++;
-                            Log.d("CompletedOntoday", String.valueOf(completedOnTodayNum));
-                            return;
-                        }
-                    }
+                    // TODO: Finish Visual Indicator
+                    // Today's Progress:
+                    percentage.setText(ratioNum+"%");
+                    indicator.setProgress(ratioNum, true);
+                    ratio.setText("1/"+numOfHabit);
+                    // Notifying the adapter to render any new data fetched from the cloud
                 }
             }
         });
 
-//        return Boolean.TRUE;
-    }
-//
-    public CollectionReference getHasEventReference(String habitID) {
-        return db.collection("user003")
-                .document(habitID).collection("HabitEvent");
-=======
         LinearLayout followerLayout, followingLayout, todayLinearLayout;
         followerLayout = findViewById(R.id.follower_click_layout);
         followingLayout = findViewById(R.id.following_click_layout);
@@ -584,7 +473,6 @@ public class UserPageActivity extends AppCompatActivity {
             Intent intent = new Intent(this, UserPageActivity.class);
             startActivity(intent);
         }
->>>>>>> origin/MergeHere
     }
 }
 
