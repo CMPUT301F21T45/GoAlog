@@ -48,6 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.Nullable;
@@ -259,7 +260,7 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: no empty email allowed
-                String targetEmail = targetEmailEditText.getText().toString();
+                String targetEmail = targetEmailEditText.getText().toString().toLowerCase(Locale.ROOT);
                 String reasonString = reasonEditText.getText().toString();
 
                 if (targetEmail.equals("")) {
@@ -297,20 +298,4 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
     }
-    public void deleteRequest () {
-
-    }
-        /*
-        ImageButton dismissButton = findViewById(R.id.dismiss_button);
-                dismissButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (selection != null) {
-                            requests.remove(selection.intValue());
-                            requestAdapter.notifyDataSetChanged();
-                            selection = null;
-                        }
-                    }
-                });
-         */
 }

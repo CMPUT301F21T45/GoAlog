@@ -2,6 +2,7 @@ package com.example.goalog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -92,17 +93,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
-                        if (doc.exists()) {
-                            try {
-                                HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("UserInfo");
-                                if (!(boolean) map.get("created")) {
-                                    User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
-                                    newUser.setCreated(true);
-                                    newUser.setToFirebase();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        if (!doc.exists()) {
+
+                            User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
+                            newUser.setCreated(true);
+                            newUser.setToFirebase();
                         }
                     }
                 }
