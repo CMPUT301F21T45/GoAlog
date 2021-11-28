@@ -12,9 +12,9 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="310dp"
+            android:layout_height="360dp"
             android:padding="10dp"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textAlignment="center"
             android:text="Set Up Your Goals"
             android:gravity="top|center"
