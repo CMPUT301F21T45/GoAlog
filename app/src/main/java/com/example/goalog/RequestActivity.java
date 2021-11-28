@@ -48,11 +48,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-
+/**
+ * RequestActivity
+ * Request to follow others. This leads to add others as your followers.
+ * The target user will be added to your following list upon approval.
+ * Swipe to accept or decline a request.
+ */
 public class RequestActivity extends AppCompatActivity {
     private EditText targetEmailEditText;
     private EditText reasonEditText;
@@ -259,7 +265,7 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: no empty email allowed
-                String targetEmail = targetEmailEditText.getText().toString();
+                String targetEmail = targetEmailEditText.getText().toString().toLowerCase(Locale.ROOT);
                 String reasonString = reasonEditText.getText().toString();
 
                 if (targetEmail.equals("")) {
@@ -297,20 +303,4 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
     }
-    public void deleteRequest () {
-
-    }
-        /*
-        ImageButton dismissButton = findViewById(R.id.dismiss_button);
-                dismissButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (selection != null) {
-                            requests.remove(selection.intValue());
-                            requestAdapter.notifyDataSetChanged();
-                            selection = null;
-                        }
-                    }
-                });
-         */
 }

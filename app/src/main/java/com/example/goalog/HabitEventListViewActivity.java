@@ -25,6 +25,8 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -73,9 +75,11 @@ public class HabitEventListViewActivity extends AppCompatActivity {
         habitEventArrayAdapter= new HabitEventCustomList(this, habitEventDataList);
         HabitEventList.setAdapter(habitEventArrayAdapter);
 
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
         try {
-            final CollectionReference collectionReference = database.collection("user003")
+            final CollectionReference collectionReference = database.collection(currentUser.getEmail())
                     .document(selectedHabitId)
                     .collection("HabitEvent");
             collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {

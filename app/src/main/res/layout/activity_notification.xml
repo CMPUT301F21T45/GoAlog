@@ -31,11 +31,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="GOALOG"
-                android:textStyle="italic|bold"
+                android:paddingTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                android:gravity="center"/>
+                android:textStyle="italic|bold" />
 
             <TextView
                 android:layout_width="match_parent"

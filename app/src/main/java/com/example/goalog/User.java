@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * User Class
@@ -30,23 +32,12 @@ public class User {
         this.displayName = publicName;
     }
 
-    /*
-    public void sendToFirebase() {
-        HashMap<String, User> data = new HashMap<>();
-        data.put("UserInfo", this);
-
-        CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
-        ref.document("Info").update("UserInfo",data);
-    }
-
-     */
-
     public void setToFirebase() {
         HashMap<String, User> data = new HashMap<>();
         data.put("UserInfo", this);
 
         CollectionReference ref =  FirebaseFirestore.getInstance().collection(this.email);
-        ref.document("Info").set(data);
+        ref.document("Info").set(data, SetOptions.merge());
     }
 
     public String getEmail() {

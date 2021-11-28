@@ -138,7 +138,7 @@ public class UserPageActivity extends AppCompatActivity {
 
         String emailExtra = getIntent().getStringExtra("emailString");
         db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection("user003");
+        CollectionReference collectionReference = db.collection(currentUser.getEmail());
 
         // View My Page or Other User's Page
         final TextView myPageTextView = findViewById(R.id.top_my_page_textview);;
@@ -241,7 +241,7 @@ public class UserPageActivity extends AppCompatActivity {
           });
         }
 
-        // TODO: add case for view user: All Habits - Public
+        // case for view user: All Habits - Public
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(
