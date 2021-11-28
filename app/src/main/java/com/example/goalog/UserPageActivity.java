@@ -135,6 +135,10 @@ public class UserPageActivity extends AppCompatActivity {
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
+                        String lastestFinishDate = "none";
+                        if (map.containsKey("latestFinishDate")) {
+                            lastestFinishDate = (String)  map.get("latestFinishDate");
+                        }
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
                         try {
@@ -143,13 +147,15 @@ public class UserPageActivity extends AppCompatActivity {
                                     char ch = weekdayPlan.charAt(i);
                                     if (weekday.equals(String.valueOf(ch))) {
                                         habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
-//                                        if (checkCompletedEventofToday(habitID)) {
-                                        completedOnTodayNum++;
-//                                        }
-                                        checkCompletedEventofToday(habitID);
+
+                                        if (lastestFinishDate == date.format(today)) {
+                                            completedOnTodayNum++;
+                                        }
+//                                        checkCompletedEventofToday(habitID);
                                     }
                                 }
                             }
+                            listAdapter.notifyDataSetChanged();
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }}
@@ -157,7 +163,6 @@ public class UserPageActivity extends AppCompatActivity {
 
 
                 }
-                listAdapter.notifyDataSetChanged();
                 Log.d("FinalCompletedOntoday", String.valueOf(completedOnTodayNum));
 
                 ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);

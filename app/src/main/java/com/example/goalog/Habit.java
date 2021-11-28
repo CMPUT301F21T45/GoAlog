@@ -20,6 +20,8 @@ public class Habit implements Serializable, Comparable<Habit> {
     private boolean isPublic;
     private String habitID;
     private Long orderID;
+    private String latestFinishDate;
+
 
     /**
      * Habit Constructor:
@@ -110,6 +112,7 @@ public class Habit implements Serializable, Comparable<Habit> {
     public void setOrderID(Long orderID) {
         this.orderID = orderID;
     }
+        
 
     @Override
     public int compareTo(Habit habit) {
