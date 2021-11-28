@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.goalog">
 
-    //camera permission
+    <!-- Camera -->
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -16,7 +16,7 @@
         </intent>
     </queries>
 
-    //location permission
+    <!--location permission-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -73,29 +73,22 @@
             android:name=".HabitListViewReorderActivity"
             android:label="Goal List"
             android:exported="true"
-            android:parentActivityName=".UserPageActivity">
-        </activity>
+            android:parentActivityName=".UserPageActivity"/>
         <activity
             android:name=".HabitEventListViewActivity"
             android:exported="true"
-<<<<<<< HEAD
-            android:parentActivityName=".HabitListViewActivity">
+            android:label="Footprints"
+            android:parentActivityName=".HabitListViewActivity"/>
 
-        </activity>
         <activity
             android:name=".MapActivity"
-            android:exported="true">
-        </activity>
-=======
-            android:label="Footprints"
-            android:parentActivityName=".HabitListViewActivity" />
->>>>>>> main
+            android:exported="true"/>
+
         <activity
             android:name=".AddHabitEventActivity"
             android:exported="true"
             android:label="Goal Completion Detail">
         </activity>
-<<<<<<< HEAD
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -104,12 +97,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths"/>
         </provider>
 
-
-=======
->>>>>>> main
     </application>
 
 </manifest>

@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MapActivity extends AppCompatActivity {
 
@@ -24,32 +27,37 @@ public class MapActivity extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     private Button OK_press;
+    List<String> permissionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_map);
         Bundle bundle;//set the bundle
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //reference from https://www.ibm.com/docs/hr/mpf/7.1.0?topic=permissions-location-services-in-android
-            ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }else{ }
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
 
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);//get the location of the device.
-        double longitude1 = location.getLongitude();
-        double latitude1 = location.getLatitude();
+
+      //  double longitude1 = 113, latitude1 = 20;
+
+        double  longitude1 = location.getLongitude();
+        double  latitude1 = location.getLatitude();
+
+
         bundle = new Bundle();
         bundle.putString("LAT", String.valueOf(latitude1));
         bundle.putString("LOG", String.valueOf(longitude1));
-        Fragment fragment = new MapFragment();//init fragment
-        fragment.setArguments(bundle);//open fragment
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_layout, fragment)
-                .commit();//reference from https://www.youtube.com/watch?v=YCFPClPjDIQ
         latitude = findViewById(R.id.latitude_Text);
         longitude = findViewById(R.id.longitude_Text);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
@@ -69,6 +77,7 @@ public class MapActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
     public void f1(String s1, String s2){
         latitude=findViewById(R.id.latitude_Text);
