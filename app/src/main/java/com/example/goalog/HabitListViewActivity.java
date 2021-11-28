@@ -206,7 +206,8 @@ public class HabitListViewActivity extends AppCompatActivity{
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
                         Long orderID = (Long) map.get("orderID");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID, orderID));
+                        String latestFinishDate = (String) map.get("latestFinishDate");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID, orderID, latestFinishDate));
                     }
                 }
                 Collections.sort(habitDataList); // sort by habit OrderID

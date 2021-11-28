@@ -20,6 +20,7 @@ public class Habit implements Serializable, Comparable<Habit> {
     private boolean isPublic;
     private String habitID;
     private Long orderID;
+    private String latestFinishDate;
 
     /**
      * Habit Constructor:
@@ -45,7 +46,7 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.habitID = habitID;
     }
 
-    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID){
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID, String latestFinishDate){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
         this.startDate = startDate;
@@ -53,6 +54,7 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.isPublic = isPublic;
         this.habitID = habitID;
         this.orderID = orderID;
+        this.latestFinishDate = latestFinishDate;
     }
 
     public void setHabitReason(String habitReason) {
@@ -109,6 +111,14 @@ public class Habit implements Serializable, Comparable<Habit> {
 
     public void setOrderID(Long orderID) {
         this.orderID = orderID;
+    }
+
+    public String getLatestFinishDate() {
+        return latestFinishDate;
+    }
+
+    public void setLatestFinishDate(String latestFinishDate) {
+        this.latestFinishDate = latestFinishDate;
     }
 
     @Override

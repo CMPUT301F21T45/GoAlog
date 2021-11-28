@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +23,14 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -190,6 +196,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
                 final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
+                final DocumentReference selectedHabit = database.collection("user003").document(clickedHabitID);
 
                 // edit mode
                 if (editMode) {
@@ -260,8 +267,29 @@ public class AddHabitEventActivity extends AppCompatActivity {
                     HashMap<String, HabitEvent> data = new HashMap<>();
                     data.put("Event", newHabitEvent);
                     if (newHabitEvent != null)
-                        // updates new HabitEvent to firebase
+                        // update new HabitEvent to firebase
                         collectionReference.document(newHabitEvent.getEventID()).set(data);
+                        // update latest finish date
+                        selectedHabit.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        HashMap<String, Object> habitMap = (HashMap<String, Object>) document.getData().get("HabitClass");
+                                        habitMap.put("latestFinishDate", completeDate);
+                                        HashMap<String, Object> data = new HashMap<>();
+                                        data.put("HabitClass", habitMap);
+                                        selectedHabit.update(data);
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("TAG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
 
                     // back to user page (the one with today's habits list)
                     Intent intent = new Intent(AddHabitEventActivity.this, UserPageActivity.class);

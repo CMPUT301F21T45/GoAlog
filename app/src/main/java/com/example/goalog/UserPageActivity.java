@@ -250,6 +250,7 @@ public class UserPageActivity extends AppCompatActivity {
                 habitDataList.clear();
 
                 assert queryDocumentSnapshots != null;
+                int completedOnTodayNum = 0;
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     Log.d("Retrieve", String.valueOf(doc.getData().get("HabitClass")));
                     // Adding the habits from FireStore
@@ -261,6 +262,8 @@ public class UserPageActivity extends AppCompatActivity {
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
+                        String lastestFinishDate = (String)  map.get("latestFinishDate");
+
                         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                         Date today = new Date();
                         if (emailExtra!=null) {
@@ -275,6 +278,9 @@ public class UserPageActivity extends AppCompatActivity {
                                         char ch = weekdayPlan.charAt(i);
                                         if (weekday.equals(String.valueOf(ch))) {
                                             habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                            if (lastestFinishDate.equals(date.format(today))) {
+                                                completedOnTodayNum++;
+                                            }
                                         }
                                     }
                                 }
@@ -284,26 +290,27 @@ public class UserPageActivity extends AppCompatActivity {
                         }
                     }
                     listAdapter.notifyDataSetChanged();
-                    ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
-                    TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
-                    TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
 
-                    int ratioNum;
-                    numOfHabit = habitDataList.size();
-
-                    if (numOfHabit ==0) {
-                        ratioNum = 0;
-                    } else {
-                        ratioNum = (int) 100 * 1/numOfHabit;
-                    }
-
-                    // TODO: Finish Visual Indicator
-                    // Today's Progress:
-                    percentage.setText(ratioNum+"%");
-                    indicator.setProgress(ratioNum, true);
-                    ratio.setText("1/"+numOfHabit);
-                    // Notifying the adapter to render any new data fetched from the cloud
                 }
+                ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
+                TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
+                TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
+
+                int ratioNum;
+                numOfHabit = habitDataList.size();
+
+                if (numOfHabit ==0) {
+                    ratioNum = 0;
+                } else {
+                    ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
+                }
+
+                // TODO: Finish Visual Indicator
+                // Today's Progress:
+                percentage.setText(ratioNum+"%");
+                indicator.setProgress(ratioNum, true);
+                ratio.setText(completedOnTodayNum+"/"+numOfHabit);
+                // Notifying the adapter to render any new data fetched from the cloud
             }
         });
 
