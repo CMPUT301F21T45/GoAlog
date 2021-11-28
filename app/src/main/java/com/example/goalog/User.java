@@ -8,6 +8,11 @@ public class User {
     private String password;
     private ArrayList<Habit> habits;
 
+
+    public User(String publicName){
+        this.publicName = publicName;
+
+    }
     public String getUserID() {
         return userID;
     }

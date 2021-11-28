@@ -45,6 +45,12 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.habitID = habitID;
     }
 
+    public Habit(String habitTitle){
+        this.habitTitle = habitTitle;
+
+    }
+
+
     public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;

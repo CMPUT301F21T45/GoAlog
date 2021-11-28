@@ -2,8 +2,11 @@ package com.example.goalog;
 
 
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import com.example.goalog.Habit;
 
 
@@ -14,6 +17,9 @@ import com.example.goalog.Habit;
  */
 
 public class HabitTest {
+
+
+
 
     //Test that setter for Habit Title is able to set a proper name to a habit
     @Test
