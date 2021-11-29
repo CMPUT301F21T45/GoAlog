@@ -3,3 +3,10 @@
 local
 *.iml
 .idea/libraries/Gradle__junit_junit_4_13_2.xml
+*.iml
+.idea/vcs.xml
+.idea/modules/app/goalog.app.iml
+.idea/libraries/Gradle__junit_junit_4_13_2.xml
+.idea/libraries/Gradle__junit_junit_4_13_2.xml
+*.iml
+.idea/vcs.xml

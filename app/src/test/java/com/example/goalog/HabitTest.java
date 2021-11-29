@@ -15,15 +15,13 @@ import org.junit.jupiter.api.Test;
  */
 
 public class HabitTest {
-
+    Habit testingHabit = new Habit("Nice title", "Good Reason",null,
+            null,FALSE,null);
 
 
     //Test that setter for Habit Title is able to set a proper name to a habit
     @Test
     public void testProperHabitTitle() {
-
-        Habit testingHabit = new Habit("Doer", null,null,
-                null,FALSE,null);
 
         String testTitle = "Good Habit Title";
         //setting habit title to testTitle using the Setter method
@@ -38,8 +36,6 @@ public class HabitTest {
     //Test that setter for Habit Title cuts downs to 20 characters when title is >20 characters
     @Test
     public void testHabitTitleLength() {
-        Habit testingHabit = new Habit("Nice title", null,null,
-                null,FALSE,null);
 
         String testTitle = "This Name is too large and should be cut down to 20 characters";
 
@@ -54,9 +50,6 @@ public class HabitTest {
     //Test that setter for Habit Reason is able to set a proper reason to a Habit Reason
     @Test
     public void testSetHabitReason() {
-        Habit testingHabit = new Habit(null, "this isn't a reason",null,
-                null,FALSE,null);
-
 
         String habitReason = "I wanna be better";
 
@@ -70,9 +63,6 @@ public class HabitTest {
     // is >30 characters
     @Test
     public void testSetReasonLength() {
-
-        Habit testingHabit = new Habit(null, "this isn't a reason",null,
-                null,FALSE,null);
 
         String reasonLength = "This is way too long to be a Habit Reason, and should be cut" +
                 "down to 30 characters or less";

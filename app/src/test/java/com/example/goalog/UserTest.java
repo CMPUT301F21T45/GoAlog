@@ -17,12 +17,10 @@ import org.junit.jupiter.api.Test;
 
 public class UserTest {
 
+    User testUser = new User(null, null, "Ninja");
 
     @Test
     public void testSetPublicName() {
-
-        User testUser = new User(null, null, "Ninja");
-
         String userName = "Hameem";
 
         testUser.setDisplayName(userName);
@@ -37,10 +35,7 @@ public class UserTest {
 
     @Test
     public void testPublicNameLength() {
-        User testUser = new User(null, null, "Ninja");
         String user1 = "What Is The Longest Name In The World Does Anyone Know";
-
-
 
         try{
             testUser.setDisplayName(user1);
