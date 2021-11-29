@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,8 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,27 +36,34 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
-
+/**
+ * HabitEventListViewActivity:
+ * 1. Retrieve habitEvent data list from firebase
+ * 2. Map habitEvent["title","Date"] on listView
+ * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
+ * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
+ */
 public class HabitEventListViewActivity extends AppCompatActivity {
     SwipeMenuListView HabitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> habitEventDataList;
-    /** HabitListViewActivity:
-     * 1. Retrieve habitEvent data list from firebase
-     * 2. Map habitEvent["title","Date"] on listView
-     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitEventActivity
-     * 4. Receive updated habit or new data from AddHabitEventActivity to firebase
-     */
 
+    /**
+     * Main: OnCreate
+     * @param savedInstanceState
+     *  Bundle savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //-------set up parameters-------------------
+        // Set up parameters:
         Habit selectedHabit = (Habit) getIntent().getSerializableExtra("Selected");
         String selectedHabitId= selectedHabit.getHabitID();
         setContentView(R.layout.habitevent_list_view);
@@ -65,9 +75,11 @@ public class HabitEventListViewActivity extends AppCompatActivity {
         habitEventArrayAdapter= new HabitEventCustomList(this, habitEventDataList);
         HabitEventList.setAdapter(habitEventArrayAdapter);
 
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
         try {
-            final CollectionReference collectionReference = database.collection("user003")
+            final CollectionReference collectionReference = database.collection(currentUser.getEmail())
                     .document(selectedHabitId)
                     .collection("HabitEvent");
             collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -90,10 +102,13 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             String completeTime =  (String)  map.get("completeDate");
                             String eventCommentString = (String) map.get("eventComment");
                             String eventID = (String) map.get("eventID");
-                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle));
+                            String img = (String) map.get("image");
+                            HashMap location = (HashMap)map.get("location");
+                            habitEventDataList.add(new HabitEvent(eventID,eventCommentString,completeTime,habitTitle,img,location));
                         }
 
                     }
+                    Collections.sort(habitEventDataList);
                     habitEventArrayAdapter.notifyDataSetChanged();
                 }
             });
@@ -101,6 +116,11 @@ public class HabitEventListViewActivity extends AppCompatActivity {
             // for swipe delete
             SwipeMenuCreator creator = new SwipeMenuCreator() {
 
+                /**
+                 * Create the "left swipe" menu
+                 * @param menu
+                 *  Swipe menu
+                 */
                 @Override
                 public void create(SwipeMenu menu) {
                     // create "open" item
@@ -135,6 +155,13 @@ public class HabitEventListViewActivity extends AppCompatActivity {
             HabitEventList.setMenuCreator(creator);
 
             HabitEventList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+                /**
+                 * On Menu Item Click
+                 * @param position Clicked position in menu.
+                 * @param menu The current menu
+                 * @param index The index
+                 * @return A boolean value
+                 */
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
@@ -150,12 +177,22 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                             collectionReference.document(habitEventDataList.get(position).getEventID())
                                     .delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        /**
+                                         * Successfully deleted a document.
+                                         * @param aVoid
+                                         *  aVoid
+                                         */
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("Sample", "DocumentSnapshot successfully deleted!");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
+                                        /**
+                                         * Failed to delete a document
+                                         * @param e
+                                         *  Exception e
+                                         */
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w("Sample", "Error deleting document", e);
@@ -167,17 +204,10 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                     return false;
                 }
             });
-
         }
         catch (Exception e){
             Intent intent = new Intent(HabitEventListViewActivity.this, HabitListViewActivity.class);
             startActivity(intent);
         }
-
-
-
-
-
-
     }
 }

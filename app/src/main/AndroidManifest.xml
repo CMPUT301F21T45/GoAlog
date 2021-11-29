@@ -1,68 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.goalog">
+
+    <!-- camera permission -->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="31" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+    <!--location permission-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Goalog">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCe9XKgYb4pwBLwgp_HzKvWJ5PCD_GzQOY" />
+        <activity
+            android:name=".RequestActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Goalog.NoActionBar"/>
+        <activity
+            android:name=".MainPagesActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Goalog.NoActionBar"/>
         <activity
             android:name=".UserPageActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Goalog.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ScrollingActivity">
-        </activity>
+            android:theme="@style/Theme.Goalog.NoActionBar"/>
         <activity
             android:name=".AddHabitActivity"
-            android:label="Goal Detail"
-            android:exported="true">
-
+            android:exported="true"
+            android:label="Goal Detail" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true"
+            android:label="GOALOG"
+            android:theme="@style/Theme.Goalog.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".HabitListViewActivity"
+            android:exported="true"
+            android:label="Goal List"
+            android:parentActivityName=".UserPageActivity" />
+        <activity
+            android:name=".HabitListViewReorderActivity"
             android:label="Goal List"
             android:exported="true"
-            android:parentActivityName=".UserPageActivity">
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:parentActivityName=".UserPageActivity"/>
         <activity
             android:name=".HabitEventListViewActivity"
-            android:label="Footprints"
             android:exported="true"
-            android:parentActivityName=".HabitListViewActivity">
+            android:label="Footprints"
+            android:parentActivityName=".HabitListViewActivity"/>
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:exported="true"/>
 
         <activity
             android:name=".AddHabitEventActivity"
-            android:label="Goal Completion Detail"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="true"
+            android:label="Goal Completion Detail">
         </activity>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
 
     </application>
 

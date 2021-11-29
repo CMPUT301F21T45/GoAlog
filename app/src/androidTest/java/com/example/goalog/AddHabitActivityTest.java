@@ -1,5 +1,6 @@
 package com.example.goalog;
 
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 public class AddHabitActivityTest {
     private Solo solo;
+    private View view;
     @Rule
     public ActivityTestRule<AddHabitActivity> rule =
             new ActivityTestRule<>(AddHabitActivity.class, true, true);
@@ -31,9 +33,23 @@ public class AddHabitActivityTest {
      */
     @Test
     public void checkButton(){
+        //start ay main page
+        solo.assertCurrentActivity("Wrong Activity", MainPagesActivity.class);
+        view=solo.getView(R.id.add_goal_text_view);
+        solo.clickOnView(view);
+        //jump to add habit
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+        /**
+         * create a new habit
+         */
+        //add a new habit
         solo.enterText((EditText) solo.getView(R.id.habit_title), "sleep");
         solo.enterText((EditText) solo.getView(R.id.habit_reason), "8hr");
+        view=solo.getView(R.id.sun_checkbox);
+        solo.clickOnView(view);
+        view=solo.getView(R.id.checkbox_privacy_add);
+        solo.clickOnView(view);
+        //select the attribute of habit
         solo.clickOnButton("Confirm");
         Assert.assertTrue(solo.waitForActivity("HabitListViewActivity"));
 

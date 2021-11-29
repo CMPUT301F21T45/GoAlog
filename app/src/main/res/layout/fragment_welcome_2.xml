@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".WelcomeFragment2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="310dp"
+            android:padding="10dp"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:text="Achieve Your Dreams"
+            android:gravity="top|center"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+
+</FrameLayout>

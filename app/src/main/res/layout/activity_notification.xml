@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RequestActivity"
+    android:orientation="vertical"
+    android:background="@color/light_yellow_white">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.8"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_line_patterns_sun" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="GOALOG"
+                android:paddingTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Requests"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:padding="10dp"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/call_to_make_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send a Request"
+                android:visibility="visible"
+                android:textSize="16sp"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:textColor="@color/blue"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/request_making_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:textColorHint="#E9E9E9"
+            android:layout_margin="10dp"
+            android:background="@color/yellow_white"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Make a Request"
+                android:textSize="20sp"
+                android:layout_marginStart="28dp"
+                android:layout_marginLeft="28dp"
+                android:textColor="@color/black"
+                android:textStyle="italic"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Email"
+                android:id="@+id/send_request_email"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="10dp"
+                android:maxLength="150"
+                android:hint="Message"
+                android:id="@+id/send_request_reason"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="4dp"
+                android:layout_gravity="right">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="cancel"
+                    android:textColor="#525252"
+                    android:id="@+id/cancel_request_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textColor="@color/blue"
+                    android:text="send"
+                    android:id="@+id/send_request_button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INBOX"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <com.baoyz.swipemenulistview.SwipeMenuListView
+            android:id="@+id/request_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:alpha="0.7" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottom_navi"
+            app:itemTextColor="@drawable/selector_navi"
+            app:itemIconTint="@drawable/selector_navi"
+            app:menu="@menu/bottom_nav_menu"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

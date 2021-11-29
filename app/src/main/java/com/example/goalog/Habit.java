@@ -5,20 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public class Habit implements Serializable {
-    // Members
-    //private int uid;
-    //private int hid;
-    //private boolean[] schedule;
-    /**
-     * A habit consists of the following attribute:
-     *     [habitTitle] is the title of the habit, and has a length constraint 20 character when editing it.
-     *     [habitReason] is motivation, and has length constraint of 30 character;
-     *     [startDate] in yyyy-mm-dd format;
-     *     [weekdayPlan] "123" if want this habit done on Monday, Tuesday, Wednesday;
-     *     [isPublic] whether this object is public to others;
-     *     [habitID] is a unique id for each habit;
-     */
+/**
+ * Habit Class
+ *  The class represents a habit the user wants to do regularly to form a good lifestyle.
+ *  It records a title, a reason, a date to start, a weekly plan, and your permission or denial to
+ *  display the habit to  the public.
+ */
+public class Habit implements Serializable, Comparable<Habit> {
 
     private String habitTitle;
     private String habitReason;
@@ -26,8 +19,24 @@ public class Habit implements Serializable {
     private String weekdayPlan;
     private boolean isPublic;
     private String habitID;
+    private Long orderID;
+    private String latestFinishDate;
 
-    //constructor
+    /**
+     * Habit Constructor:
+     * @param habitTitle
+     *   It is the title of the habit, and has a length constraint 20 character when editing it.
+     * @param habitReason
+     *   is motivation, and has length constraint of 30 character;
+     * @param startDate
+     *   Date to Start. It is a String in "yyyy-MM-dd" format;
+     * @param weekdayPlan
+     *   is a string contains the active weekdays scheduled for the habits.
+     * @param isPublic
+     *   whether this object is public to others;
+     * @param habitID
+     *   is a unique ID for each habit
+     */
     public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic,String habitID){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
@@ -37,7 +46,17 @@ public class Habit implements Serializable {
         this.habitID = habitID;
     }
 
-    //getters and setters
+    public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID, String latestFinishDate){
+        this.habitTitle = habitTitle;
+        this.habitReason = habitReason;
+        this.startDate = startDate;
+        this.weekdayPlan = weekdayPlan;
+        this.isPublic = isPublic;
+        this.habitID = habitID;
+        this.orderID = orderID;
+        this.latestFinishDate = latestFinishDate;
+    }
+
     public void setHabitReason(String habitReason) {
         if (habitReason.length() > 30) {
             this.habitReason = habitReason.substring(0,30);
@@ -50,7 +69,9 @@ public class Habit implements Serializable {
 
     public void setHabitTitle(String habitTitle) {
         if (habitTitle.length() > 20) {
-            this.habitTitle = habitTitle.substring(0,30);
+            this.habitTitle = habitTitle.substring(0,20);
+        }else{
+            this.habitTitle = habitTitle;
         }
     }
 
@@ -86,4 +107,25 @@ public class Habit implements Serializable {
         return habitID;
     }
 
+    public Long getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(Long orderID) {
+        this.orderID = orderID;
+    }
+
+    public String getLatestFinishDate() {
+        return latestFinishDate;
+    }
+
+    public void setLatestFinishDate(String latestFinishDate) {
+        this.latestFinishDate = latestFinishDate;
+    }
+
+    @Override
+    public int compareTo(Habit habit) {
+        Long diff = this.getOrderID() - habit.getOrderID();
+        return diff.intValue();
+    }
 }

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +20,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -32,17 +31,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
+/** HabitListViewActivity:
+ * 1. Retrieve habit data list from firebase
+ * 2. Map habit["title","reason","StartDate"] on listView
+ * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitActivity
+ * 4. Receive updated habit or new data from AddHabitActivity to firebase
+ */
 public class HabitListViewActivity extends AppCompatActivity{
-    /** HabitListViewActivity:
-     * 1. Retrieve habit data list from firebase
-     * 2. Map habit["title","reason","StartDate"] on listView
-     * 3. Swipe an habit to edit or delete, using intent to send the selected habit to AddHabitActivity
-     * 4. Receive updated habit or new data from AddHabitActivity to firebase
-     */
     SwipeMenuListView HabitList;
     static ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
@@ -52,14 +52,17 @@ public class HabitListViewActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         //-------set up parameters-------------------
-        setContentView(R.layout.habit_list_view);
+        setContentView(R.layout.activity_habit_list_view);
         FloatingActionButton buttonAddHabit = findViewById(R.id.add_habit_button);
+        FloatingActionButton buttonReorder = findViewById(R.id.reorder_button);
+
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomList(this, habitDataList);
+        habitAdapter = new CustomHabitList(this, habitDataList);
         HabitList.setAdapter(habitAdapter);
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user003"); //assume we already logged in
+        final CollectionReference collectionReference = database.collection(currentUser.getEmail()); //assume we already logged in
         //----------------------------------------------
         HabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,6 +79,26 @@ public class HabitListViewActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HabitListViewActivity.this, AddHabitActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // enter reorder page
+        buttonReorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // update every habit orderID for new added habits
+                int index = 0;
+                for (Habit habit: habitDataList) {
+                    Log.d("TAG", habit.getOrderID().toString());
+                    habit.setOrderID(new Long(index));
+                    HashMap<String, Object> data = new HashMap<>();
+                    data.put("HabitClass", habit);
+                    collectionReference.document(habit.getHabitID()).update(data);
+                    index++;
+                }
+                // go to reorder page
+                Intent intent = new Intent(HabitListViewActivity.this, HabitListViewReorderActivity.class);
                 startActivity(intent);
             }
         });
@@ -185,12 +208,20 @@ public class HabitListViewActivity extends AppCompatActivity{
                         String weekdayPlan = (String)  map.get("weekdayPlan");
                         boolean isPublic = (boolean) map.get("public");
                         String habitID = (String) map.get("habitID");
-                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                        Long orderID = (Long) map.get("orderID");
+                        String latestFinishDate = (String) map.get("latestFinishDate");
+                        habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID, orderID, latestFinishDate));
                     }
                 }
+                Collections.sort(habitDataList); // sort by habit OrderID
                 habitAdapter.notifyDataSetChanged();
+
                 // Notifying the adapter to render any new data fetched from the cloud
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        // Disable Back Button.
     }
 }
