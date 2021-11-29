@@ -55,7 +55,6 @@ public class MapActivity extends AppCompatActivity {
         }
         if(!permissionList.isEmpty()) {
             ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-
         }else {
             Bundle bundle;//set the bundle
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);//get the location of the device.

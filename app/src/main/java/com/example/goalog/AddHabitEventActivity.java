@@ -1,9 +1,11 @@
 package com.example.goalog;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +27,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -319,6 +323,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    selection.dismiss();
+                    return;
+                }
                 selection.dismiss();
                 openCamera();
             }
@@ -327,6 +337,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
         album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    selection.dismiss();
+                    return;
+                }
                 selection.dismiss();
                 openGallery();
             }
@@ -340,8 +356,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });//return to add page
 
         requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-
     }
+
 
     /*
      * Open phone camera
