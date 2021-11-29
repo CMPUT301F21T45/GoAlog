@@ -19,7 +19,6 @@ import java.util.HashMap;
  *  to leave a comment, upload a picture or not. The class can contain the location where the user
  *  completed it.
  * Current Issues:
- *  Two Todos are denoted.
  *  The optional picture uploading process has made some progress. But it is excluded from the first
  *  half of the project. Other attributes such as ones related to locations might be used later.
  *  The commented constructors are for planning, testing, etc.

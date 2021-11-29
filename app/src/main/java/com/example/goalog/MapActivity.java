@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An Activity page with map
- * From AddHabitEventActivity when user click location and want to add a location on map
- *
+ * MapActivity
+ * place the marker of init location
+ * get latitude and longitude data
+ * ask the permission of location in app
  */
 public class MapActivity extends AppCompatActivity {
 
@@ -92,9 +93,11 @@ public class MapActivity extends AppCompatActivity {
     }
 
     /**
-     * A textview to show latitude and longitude that user choose
-     * @param s1
-     * @param s2
+     * Use this factory method to create a marker of
+     * this fragment using the provided parameters.
+     *
+     *  String s1
+     *  String s2
      */
     public void f1(String s1, String s2){
         latitude=findViewById(R.id.latitude_Text);

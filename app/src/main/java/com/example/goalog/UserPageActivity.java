@@ -189,7 +189,7 @@ public class UserPageActivity extends AppCompatActivity {
             String emailString = user.getEmail();
             userName.setText(nameString);
             email.setText(emailString);
-            listAdapter = new CustomTodayHabitList(this,habitDataList);
+            listAdapter = new TodayHabitListAdapter(this,habitDataList);
         }
         todayList.setAdapter(listAdapter);
 

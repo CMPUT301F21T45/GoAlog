@@ -264,7 +264,6 @@ public class RequestActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: no empty email allowed
                 String targetEmail = targetEmailEditText.getText().toString().toLowerCase(Locale.ROOT);
                 String reasonString = reasonEditText.getText().toString();
 
@@ -286,7 +285,6 @@ public class RequestActivity extends AppCompatActivity {
                                 //user exits, create a new followRequest
                                 // update that user's notification document
                                 if (!currentUser.getEmail().equals(targetEmail)) {
-                                    // Todo: Check
                                     String quoteReason = "'" + reasonString + "'";
                                     FollowRequest newRequest = new FollowRequest(currentUser.getEmail(), targetEmail, quoteReason);
                                     newRequest.sendToFirebase();

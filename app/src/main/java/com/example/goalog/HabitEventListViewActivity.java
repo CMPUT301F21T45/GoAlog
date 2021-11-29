@@ -4,14 +4,10 @@ import android.content.Intent;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +20,6 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,11 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
@@ -72,7 +64,7 @@ public class HabitEventListViewActivity extends AppCompatActivity {
 
         HabitEventList=findViewById(R.id.habit_event_list);
         habitEventDataList = new ArrayList<>();
-        habitEventArrayAdapter= new HabitEventCustomList(this, habitEventDataList);
+        habitEventArrayAdapter= new HabitEventListAdapter(this, habitEventDataList);
         HabitEventList.setAdapter(habitEventArrayAdapter);
 
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -93,7 +85,6 @@ public class HabitEventListViewActivity extends AppCompatActivity {
                     assert queryDocumentSnapshots != null;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d("Retrieve", String.valueOf(doc.getData().get("Event")));
-                        // TODO: Retrieve data from firebase.
                         // Adding the habits from FireStore
                         HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("Event");
                         if (doc.getData().get("Event") != null){

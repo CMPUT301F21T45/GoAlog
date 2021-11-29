@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
+//this can only be successful after logging in
 public class HabitEventListViewTest {
     private Solo solo;
     @Rule
@@ -28,8 +28,9 @@ public class HabitEventListViewTest {
      * @throws Exception
      */
     @Test
-    public void checkButton4(){
-        solo.clickOnView(solo.getView(R.id.habit_list));
+    public void clickHabitListTest(){
+        solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
+        solo.clickOnView(solo.getView(R.id.habit_event_list));
         solo.assertCurrentActivity("Wrong Activity", HabitEventListViewActivity.class);
         Assert.assertTrue(solo.waitForActivity("HabitEventListViewActivity"));
 

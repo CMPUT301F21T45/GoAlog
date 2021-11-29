@@ -13,6 +13,8 @@
         <entry key="..\:/Users/Lambe/Documents/GitHub/goalog/app/src/main/res/layout/content.xml" value="0.23703703703703705" />
         <entry key="..\:/Users/Lambe/Documents/GitHub/goalog/app/src/main/res/layout/content_today_list.xml" value="0.2692502532928065" />
         <entry key="..\:/Users/Lambe/Documents/GitHub/goalog/app/src/main/res/layout/habit_list_view.xml" value="0.2692502532928065" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/GoAlog/app/src/main/res/layout/activity_user_page.xml" value="0.1" />
+        <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/GoAlog/app/src/main/res/layout/habitevent_list_view.xml" value="0.1" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_add_habit.xml" value="0.25" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_add_habit_event.xml" value="0.33" />
         <entry key="..\:/Users/rei7632/Desktop/CMPUT301/group_proj/GoAlog/app/src/main/res/layout/activity_habit_event.xml" value="0.33" />
@@ -42,8 +44,6 @@
         <entry key="app/src/main/res/drawable/circle.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.2513157894736842" />
         <entry key="app/src/main/res/drawable/ic_launcher_logo_background.xml" value="0.270995670995671" />
-        <entry key="app/src/main/res/drawable/ic_line_patterns_1_.xml" value="0.2324074074074074" />
-        <entry key="app/src/main/res/drawable/ic_line_patterns_goalog.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/drawable/selector_navi.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout-v21/activity_notification.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout-v31/activity_user_page.xml" value="0.28229166666666666" />

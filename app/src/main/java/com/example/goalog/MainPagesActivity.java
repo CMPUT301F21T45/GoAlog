@@ -89,7 +89,7 @@ public class MainPagesActivity extends AppCompatActivity {
         dateTextView.setText(sdfDate.format(todayCal.getTime()));
 
         // Set number of jobs reminder:
-        // Todo: get instance of the this user, get number of jobs today, display info
+        // Get instance of the this user, get number of jobs today, display info
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         bottomNavigationView.setSelectedItemId(R.id.navigation_trend);

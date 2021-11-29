@@ -58,7 +58,7 @@ public class HabitListViewActivity extends AppCompatActivity{
 
         HabitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomHabitList(this, habitDataList);
+        habitAdapter = new HabitListAdapter(this, habitDataList);
         HabitList.setAdapter(habitAdapter);
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();

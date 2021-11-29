@@ -13,7 +13,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+/**
+ * MapFragment
+ * Welcome Slogan
+ * A simple {@link Fragment} subclass.
+ * Use the {@link MapFragment} factory method to
+ * create an instance of this fragment.
+ */
 
 public class MapFragment extends Fragment {
     double latitude;
@@ -71,6 +77,13 @@ public class MapFragment extends Fragment {
                     }
                 });
             }
+            /**
+             * Use this factory method to create a marker of
+             * this fragment using the provided parameters.
+             *
+             * @title double lat.
+             * @title double lon.
+             */
             public void placeMarker(String title, double lat, double lon) {
                 //place the mark of the map fragment
                 if (mMap != null) {
