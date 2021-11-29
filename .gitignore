@@ -1,3 +1,5 @@
 .gradle
 .idea
 local
+*.iml
+.idea/libraries/Gradle__junit_junit_4_13_2.xml
