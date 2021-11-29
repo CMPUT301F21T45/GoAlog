@@ -130,8 +130,6 @@ public class UserPageActivity extends AppCompatActivity {
 
         habitDataList = new ArrayList<>();
         habitTitleDataList = new ArrayList<>();
-        //listAdapter = new CustomTodayHabitList(this,habitDataList);
-        //listAllAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
 
         todayList = findViewById(R.id.today_list);
 
@@ -143,10 +141,10 @@ public class UserPageActivity extends AppCompatActivity {
         final TextView myPageTextView = findViewById(R.id.top_my_page_textview);;
 
         if (emailExtra != null) {
+            // See other user's information
             isFromIntent = true;
             collectionReference = db.collection(emailExtra);
             assert user != null;
-            String nameString = user.getDisplayName();
             myPageTextView.setText("Back To My Page");
             TextView todayPublicTextView = findViewById(R.id.today_or_public_text_view);
             todayPublicTextView.setText("Public Goals");
@@ -162,15 +160,14 @@ public class UserPageActivity extends AppCompatActivity {
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             HashMap<String, Object> infoMap = (HashMap<String, Object>) document.getData().get("UserInfo");
+                            // Set other user's display name
                             if (infoMap != null) {
-                                HashMap<String, String> map = (HashMap<String, String>) infoMap.get("UserInfo");
-                                if (map != null) {
-                                    String name = map.get("displayName");
-                                    userName.setText(name);
-                                } else {
-                                    userName.setText(emailExtra);
-                                }
+                                String name = (String) infoMap.get("displayName");
+                                userName.setText(name);
+                            } else {
+                                userName.setText(emailExtra);
                             }
+
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -185,6 +182,7 @@ public class UserPageActivity extends AppCompatActivity {
             erLLayout.setVisibility(View.INVISIBLE);
             listAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
         } else {
+            // See your information and indicator
             isFromIntent = false;
             assert user != null;
             String nameString = user.getDisplayName();
@@ -325,6 +323,7 @@ public class UserPageActivity extends AppCompatActivity {
             }
         });
 
+        // Initializations for following and follower sub sections.
         LinearLayout followerLayout, followingLayout, todayLinearLayout;
         followerLayout = findViewById(R.id.follower_click_layout);
         followingLayout = findViewById(R.id.following_click_layout);
