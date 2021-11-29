@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+//this can only be successful after logging in
 public class RequestActivityTest {
     private Solo solo;
     private View view;
@@ -32,7 +33,7 @@ public class RequestActivityTest {
      * @throws Exception
      */
     @Test
-    public void addRequestTest(){
+    public void AddRequestTest(){
         /**
          * check the request page
          * add request

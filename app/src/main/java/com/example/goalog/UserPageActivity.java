@@ -130,8 +130,6 @@ public class UserPageActivity extends AppCompatActivity {
 
         habitDataList = new ArrayList<>();
         habitTitleDataList = new ArrayList<>();
-        //listAdapter = new CustomTodayHabitList(this,habitDataList);
-        //listAllAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
 
         todayList = findViewById(R.id.today_list);
 
@@ -143,10 +141,10 @@ public class UserPageActivity extends AppCompatActivity {
         final TextView myPageTextView = findViewById(R.id.top_my_page_textview);;
 
         if (emailExtra != null) {
+            // See other user's information
             isFromIntent = true;
             collectionReference = db.collection(emailExtra);
             assert user != null;
-            String nameString = user.getDisplayName();
             myPageTextView.setText("Back To My Page");
             TextView todayPublicTextView = findViewById(R.id.today_or_public_text_view);
             todayPublicTextView.setText("Public Goals");
@@ -162,15 +160,14 @@ public class UserPageActivity extends AppCompatActivity {
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             HashMap<String, Object> infoMap = (HashMap<String, Object>) document.getData().get("UserInfo");
+                            // Set other user's display name
                             if (infoMap != null) {
-                                HashMap<String, String> map = (HashMap<String, String>) infoMap.get("UserInfo");
-                                if (map != null) {
-                                    String name = map.get("displayName");
-                                    userName.setText(name);
-                                } else {
-                                    userName.setText(emailExtra);
-                                }
+                                String name = (String) infoMap.get("displayName");
+                                userName.setText(name);
+                            } else {
+                                userName.setText(emailExtra);
                             }
+
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -185,6 +182,7 @@ public class UserPageActivity extends AppCompatActivity {
             erLLayout.setVisibility(View.INVISIBLE);
             listAdapter = new ArrayAdapter<>(this, R.layout.content_follow_user_list, habitTitleDataList);
         } else {
+            // See your information and indicator
             isFromIntent = false;
             assert user != null;
             String nameString = user.getDisplayName();
@@ -258,6 +256,7 @@ public class UserPageActivity extends AppCompatActivity {
                     // Adding the habits from FireStore
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
+                        // get all attributes
                         String habitTitle = (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");
@@ -272,7 +271,9 @@ public class UserPageActivity extends AppCompatActivity {
                             if(isPublic) {
                                 habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                                 habitTitleDataList.add(habitTitle);
+                                // if the latest finished date of habit is today
                                 if (latestFinishDate.equals(date.format(today))) {
+                                    // increase the completed-on-today habit number
                                     completedOnTodayNum++;
                                 }
                             }
@@ -283,7 +284,9 @@ public class UserPageActivity extends AppCompatActivity {
                                         char ch = weekdayPlan.charAt(i);
                                         if (weekday.equals(String.valueOf(ch))) {
                                             habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                            // if the latest finished date of habit is today
                                             if (latestFinishDate.equals(date.format(today))) {
+                                                // increase the completed-on-today habit number
                                                 completedOnTodayNum++;
                                             }
                                         }
@@ -297,20 +300,22 @@ public class UserPageActivity extends AppCompatActivity {
                     listAdapter.notifyDataSetChanged();
 
                 }
+                // get the daily progress related view
                 ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
                 TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
                 TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
 
                 int ratioNum;
-                numOfHabit = habitDataList.size();
+                numOfHabit = habitDataList.size(); // get total number of habits
 
+                // calculate thr ratio of completed-on-today habit number and total habit number
                 if (numOfHabit ==0) {
                     ratioNum = 0;
                 } else {
                     ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
                 }
 
-                // Set the Visual Indicator: Today's Progress:
+                // set the daily progress data
                 percentage.setText(ratioNum+"%");
                 indicator.setProgress(ratioNum, true);
                 ratio.setText(completedOnTodayNum+"/"+numOfHabit);
@@ -318,6 +323,7 @@ public class UserPageActivity extends AppCompatActivity {
             }
         });
 
+        // Initializations for following and follower sub sections.
         LinearLayout followerLayout, followingLayout, todayLinearLayout;
         followerLayout = findViewById(R.id.follower_click_layout);
         followingLayout = findViewById(R.id.following_click_layout);

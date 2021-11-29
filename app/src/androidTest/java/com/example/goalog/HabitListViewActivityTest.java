@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
+//this can only be successful after logging in
 public class HabitListViewActivityTest {
     private Solo solo;
     private View view;
@@ -34,16 +34,19 @@ public class HabitListViewActivityTest {
     public void clickHabitListTest() {
         solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
         solo.clickOnView(solo.getView(R.id.habit_list));
-        Assert.assertTrue(solo.waitForActivity(HabitListViewActivity.class));
+        solo.sleep(1000);
+        Assert.assertTrue(solo.waitForActivity(HabitEventListViewActivity.class));
     }
     @Test
-    public void addHabitButtonTest(){
+    public void addHabitTest(){
         solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
         view = solo.getView(R.id.add_habit_button);
         solo.clickOnView(view);
-        Assert.assertTrue(solo.waitForActivity(HabitListViewActivity.class));
+        solo.sleep(1000);
+        Assert.assertTrue(solo.waitForActivity(AddHabitActivity.class));
 
     }
 
 }
+
 

@@ -44,10 +44,11 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
      *   The day when the user completes the event. It is a String in the "yy-MM-dd" format.
      * @param habitTitle
      *   The title of the parent habit.
+     * @param image
+     *   The image uri
+     * @param location
+     *  The longitude and latitude of location
      *
-     * Current Issues:
-     *   The habitTitle has no use.
-     *   Other attributes need to be included later.
      */
     public HabitEvent(String eventID, String eventCommentString, String completeDate, String habitTitle, String image, HashMap location) {
         this.completeDate = completeDate;
@@ -58,33 +59,42 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         this.Location = location;
     }
 
+    public String getEventID() {
+        return eventID;
+    }
+
     public String getHabitTitle() { return habitTitle; }
-    public String getEventID() { return eventID; }
-    public String getEventComment(){
-        return eventComment;
-    }
-    public String getImage() {
-        return image;
-    }
+
+    public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
+
     public String getCompleteDate(){
         return completeDate;
     }
+
     public HashMap getLocation() { return Location; }
 
-    public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
-    public void setEventID(String eventID) { this.eventID = eventID; }
+    public void setLocation(HashMap location) {this.Location = location;}
+
+
+    public String getEventComment() {
+        return eventComment;
+    }
+
     public void setEventComment(String eventComment){
         if (eventComment.length() <= 20) {
             this.eventComment = eventComment;
         } else {
-            throw new IllegalArgumentException("Even Comment cannot exceed 20 characters.");
+            throw new IllegalArgumentException("Event Comment cannot exceed 20 characters.");
         }
     }
+
+    public String getImage() {
+        return image;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
-    public void setLocation(HashMap location) {this.Location = location;}
-
 
 
     /**

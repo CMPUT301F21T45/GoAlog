@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
+//this can only be successful after logging in
 public class AddHabitEventActivityTest {
     private Solo solo;
     private View view;
@@ -45,11 +45,14 @@ public class AddHabitEventActivityTest {
         //jump to map
         view=solo.getView(R.id.map_text);
         solo.clickOnView(view);
+        solo.sleep(1000);
         view=solo.getView(R.id.OK);
         solo.clickOnView(view);
+        solo.sleep(1000);
         //return to add habit event
 
         solo.clickOnButton("Confirm");
+        solo.sleep(1000);
         Assert.assertTrue(solo.waitForActivity("UserPageActivity"));
 
     }

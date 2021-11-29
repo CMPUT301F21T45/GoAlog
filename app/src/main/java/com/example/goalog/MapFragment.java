@@ -13,7 +13,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 /**
  * MapFragment
  * Welcome Slogan
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Use the {@link MapFragment} factory method to
  * create an instance of this fragment.
  */
+
 public class MapFragment extends Fragment {
     double latitude;
     double longitude;

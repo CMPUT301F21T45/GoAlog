@@ -1,15 +1,13 @@
 package com.example.goalog;
-
+//this can only be successful before logging in
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.gms.auth.api.signin.internal.SignInHubActivity;
 import com.robotium.solo.Solo;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,6 +43,8 @@ public class WelcomeActivityTest {
         solo.assertCurrentActivity("Wrong Activity", MainPagesActivity.class);
 
     }
+
+
 
 
 }

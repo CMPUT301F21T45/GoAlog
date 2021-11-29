@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
+//this can only be successful after logging in
 public class AddHabitAcrossActivityTest {
     private Solo solo;
     private View view;
@@ -33,14 +33,17 @@ public class AddHabitAcrossActivityTest {
 
     @Test
     public void AddHabitTest() {
+
         //start in user Activity
         solo.assertCurrentActivity("Wrong Activity", UserPageActivity.class);
         solo.clickOnButton("My Goals");
+        solo.sleep(1000);
 
         //jump to HabitListView
         solo.assertCurrentActivity("Wrong Activity",HabitListViewActivity.class);
         view = solo.getView(R.id.add_habit_button);
         solo.clickOnView(view);
+        solo.sleep(1000);
 
         //jump to AddHabitView
         /**
@@ -54,11 +57,13 @@ public class AddHabitAcrossActivityTest {
         solo.enterText((EditText) solo.getView(R.id.habit_reason),"Testing reason");
         view = solo.getView(R.id.fri_checkbox);
         solo.clickOnView(view);
+        solo.sleep(1000);
         solo.clickOnButton("Confirm");
 
         //jump to HabitListView
         solo.assertCurrentActivity("Wrong Activity",HabitListViewActivity.class);
         view = solo.getView(R.id.habit_title);
+        solo.sleep(1000);
         assertTrue(solo.searchText("Test Habit"));
 
     }

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+//this can only be successful after logging in
 public class UserPageActivityTest {
     private Solo solo;
     private View view;
