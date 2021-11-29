@@ -44,10 +44,11 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
      *   The day when the user completes the event. It is a String in the "yy-MM-dd" format.
      * @param habitTitle
      *   The title of the parent habit.
+     * @param image
+     *   The image uri
+     * @param location
+     *  The longitude and latitude of location
      *
-     * Current Issues:
-     *   The habitTitle has no use.
-     *   Other attributes need to be included later.
      */
     public HabitEvent(String eventID, String eventCommentString, String completeDate, String habitTitle, String image, HashMap location) {
         this.completeDate = completeDate;
@@ -77,7 +78,7 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         if (eventComment.length() <= 20) {
             this.eventComment = eventComment;
         } else {
-            throw new IllegalArgumentException("Even Comment cannot exceed 20 characters.");
+            throw new IllegalArgumentException("Event Comment cannot exceed 20 characters.");
         }
     }
     public void setImage(String image) {

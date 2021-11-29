@@ -46,25 +46,6 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.habitID = habitID;
     }
 
-    /**
-     * Habit Constructor:
-     * @param habitTitle
-     *   It is the title of the habit, and has a length constraint 20 character when editing it.
-     * @param habitReason
-     *   is motivation, and has length constraint of 30 character;
-     * @param startDate
-     *   Date to Start. It is a String in "yyyy-MM-dd" format;
-     * @param weekdayPlan
-     *   is a string contains the active weekdays scheduled for the habits.
-     * @param isPublic
-     *   whether this object is public to others;
-     * @param habitID
-     *   is a unique ID for each habit
-     * @param orderID
-     *   is a ID to order habit in habit list
-     * @param latestFinishDate
-     *   is a string to store the date of latest finish event of this habit
-     */
     public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID, String latestFinishDate){
         this.habitTitle = habitTitle;
         this.habitReason = habitReason;
@@ -76,10 +57,10 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.latestFinishDate = latestFinishDate;
     }
 
-
-
-    public String getHabitTitle() {
-        return habitTitle;
+    public void setHabitReason(String habitReason) {
+        if (habitReason.length() > 30) {
+            this.habitReason = habitReason.substring(0,30);
+        }
     }
 
     public void setHabitTitle(String habitTitle) {
@@ -90,46 +71,50 @@ public class Habit implements Serializable, Comparable<Habit> {
         }
     }
 
-    public String getHabitReason(){
-        return habitReason;
-    }
-
-    public void setHabitReason(String habitReason) {
-        if (habitReason.length() > 30) {
-            this.habitReason = habitReason.substring(0,30);
-        }
-    }
-
-    public String getStartDate(){
-        return startDate;
-    }
-
     public void setStartDate(String date) {
         this.startDate = date;
     }
 
-    public String getWeekdayPlan() {
-        return weekdayPlan;
+    public void setLatestFinishDate(String latestFinishDate) {
+        this.latestFinishDate = latestFinishDate;
     }
+
 
     public void setWeekdayPlan(String weekdayPlan) {
         this.weekdayPlan = weekdayPlan;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
     }
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
     }
 
-    public String getHabitID() {
-        return habitID;
-    }
-
     public void setOrderID(Long orderID) {
         this.orderID = orderID;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+
+    public String getHabitTitle() {
+        return habitTitle;
+    }
+
+    public String getHabitReason(){
+        return habitReason;
+    }
+
+    public String getStartDate(){
+        return startDate;
+    }
+
+    public String getWeekdayPlan() {
+        return weekdayPlan;
+    }
+
+    public String getHabitID() {
+        return habitID;
     }
 
     public Long getOrderID() {
@@ -140,17 +125,6 @@ public class Habit implements Serializable, Comparable<Habit> {
         return latestFinishDate;
     }
 
-    public void setLatestFinishDate(String latestFinishDate) {
-        this.latestFinishDate = latestFinishDate;
-    }
-
-    /**
-     * CompareTo The method that will be used to compare the order of habits by orderID attribute
-     * @param habit
-     *  The candidate Habit object
-     * @return
-     *  The compare result
-     */
     @Override
     public int compareTo(Habit habit) {
         Long diff = this.getOrderID() - habit.getOrderID();

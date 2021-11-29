@@ -4,10 +4,10 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -51,8 +52,6 @@ import java.util.UUID;
  *  1. the add HabitEvent page, with all fields blank and needed to be filled by user
  *  2. the HabitEvent detail page, with all fields of a given HabitEvent and allows user to edit
  *
- *  Currently unsolved issues: the optional photograph of HabitEvent is not yet implemented,
- *  so there are some related unused attributes as well as related commented-out code
  */
 public class AddHabitEventActivity extends AppCompatActivity {
 
@@ -78,7 +77,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private Uri filePath;
     private Uri imageUri;
     private Bitmap bitmap = null;
-    private Context PostImage;
 
     Object editLatitude;
     Object editLongitude ;
@@ -90,6 +88,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
     // check whether the Activity is used for add or edit a HabitEvent
     private boolean editMode = false;
 
+    /**
+     * set up AddHabitEvent Activity
+     * user can upload image, add chosen location or add  optional comment and edit habit event
+     * @param savedInstanceState This is a previous saved state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,12 +169,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
             }//show detail when have a location
-            else if(editLatitude == "" && editLongitude == "" && latitude != "" && longitude != "") {
+            else if(editLatitude == "" && editLongitude == "" && !latitude.equals("") && !longitude.equals("")) {
                 edit_location = "(" + latitude + "," + longitude + ")";
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
             }//show detail when add a new location
-            if (needUpdatedEvent.getImage() == "") {
+            if (needUpdatedEvent.getImage().equals("")) {
                 filePath = Uri.parse(needUpdatedEvent.getImage());
                 image_display.setImageResource(R.mipmap.ic_upload_image);
                 deleteImage.setVisibility(View.INVISIBLE);
@@ -304,8 +307,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
      * A view to select choose type
+     *
      */
     private void setChoosePhoto() {
         View chooseTypeView = LayoutInflater.from(this).inflate(R.layout.choose_type_view, null);
@@ -319,6 +323,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    selection.dismiss();
+                    Toast.makeText(AddHabitEventActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 selection.dismiss();
                 openCamera();
             }
@@ -327,6 +338,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    selection.dismiss();
+                    Toast.makeText(AddHabitEventActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 selection.dismiss();
                 openGallery();
             }
@@ -339,20 +357,23 @@ public class AddHabitEventActivity extends AppCompatActivity {
             }
         });//return to add page
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }//request permission
-
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
     }
 
-    /*
+
+    /**
      * Open phone camera
+     *
      */
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         openCameraResultLauncher.launch(takePictureIntent);
     }
 
+    /**
+     * open camera request result
+     *
+     */
     ActivityResultLauncher<Intent> openCameraResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -360,25 +381,32 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
-                            PostImage = getApplicationContext();
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
                             filePath = imageUri;                            //copy image uri
                             image_display.setImageBitmap(imageBitmap);      //display image on screen
-                            deleteImage.setVisibility(View.VISIBLE);         //display delete button
+                            deleteImage.setVisibility(View.VISIBLE);        //display delete button
                             saveImage();
                         }
                     }
                 }
             });
 
+    /**
+     * Open phone gallery
+     *
+     */
+
     private void openGallery() {
         Intent photoPicker = new Intent(Intent.ACTION_PICK);
         photoPicker.setType("image/*");
         openGalleryResultLauncher.launch(photoPicker);
     }
-
+    /**
+     * open gallery request return
+     *
+     */
     ActivityResultLauncher<Intent> openGalleryResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -404,8 +432,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
             });
 
-    /*
+    /**
      * save picture to gallery
+     *
      */
     public void saveImage() {
         try {
@@ -419,16 +448,19 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();//create a byte array output stream
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream));//reduce the size of the image and put extra Data
             } else {
-                Toast.makeText(PostImage, "Cannot save image!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddHabitEventActivity.this, "Cannot save image!", Toast.LENGTH_SHORT).show();
             }
         } catch (FileNotFoundException e) {
 
         }
     }
 
-    /*
+    /**
      * get image uri
      * code from https://stackoverflow.com/questions/67844042/update-user-profileimage-in-firebase-android-studio
+     * @param inContext
+     * @param inImage
+     * @return
      */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
@@ -436,8 +468,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    /*
-     * go to map and return location
+    /**
+     * go to map and return location and what result code returned
+     *
      */
     ActivityResultLauncher<Intent> setLocationResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
