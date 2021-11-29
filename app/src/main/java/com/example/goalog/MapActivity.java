@@ -119,6 +119,7 @@ public class MapActivity extends AppCompatActivity {
                     for (int result : grantResults) {
                         if (result != PackageManager.PERMISSION_GRANTED) {
                             finish();
+                            Toast.makeText(MapActivity.this, "Location permission denied", Toast.LENGTH_SHORT).show();
                         }else{
                             finish();
                             Toast.makeText(MapActivity.this, "Location permissions Granted, add location now!", Toast.LENGTH_LONG).show();

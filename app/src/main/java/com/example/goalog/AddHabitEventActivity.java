@@ -77,7 +77,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private Uri filePath;
     private Uri imageUri;
     private Bitmap bitmap = null;
-    private Context PostImage;
 
     Object editLatitude;
     Object editLongitude ;
@@ -328,6 +327,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     selection.dismiss();
+                    Toast.makeText(AddHabitEventActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 selection.dismiss();
@@ -342,6 +342,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(AddHabitEventActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     selection.dismiss();
+                    Toast.makeText(AddHabitEventActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 selection.dismiss();
@@ -370,7 +371,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
     /**
-     * open camera request return
+     * open camera request result
      *
      */
     ActivityResultLauncher<Intent> openCameraResultLauncher = registerForActivityResult(
@@ -380,7 +381,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() != RESULT_CANCELED) {
                         if (result.getResultCode() == RESULT_OK) {
-                            PostImage = getApplicationContext();
                             Bundle extras = result.getData().getExtras();
                             Bitmap imageBitmap = (Bitmap) extras.get("data");
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
@@ -448,7 +448,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();//create a byte array output stream
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream));//reduce the size of the image and put extra Data
             } else {
-                Toast.makeText(PostImage, "Cannot save image!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddHabitEventActivity.this, "Cannot save image!", Toast.LENGTH_SHORT).show();
             }
         } catch (FileNotFoundException e) {
 
