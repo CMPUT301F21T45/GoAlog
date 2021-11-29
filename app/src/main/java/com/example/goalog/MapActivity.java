@@ -4,33 +4,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * An Activity page with map
+ * From AddHabitEventActivity when user click location and want to add a location on map
+ *
+ */
 public class MapActivity extends AppCompatActivity {
 
     private TextView latitude;
@@ -40,11 +36,15 @@ public class MapActivity extends AppCompatActivity {
     private Button OK_press;
     List<String> permissionList = new ArrayList<>();
 
+    /**
+     * set up Map Activity
+     * user can choose location at map and return value to last activity
+     * @param saveInstanceState This is a previous saved state
+     */
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_map);
-
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,10 +89,13 @@ public class MapActivity extends AppCompatActivity {
                 }
             });
         }
-        }
+    }
 
-
-
+    /**
+     * A textview to show latitude and longitude that user choose
+     * @param s1
+     * @param s2
+     */
     public void f1(String s1, String s2){
         latitude=findViewById(R.id.latitude_Text);
         longitude=findViewById(R.id.longitude_Text);//get the location of mapFragment
@@ -100,6 +103,13 @@ public class MapActivity extends AppCompatActivity {
         longitude.setText(s2);
     }
 
+    /**
+     * Given requestCode and return the resultCode
+     * @param permissions
+     * @param grantResults
+     * @param requestCode
+     *
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -115,11 +125,6 @@ public class MapActivity extends AppCompatActivity {
                         }
                     }
                 }
-
         }
     }
-
-
-
-
-    }
+}

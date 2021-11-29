@@ -1,7 +1,6 @@
 package com.example.goalog;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,7 +26,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,8 +52,6 @@ import java.util.UUID;
  *  1. the add HabitEvent page, with all fields blank and needed to be filled by user
  *  2. the HabitEvent detail page, with all fields of a given HabitEvent and allows user to edit
  *
- *  Currently unsolved issues: the optional photograph of HabitEvent is not yet implemented,
- *  so there are some related unused attributes as well as related commented-out code
  */
 public class AddHabitEventActivity extends AppCompatActivity {
 
@@ -94,6 +89,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
     // check whether the Activity is used for add or edit a HabitEvent
     private boolean editMode = false;
 
+    /**
+     * set up AddHabitEvent Activity
+     * user can upload image, add chosen location or add  optional comment and edit habit event
+     * @param savedInstanceState This is a previous saved state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -308,8 +308,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
      * A view to select choose type
+     *
      */
     private void setChoosePhoto() {
         View chooseTypeView = LayoutInflater.from(this).inflate(R.layout.choose_type_view, null);
@@ -359,14 +360,19 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
 
-    /*
+    /**
      * Open phone camera
+     *
      */
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         openCameraResultLauncher.launch(takePictureIntent);
     }
 
+    /**
+     * open camera request return
+     *
+     */
     ActivityResultLauncher<Intent> openCameraResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -387,12 +393,20 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
             });
 
+    /**
+     * Open phone gallery
+     *
+     */
+
     private void openGallery() {
         Intent photoPicker = new Intent(Intent.ACTION_PICK);
         photoPicker.setType("image/*");
         openGalleryResultLauncher.launch(photoPicker);
     }
-
+    /**
+     * open gallery request return
+     *
+     */
     ActivityResultLauncher<Intent> openGalleryResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -418,8 +432,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 }
             });
 
-    /*
+    /**
      * save picture to gallery
+     *
      */
     public void saveImage() {
         try {
@@ -440,9 +455,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
         }
     }
 
-    /*
+    /**
      * get image uri
      * code from https://stackoverflow.com/questions/67844042/update-user-profileimage-in-firebase-android-studio
+     * @param inContext
+     * @param inImage
+     * @return
      */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
@@ -450,8 +468,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    /*
-     * go to map and return location
+    /**
+     * go to map and return location and what result code returned
+     *
      */
     ActivityResultLauncher<Intent> setLocationResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),

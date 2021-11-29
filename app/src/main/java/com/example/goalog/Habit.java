@@ -63,10 +63,6 @@ public class Habit implements Serializable, Comparable<Habit> {
         }
     }
 
-    public String getHabitTitle() {
-        return habitTitle;
-    }
-
     public void setHabitTitle(String habitTitle) {
         if (habitTitle.length() > 20) {
             this.habitTitle = habitTitle.substring(0,20);
@@ -75,20 +71,38 @@ public class Habit implements Serializable, Comparable<Habit> {
         }
     }
 
+    public void setStartDate(String date) {
+        this.startDate = date;
+    }
+
+    public void setLatestFinishDate(String latestFinishDate) {
+        this.latestFinishDate = latestFinishDate;
+    }
+
+
     public void setWeekdayPlan(String weekdayPlan) {
         this.weekdayPlan = weekdayPlan;
     }
 
-    public String getHabitReason(){
-        return habitReason;
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public void setOrderID(Long orderID) {
+        this.orderID = orderID;
     }
 
     public boolean isPublic() {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+
+    public String getHabitTitle() {
+        return habitTitle;
+    }
+
+    public String getHabitReason(){
+        return habitReason;
     }
 
     public String getStartDate(){
@@ -99,10 +113,6 @@ public class Habit implements Serializable, Comparable<Habit> {
         return weekdayPlan;
     }
 
-    public void setStartDate(String date) {
-        this.startDate = date;
-    }
-
     public String getHabitID() {
         return habitID;
     }
@@ -111,16 +121,8 @@ public class Habit implements Serializable, Comparable<Habit> {
         return orderID;
     }
 
-    public void setOrderID(Long orderID) {
-        this.orderID = orderID;
-    }
-
     public String getLatestFinishDate() {
         return latestFinishDate;
-    }
-
-    public void setLatestFinishDate(String latestFinishDate) {
-        this.latestFinishDate = latestFinishDate;
     }
 
     @Override
