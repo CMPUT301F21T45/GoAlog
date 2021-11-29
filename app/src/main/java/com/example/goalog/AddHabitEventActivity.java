@@ -166,12 +166,12 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
             }//show detail when have a location
-            else if(editLatitude == "" && editLongitude == "" && latitude != "" && longitude != "") {
+            else if(editLatitude == "" && editLongitude == "" && !latitude.equals("") && !longitude.equals("")) {
                 edit_location = "(" + latitude + "," + longitude + ")";
                 location.setText(edit_location);
                 deleteLocation.setVisibility(View.VISIBLE);
             }//show detail when add a new location
-            if (needUpdatedEvent.getImage() == "") {
+            if (needUpdatedEvent.getImage().equals("")) {
                 filePath = Uri.parse(needUpdatedEvent.getImage());
                 image_display.setImageResource(R.mipmap.ic_upload_image);
                 deleteImage.setVisibility(View.INVISIBLE);
@@ -339,9 +339,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
             }
         });//return to add page
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }//request permission
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
     }
 
@@ -366,7 +364,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                             imageUri = getImageUri(getApplicationContext(), imageBitmap);
                             filePath = imageUri;                            //copy image uri
                             image_display.setImageBitmap(imageBitmap);      //display image on screen
-                            deleteImage.setVisibility(View.VISIBLE);         //display delete button
+                            deleteImage.setVisibility(View.VISIBLE);        //display delete button
                             saveImage();
                         }
                     }
