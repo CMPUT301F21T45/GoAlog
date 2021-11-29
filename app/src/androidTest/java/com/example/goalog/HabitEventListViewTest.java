@@ -30,7 +30,7 @@ public class HabitEventListViewTest {
     @Test
     public void clickHabitListTest(){
         solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
-        solo.clickOnView(solo.getView(R.id.habit_event_list));
+        solo.clickOnView(solo.getView(R.id.habit_list));
         solo.assertCurrentActivity("Wrong Activity", HabitEventListViewActivity.class);
         Assert.assertTrue(solo.waitForActivity("HabitEventListViewActivity"));
 
