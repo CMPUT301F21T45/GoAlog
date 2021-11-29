@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="310dp"
             android:padding="10dp"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textAlignment="center"
             android:text="Achieve Your Dreams"
             android:gravity="top|center"
