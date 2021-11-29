@@ -70,6 +70,8 @@ public class Habit implements Serializable, Comparable<Habit> {
     public void setHabitTitle(String habitTitle) {
         if (habitTitle.length() > 20) {
             this.habitTitle = habitTitle.substring(0,20);
+        }else{
+            this.habitTitle = habitTitle;
         }
     }
 

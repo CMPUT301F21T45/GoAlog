@@ -28,6 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -92,6 +94,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // get related views
         optionalComment = findViewById(R.id.comment_text);          //create an optional comment
@@ -195,8 +199,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 eventCommentString = optionalComment.getText().toString();
 
                 final FirebaseFirestore database = FirebaseFirestore.getInstance();
-                final CollectionReference collectionReference = database.collection("user003").document(clickedHabitID).collection("HabitEvent");
-                final DocumentReference selectedHabit = database.collection("user003").document(clickedHabitID);
+                final CollectionReference collectionReference = database.collection(currentUser.getEmail()).document(clickedHabitID).collection("HabitEvent");
+                final DocumentReference selectedHabit = database.collection(currentUser.getEmail()).document(clickedHabitID);
 
                 // edit mode
                 if (editMode) {

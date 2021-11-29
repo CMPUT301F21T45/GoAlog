@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -58,8 +60,9 @@ public class HabitListViewActivity extends AppCompatActivity{
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomHabitList(this, habitDataList);
         HabitList.setAdapter(habitAdapter);
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = database.collection("user003"); //assume we already logged in
+        final CollectionReference collectionReference = database.collection(currentUser.getEmail()); //assume we already logged in
         //----------------------------------------------
         HabitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -216,5 +219,9 @@ public class HabitListViewActivity extends AppCompatActivity{
                 // Notifying the adapter to render any new data fetched from the cloud
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        // Disable Back Button.
     }
 }

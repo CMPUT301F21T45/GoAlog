@@ -2,6 +2,7 @@ package com.example.goalog;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,8 +28,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
+/**
+ * WelcomeActivity
+ * In this activity, you are going to log in or sign up and use the application
+ * Once you logged in, your status will be kept until you sign out.
+ * (also the activity will be skipped if you've logged in)
+ */
 public class WelcomeActivity extends AppCompatActivity {
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +90,6 @@ public class WelcomeActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainPagesActivity.class);
             assert currentUser != null;
 
-
             final CollectionReference collRef = FirebaseFirestore.getInstance()
                     .collection(currentUser.getEmail());
             collRef.document("Info").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -92,33 +97,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
-                        if (doc.exists()) {
-                            try {
-                                HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("UserInfo");
-                                if (!(boolean) map.get("created")) {
-                                    User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
-                                    newUser.setCreated(true);
-                                    newUser.setToFirebase();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        if (!doc.exists()) {
+                            User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
+                            newUser.setCreated(true);
+                            newUser.setToFirebase();
                         }
                     }
                 }
             });
 
-            /*
-            User newUser = new User(currentUser.getUid(), currentUser.getEmail(), currentUser.getDisplayName());
-
-            // if is created, do not overview
-            if (!newUser.isCreated()) {
-                newUser.setCreated(true);
-                newUser.setToFirebase();
-            }
-             */
-
-            // Todo: distinguish.
             finish();
             startActivity(intent);
         } else {

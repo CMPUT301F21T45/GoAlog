@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 /**
+ * WelcomeFragment2
+ * Welcome Slogan
  * A simple {@link Fragment} subclass.
  * Use the {@link WelcomeFragment2#newInstance} factory method to
  * create an instance of this fragment.

@@ -53,7 +53,7 @@ public class AddHabitActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
-        // get realated views
+        // get related views
         activityTitle = findViewById(R.id.activity_add_habit_title);
         dateDisplay = findViewById(R.id.display_start_date_add_habit);
         habitTitle = findViewById(R.id.habit_title);
@@ -118,7 +118,7 @@ public class AddHabitActivity extends AppCompatActivity{
 
                 // input constrains
                 if(habitTitleString.length()> 20) {
-                    habitTitleString = habitTitleString.substring(0,30);
+                    habitTitleString = habitTitleString.substring(0,20);
                 }
                 if (habitReasonString.length()>30) {
                     habitReasonString = habitReasonString.substring(0,30);
@@ -156,7 +156,6 @@ public class AddHabitActivity extends AppCompatActivity{
                         Toast.makeText(v.getContext(), "Successfully Edited!",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(intent);
-
                     }
                     // if inputs don't fit the constraints, nothing happens
                     else {

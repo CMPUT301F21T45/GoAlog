@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow_white">
+    android:background="@color/light_yellow_white">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -33,8 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textAlignment="center"
-                android:background="@color/black"
-                android:textColor="@color/white"
+                android:background="@color/dark"
+                android:textColor="@color/yellow_white"
                 android:text="GOALOG"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="20sp"
+                android:padding="10sp"
                 android:text="GOALOG"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -71,8 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:backgroundTint="@color/black"
+            android:textSize="18sp"
+            android:backgroundTint="@color/dark"
             android:text="Sign In" />
 
 
