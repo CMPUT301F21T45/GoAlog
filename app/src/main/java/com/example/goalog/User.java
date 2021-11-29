@@ -40,22 +40,6 @@ public class User {
         ref.document("Info").set(data, SetOptions.merge());
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
     public String getDisplayName() {
         return displayName;
     }
@@ -70,5 +54,9 @@ public class User {
 
     public void setCreated(boolean created) {
         isCreated = created;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
