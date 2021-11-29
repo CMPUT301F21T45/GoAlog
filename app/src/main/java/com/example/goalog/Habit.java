@@ -60,6 +60,8 @@ public class Habit implements Serializable, Comparable<Habit> {
     public void setHabitReason(String habitReason) {
         if (habitReason.length() > 30) {
             this.habitReason = habitReason.substring(0,30);
+        }else{
+            this.habitReason = habitReason;
         }
     }
 

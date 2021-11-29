@@ -4,7 +4,7 @@ package com.example.goalog;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static java.lang.Boolean.FALSE;
 
-import org.junit.Test;
+
 import org.junit.jupiter.api.Test;
 
 
