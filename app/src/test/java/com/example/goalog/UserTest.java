@@ -1,56 +1,54 @@
 package com.example.goalog;
 
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
-import com.example.goalog.Habit;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-
-import com.example.goalog.User;
-
+import org.junit.jupiter.api.Test;
 
 
 
 /**
- *
+ *  Unit Test to Test User Class to ensure that the setters are working
+ *  properly for user's Display Name. Will add constraint test after discussing with
+ *  members of my team
  */
 
 public class UserTest {
 
-    // Test to ensure set username is equal to the String given
+
     @Test
     public void testSetPublicName() {
 
+        User testUser = new User(null, null, "Ninja");
 
         String userName = "Hameem";
-        User testName = new User("fake");
 
-        testName.setPublicName(userName);
+        testUser.setDisplayName(userName);
         /* check to ensure the setter has properly passed the correct name to the getter */
-        assertEquals(userName, testName.getPublicName());
+        assertEquals(userName, testUser.getDisplayName());
     }
 
-    // Test to ensure username is not set if it is too long
+    /* TODO
+     Get an answer from my teammates as to whether we should be implementing a character limit
+     for User's Display Name & Modify the following method upon doing so
+     */
+
     @Test
     public void testPublicNameLength() {
+        User testUser = new User(null, null, "Ninja");
+        String user1 = "What Is The Longest Name In The World Does Anyone Know";
 
-        String user1 = "WhatIsTheLongestNameInTheWorldDoesAnyoneKnow";
 
-
-        User testNameLength = new User("Louie");
 
         try{
-            testNameLength.setPublicName(user1);
+            testUser.setDisplayName(user1);
         }
         catch (IllegalArgumentException err) {
             assertTrue(Boolean.TRUE);
         }
-        // error replication fails
-       // assertTrue(Boolean.FALSE);
+
 
     }
 

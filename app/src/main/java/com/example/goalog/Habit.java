@@ -45,10 +45,7 @@ public class Habit implements Serializable, Comparable<Habit> {
         this.habitID = habitID;
     }
 
-    public Habit(String habitTitle){
-        this.habitTitle = habitTitle;
 
-    }
 
 
     public Habit(String habitTitle, String habitReason, String startDate, String weekdayPlan, boolean isPublic, String habitID, long orderID){
@@ -64,17 +61,23 @@ public class Habit implements Serializable, Comparable<Habit> {
     public void setHabitReason(String habitReason) {
         if (habitReason.length() > 30) {
             this.habitReason = habitReason.substring(0,30);
+
+        }
+        else {
+            this.habitReason = habitReason;
         }
     }
 
-    public String getHabitTitle() {
-        return habitTitle;
-    }
 
     public void setHabitTitle(String habitTitle) {
         if (habitTitle.length() > 20) {
             this.habitTitle = habitTitle.substring(0,20);
         }
+        else this.habitTitle = habitTitle;
+
+    }
+    public String getHabitTitle() {
+        return habitTitle;
     }
 
     public void setWeekdayPlan(String weekdayPlan) {

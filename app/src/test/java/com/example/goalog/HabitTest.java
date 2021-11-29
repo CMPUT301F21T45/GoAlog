@@ -1,13 +1,9 @@
 package com.example.goalog;
 
 
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
-import com.example.goalog.Habit;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static java.lang.Boolean.FALSE;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -20,65 +16,69 @@ public class HabitTest {
 
 
 
-
     //Test that setter for Habit Title is able to set a proper name to a habit
     @Test
     public void testProperHabitTitle() {
-        String habitTitle = "Good Habit";
 
-        Habit properTitle = new Habit("yes");
+        Habit testingHabit = new Habit("Doer", null,null,
+                null,FALSE,null);
 
-        properTitle.setHabitTitle(habitTitle);
+        String testTitle = "Good Habit Title";
+        //setting habit title to testTitle using the Setter method
+        testingHabit.setHabitTitle(testTitle);
 
         // checks that the setter has set Habit Title to "Good Habit"
-        assertEquals(habitTitle, properTitle.getHabitTitle());
+        assertEquals(testingHabit.getHabitTitle(),testTitle);
+
     }
 
 
-    //Test that setter for Habit Title shows an error when Title length exceed maximum
-    //length
+    //Test that setter for Habit Title cuts downs to 20 characters when title is >20 characters
     @Test
     public void testHabitTitleLength() {
-        String habitTitle = "asdlkjok2k1jenlmnsfjakndfalkflakn";
-        Habit testHabit = new Habit("lol");
+        Habit testingHabit = new Habit("Nice title", null,null,
+                null,FALSE,null);
 
-        try{
-            testHabit.setHabitTitle(habitTitle);
-        }
-        catch (IllegalArgumentException err) {
-            assertTrue(Boolean.TRUE);
-        }
+        String testTitle = "This Name is too large and should be cut down to 20 characters";
 
-        //Error replication fails
-      //  assertTrue(Boolean.FALSE);
+        //setting habit title to testTitle using the Setter method
+        testingHabit.setHabitTitle(testTitle);
+
+        //checking that the setter has set Habit Title to the first 20 characters by default
+        assertEquals(testingHabit.getHabitTitle(),
+                testTitle.substring(0,20));
     }
 
     //Test that setter for Habit Reason is able to set a proper reason to a Habit Reason
     @Test
     public void testSetHabitReason() {
+        Habit testingHabit = new Habit(null, "this isn't a reason",null,
+                null,FALSE,null);
+
+
         String habitReason = "I wanna be better";
-        Habit testHabit = new Habit("motivation");
 
-        testHabit.setHabitReason(habitReason);
+        //setting habit reason to habitReason using the Setter method
+        testingHabit.setHabitReason(habitReason);
 
-        assertEquals(habitReason, testHabit.getHabitReason()); //check if habit reason matches
+        assertEquals(habitReason, testingHabit.getHabitReason()); //check if habit reason matches
     }
 
-    //Test that setter for Habit Reason is able to show an error when Habit Reason exceed Max
-    //character limit
+    //Test that setter for Habit Reason is able to cut downs to 30 characters when reason
+    // is >30 characters
     @Test
     public void testSetReasonLength() {
-        String reasonLength = "123456789123456789123456789101010";
-        Habit testHabit = new Habit("no pain no gain");
 
-        try{
-            testHabit.setHabitReason(reasonLength);
-        }
-        catch (IllegalArgumentException err) {
-            assertTrue(Boolean.TRUE);
-        }
-        // error replication fails
-      //  assertTrue(Boolean.FALSE);
+        Habit testingHabit = new Habit(null, "this isn't a reason",null,
+                null,FALSE,null);
+
+        String reasonLength = "This is way too long to be a Habit Reason, and should be cut" +
+                "down to 30 characters or less";
+
+        testingHabit.setHabitReason(reasonLength);
+        assertEquals(testingHabit.getHabitReason(),
+                reasonLength.substring(0,30));
+
     }
 
 }
