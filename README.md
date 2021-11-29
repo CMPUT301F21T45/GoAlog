@@ -3,7 +3,7 @@ Welcome to our CMPUT301 Project Goalog page!
 
 Attention: Please use devices with API 23-28 for full functionality!!
 
-Group Members: Yuting He, Shiguo, Binbing Wu, Jiajun() Xie, Rei, Hameem Bhuiyan(hbhuiyan)
+Group Members: Yuting He, Shiguo Feng, Binbing Wu, Jiajun(Louie) Xie, Rei, Hameem Bhuiyan(hbhuiyan)
 
 TA: Yuning Guo
 
