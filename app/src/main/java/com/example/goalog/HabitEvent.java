@@ -59,21 +59,27 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
         this.Location = location;
     }
 
+    public String getEventID() {
+        return eventID;
+    }
+
     public String getHabitTitle() { return habitTitle; }
-    public String getEventID() { return eventID; }
-    public String getEventComment(){
-        return eventComment;
-    }
-    public String getImage() {
-        return image;
-    }
+
+    public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
+
     public String getCompleteDate(){
         return completeDate;
     }
+
     public HashMap getLocation() { return Location; }
 
-    public void setHabitTitle(String habitTitle) { this.habitTitle = habitTitle; }
-    public void setEventID(String eventID) { this.eventID = eventID; }
+    public void setLocation(HashMap location) {this.Location = location;}
+
+
+    public String getEventComment() {
+        return eventComment;
+    }
+
     public void setEventComment(String eventComment){
         if (eventComment.length() <= 20) {
             this.eventComment = eventComment;
@@ -81,11 +87,14 @@ public class HabitEvent implements Serializable, Comparable<HabitEvent>{
             throw new IllegalArgumentException("Event Comment cannot exceed 20 characters.");
         }
     }
+
+    public String getImage() {
+        return image;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
-    public void setLocation(HashMap location) {this.Location = location;}
-
 
 
     /**
