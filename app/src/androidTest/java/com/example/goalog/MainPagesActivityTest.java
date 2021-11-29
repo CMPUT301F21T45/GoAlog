@@ -32,7 +32,7 @@ public class MainPagesActivityTest {
      * @throws Exception
      */
     @Test
-    public void checkButton(){
+    public void addReminderTest(){
         /**
          * check main page action
          * add reminder
@@ -55,7 +55,7 @@ public class MainPagesActivityTest {
         Assert.assertTrue(solo.waitForActivity(AddHabitActivity.class));
     }
     @Test
-    public void checkSignOut(){
+    public void SignOutTest(){
         /**
          * check sign out
          */

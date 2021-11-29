@@ -33,7 +33,7 @@ public class HabitListViewReorderActivityTest {
          *
          */
         @Test
-        public void checkImageview() {
+        public void reorderButtonTest() {
             /**
              * check the reorder button
              */
@@ -43,7 +43,7 @@ public class HabitListViewReorderActivityTest {
             Assert.assertTrue(solo.waitForActivity(HabitListViewReorderActivity.class));
         }
         @Test
-        public void checkAction() {
+        public void reorderActionTest() {
             /**
              * check the reorder function work
              */

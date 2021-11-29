@@ -31,13 +31,13 @@ public class HabitListViewActivityTest {
      * @throws Exception
      */
     @Test
-    public void checkAction() {
+    public void clickHabitListTest() {
         solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
         solo.clickOnView(solo.getView(R.id.habit_list));
         Assert.assertTrue(solo.waitForActivity(HabitListViewActivity.class));
     }
     @Test
-    public void checkButton2(){
+    public void addHabitButtonTest(){
         solo.assertCurrentActivity("Wrong Activity", HabitListViewActivity.class);
         view = solo.getView(R.id.add_habit_button);
         solo.clickOnView(view);

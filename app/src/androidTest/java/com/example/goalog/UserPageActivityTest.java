@@ -27,7 +27,7 @@ public class UserPageActivityTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
     }
     @Test
-    public void checkAction(){
+    public void myGoalButtonTest(){
         /**
          * check user page
          */
@@ -38,7 +38,7 @@ public class UserPageActivityTest {
 
     }
     @Test
-    public void checkButton1(){
+    public void doneGoalButtonTest(){
         /**
          * check the done button
          */

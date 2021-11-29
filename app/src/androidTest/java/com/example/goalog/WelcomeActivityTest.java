@@ -29,7 +29,7 @@ public class WelcomeActivityTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
     }
     @Test
-    public void checkAction(){
+    public void loginTest(){
         /**
          * check the sign in page
          * register

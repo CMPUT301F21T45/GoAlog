@@ -32,7 +32,7 @@ public class AddHabitActivityTest {
      * @throws Exception
      */
     @Test
-    public void checkButton(){
+    public void AddHabitTest(){
         //start ay main page
         solo.assertCurrentActivity("Wrong Activity", MainPagesActivity.class);
         view=solo.getView(R.id.add_goal_text_view);

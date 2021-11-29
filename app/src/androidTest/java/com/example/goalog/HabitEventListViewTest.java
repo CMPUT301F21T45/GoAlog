@@ -28,7 +28,7 @@ public class HabitEventListViewTest {
      * @throws Exception
      */
     @Test
-    public void checkButton4(){
+    public void clickHabitListTest(){
 
         solo.clickOnView(solo.getView(R.id.habit_list));
         solo.assertCurrentActivity("Wrong Activity", HabitEventListViewActivity.class);

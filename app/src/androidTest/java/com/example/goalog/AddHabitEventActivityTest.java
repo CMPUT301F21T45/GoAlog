@@ -32,7 +32,7 @@ public class AddHabitEventActivityTest {
      * @throws Exception
      */
     @Test
-    public void checkButton1(){
+    public void AddHabitEventTest(){
         //start at user page
         solo.assertCurrentActivity("Wrong Activity", UserPageActivity.class);
         solo.clickOnButton("Done");

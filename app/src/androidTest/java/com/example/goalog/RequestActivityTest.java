@@ -32,7 +32,7 @@ public class RequestActivityTest {
      * @throws Exception
      */
     @Test
-    public void checkButton(){
+    public void addRequestTest(){
         /**
          * check the request page
          * add request
