@@ -208,39 +208,39 @@ public class UserPageActivity extends AppCompatActivity {
         });
         // follow other's habits
         if (emailExtra != null) {
-          todayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-              @Override
-              public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                  AlertDialog followHabitAlert = new  AlertDialog
-                          .Builder(UserPageActivity.this)
-                          .setTitle("Follow Habit")
-                          .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
-                              @Override
-                              public void onClick(DialogInterface dialog, int which) {
-                                  Habit selectedHabit = habitDataList.get(position);
-                                  selectedHabit.setOrderID((long) -1);
-                                  selectedHabit.setLatestFinishDate("none");
-                                  HashMap<String, Habit> habitMap = new HashMap<>();
-                                  habitMap.put("HabitClass", selectedHabit);
-                                  CollectionReference collRef = db.collection(currentUser.getEmail());
-                                  if (selectedHabit!=null) {
-                                      collRef.document(selectedHabit.getHabitID())
-                                              .set(habitMap, SetOptions.merge());
-                                  }
+            todayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    AlertDialog followHabitAlert = new  AlertDialog
+                            .Builder(UserPageActivity.this)
+                            .setTitle("Follow Habit")
+                            .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Habit selectedHabit = habitDataList.get(position);
+                                    selectedHabit.setOrderID((long) -1);
+                                    selectedHabit.setLatestFinishDate("none");
+                                    HashMap<String, Habit> habitMap = new HashMap<>();
+                                    habitMap.put("HabitClass", selectedHabit);
+                                    CollectionReference collRef = db.collection(currentUser.getEmail());
+                                    if (selectedHabit!=null) {
+                                        collRef.document(selectedHabit.getHabitID())
+                                                .set(habitMap, SetOptions.merge());
+                                    }
 
-                              }
-                          }).setNegativeButton("No", null).create();
-                  followHabitAlert.setOnShowListener(new DialogInterface.OnShowListener() {
-                      @Override
-                      public void onShow(DialogInterface dialog) {
-                          followHabitAlert.getButton(AlertDialog.BUTTON_POSITIVE)
-                                  .setTextColor(getResources().getColor(R.color.warning_red));
-                      }
-                  });
-                  followHabitAlert.show();
-                  return false;
-              }
-          });
+                                }
+                            }).setNegativeButton("No", null).create();
+                    followHabitAlert.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            followHabitAlert.getButton(AlertDialog.BUTTON_POSITIVE)
+                                    .setTextColor(getResources().getColor(R.color.warning_red));
+                        }
+                    });
+                    followHabitAlert.show();
+                    return false;
+                }
+            });
         }
 
         // case for view user: All Habits - Public
@@ -258,6 +258,7 @@ public class UserPageActivity extends AppCompatActivity {
                     // Adding the habits from FireStore
                     HashMap<String, Object> map = (HashMap<String, Object>) doc.getData().get("HabitClass");
                     if (doc.getData().get("HabitClass") != null){
+                        // get all attributes
                         String habitTitle = (String) map.get("habitTitle");
                         String habitReason = (String) map.get("habitReason");
                         String startDate = (String)  map.get("startDate");
@@ -272,7 +273,9 @@ public class UserPageActivity extends AppCompatActivity {
                             if(isPublic) {
                                 habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
                                 habitTitleDataList.add(habitTitle);
+                                // if the latest finished date of habit is today
                                 if (latestFinishDate.equals(date.format(today))) {
+                                    // increase the completed-on-today habit number
                                     completedOnTodayNum++;
                                 }
                             }
@@ -283,7 +286,9 @@ public class UserPageActivity extends AppCompatActivity {
                                         char ch = weekdayPlan.charAt(i);
                                         if (weekday.equals(String.valueOf(ch))) {
                                             habitDataList.add(new Habit(habitTitle, habitReason, startDate, weekdayPlan, isPublic,habitID));
+                                            // if the latest finished date of habit is today
                                             if (latestFinishDate.equals(date.format(today))) {
+                                                // increase the completed-on-today habit number
                                                 completedOnTodayNum++;
                                             }
                                         }
@@ -297,20 +302,22 @@ public class UserPageActivity extends AppCompatActivity {
                     listAdapter.notifyDataSetChanged();
 
                 }
+                // get the daily progress related view
                 ProgressBar indicator = (ProgressBar) findViewById(R.id.progress_bar_indicator);
                 TextView percentage = (TextView) findViewById(R.id.percentage_indicator);
                 TextView ratio = (TextView) findViewById(R.id.finished_all_ratio_indicator);
 
                 int ratioNum;
-                numOfHabit = habitDataList.size();
+                numOfHabit = habitDataList.size(); // get total number of habits
 
+                // calculate thr ratio of completed-on-today habit number and total habit number
                 if (numOfHabit ==0) {
                     ratioNum = 0;
                 } else {
                     ratioNum = (int) 100 * completedOnTodayNum/numOfHabit;
                 }
 
-                // Set the Visual Indicator: Today's Progress:
+                // set the daily progress data
                 percentage.setText(ratioNum+"%");
                 indicator.setProgress(ratioNum, true);
                 ratio.setText(completedOnTodayNum+"/"+numOfHabit);

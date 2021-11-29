@@ -13,12 +13,26 @@ import com.woxthebox.draglistview.DragItemAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * An Adapter for habit list, used in the page to show all habit in a reorderable list view
+ *
+ * @see HabitListViewReorderActivity
+ */
 class ReorderListItemAdapter extends DragItemAdapter<Habit, ReorderListItemAdapter.ViewHolder> {
 
     private int mLayoutId;
     private int mGrabHandleId;
     private boolean mDragOnLongPress;
 
+
+    /**
+     * Constructor
+     *
+     * @param list              a arraylist of Habit to be shown
+     * @param layoutId          int, the id of layout used to show habit list
+     * @param grabHandleId      int, the id of grab handle to allow user to drag and reorder habits
+     * @param dragOnLongPress   a boolean to indicate whether user can drag item by long press or not
+     */
     ReorderListItemAdapter(ArrayList<Habit> list, int layoutId, int grabHandleId, boolean dragOnLongPress) {
         mLayoutId = layoutId;
         mGrabHandleId = grabHandleId;
@@ -26,6 +40,13 @@ class ReorderListItemAdapter extends DragItemAdapter<Habit, ReorderListItemAdapt
         setItemList(list);
     }
 
+    /**
+     * a ViewHolder to get the related view of a habit list
+     *
+     * @param parent        parent view group
+     * @param viewType      int to indicate the view type
+     * @return              the ViewHolder of the habit list
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,6 +54,12 @@ class ReorderListItemAdapter extends DragItemAdapter<Habit, ReorderListItemAdapt
         return new ViewHolder(view);
     }
 
+    /**
+     * bind data to corresponding views of an item in list
+     *
+     * @param position      the position of this content inside the list
+     * @param holder        the ViewHolder of an item in list
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
@@ -43,17 +70,31 @@ class ReorderListItemAdapter extends DragItemAdapter<Habit, ReorderListItemAdapt
         holder.startDate.setText(habit.getStartDate());
     }
 
+    /**
+     * get the order ID if an item inside list
+     *
+     * @param position      the position of this content inside the list
+     * @return              the ID used to order the items in list
+     */
     @Override
     public long getUniqueItemId(int position) {
-        // change later right now use the habit ID
+        // use the orderID attribute of a habit
         return mItemList.get(position).getOrderID() ;
     }
 
+    /**
+     * a class to get the related view of an item view
+     */
     class ViewHolder extends DragItemAdapter.ViewHolder {
         TextView habitName;
         TextView habitReason;
         TextView startDate;
 
+        /**
+         * Constructor
+         *
+         * @param itemView  the view to be built
+         */
         ViewHolder(final View itemView) {
             super(itemView, mGrabHandleId, mDragOnLongPress);
             // get all related views
@@ -61,17 +102,6 @@ class ReorderListItemAdapter extends DragItemAdapter<Habit, ReorderListItemAdapt
             habitReason= itemView.findViewById(R.id.habit_reason);
             startDate= itemView.findViewById(R.id.startDate);
 
-        }
-
-        @Override
-        public void onItemClicked(View view) {
-            Toast.makeText(view.getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public boolean onItemLongClicked(View view) {
-            Toast.makeText(view.getContext(), "Item long clicked", Toast.LENGTH_SHORT).show();
-            return true;
         }
     }
 }
